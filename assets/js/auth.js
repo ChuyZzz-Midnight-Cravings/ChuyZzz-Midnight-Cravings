@@ -13,9 +13,6 @@ function setLoggedInUser(email) {
   localStorage.setItem("loggedUser", email);
 }
 
-// ===============================
-// DOM CONTENT LOADED
-// ===============================
 document.addEventListener("DOMContentLoaded", () => {
 
   // -------------------------------
@@ -43,22 +40,22 @@ document.addEventListener("DOMContentLoaded", () => {
   // -------------------------------
   const clientId = "540201718454-mub2h4ufht1b749ot2k3t9f019h2fcnm.apps.googleusercontent.com";
 
-  // Initialize Google Sign-In
+  
   google.accounts.id.initialize({
     client_id: clientId,
     callback: handleGoogleCredential
   });
 
-  // Render Google Login button
+  
   google.accounts.id.renderButton(
     document.getElementById("google-login-container"),
     { theme: "outline", size: "large", width: 250, text: "signin_with" }
   );
 
-  // Optional: Auto popup (One Tap)
+  
   google.accounts.id.prompt();
 
-  // Google Sign-Up Button (custom)
+  
   const googleSignupBtn = document.getElementById("google-signup");
   googleSignupBtn?.addEventListener("click", () => {
     google.accounts.id.initialize({
