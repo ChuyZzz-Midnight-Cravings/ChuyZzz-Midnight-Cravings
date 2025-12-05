@@ -550,5 +550,66 @@ body {
     font-size: 1rem;
   }
 }
+/* =============================== STATUS PAGE ================================*/
+.status-container {
+  max-width: 600px;
+  margin: 60px auto;
+  padding: 30px 20px;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 16px;
+  text-align: center;
+  color: #fff;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.7);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
 
-/* END OF FILE */
+.status-container h1 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 20px;
+  color: #ffd966;
+  text-shadow: 1px 1px 6px rgba(0,0,0,0.6);
+}
+
+.status-container p {
+  font-size: 1.2rem;
+  margin: 8px 0;
+}
+
+.status-container strong {
+  color: #ffb92a;
+}
+
+#os-items {
+  margin-top: 20px;
+}
+
+#os-items p {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 10px;
+  margin: 6px 0;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.status-actions {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.status-actions .btn {
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 12px;
+  background: #ffb92a;
+  color: #111;
+  font-weight: 700;
+  transition: 0.25s;
+}
+
+.status-actions .btn:hover {
+  background: #ffd966;
+  transform: translateY(-2px);
+}
+
