@@ -206,23 +206,7 @@ body {
   border-radius: 8px;
 }
 
-/* ===============================
-   HOME — MENU PREVIEW (3 IMAGES)
-================================*/
-.preview-grid {
-  display: flex;
-  justify-content: center;
-  gap: 18px;
-}
 
-.preview-grid img {
-  height: 200px;
-  width: 200px;
-  object-fit: contain;
-  background: rgba(255, 255, 255, 0.05);
-  padding: 10px;
-  border-radius: 12px;
-}
 
 /* ===============================
    SHOP PAGE — PRODUCT GRID
