@@ -293,54 +293,10 @@ body {
   border: 0;
 }
 
-/* =============================== LOGIN / SIGNUP ================================*/
-.auth-container {
-  min-height: 80vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.auth-card {
-  background: rgba(0, 0, 0, 0.6);
-  padding: 24px;
-  border-radius: 12px;
-  width: 320px;
-  text-align: center;
-}
-
-.auth-card input {
-  width: 100%;
-  padding: 8px;
-  margin: 8px 0;
-  border-radius: 8px;
-  border: 0;
-}
-
-.hidden {
-  display: none;
-}
-
-.page-center {
-  text-align: center !important;
-}
-
-.page-center p,
-.page-center h1,
-.page-center h2 {
-  text-align: center !important;
-}
-
-.hero-card.page-center {
-  display: block !important;
-  text-align: center !important;
-}
-
-.hero-card.page-center * {
-  text-align: center !important;
-}
+/* =============================== LOGIN / SIGNUP ================================ */
 .auth-layout {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 60px;
@@ -348,32 +304,86 @@ body {
   padding: 20px;
 }
 
-.auth-logo-box {
+.auth-card {
+  background: rgba(0, 0, 0, 0.6);
+  padding: 30px 24px;
+  border-radius: 16px;
+  width: 320px;
+  max-width: 100%;
   text-align: center;
 }
 
+.auth-card input {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  border-radius: 8px;
+  border: 0;
+}
+
+.auth-card .btn {
+  margin-top: 12px;
+}
+
+/* ===== LINKS ===== */
+.auth-links {
+  margin-top: 15px;
+  font-size: 14px;
+  text-align: center;
+}
+
+.auth-links a {
+  color: #ffb92a;
+  text-decoration: none;
+  font-weight: 600;
+  transition: 0.2s;
+}
+
+.auth-links a:hover {
+  color: #ffd966;
+  text-decoration: underline;
+}
+
+/* ===== GOOGLE BUTTON ===== */
+.google-wrapper {
+  display: flex;
+  justify-content: center;
+  margin: 15px 0;
+}
+
+.btn.google {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 250px;
+  padding: 10px 0;
+  background: #ffffff;
+  color: #444;
+  font-weight: 700;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin: 0 auto 10px auto;
+}
+
+.btn.google img {
+  width: 20px;
+  height: 20px;
+}
+
+.btn.google:hover {
+  background: #f5f5f5;
+  transform: translateY(-2px);
+}
 .auth-logo-side {
   width: 260px;
   max-width: 100%;
   border-radius: 20px;
 }
 
-.auth-card {
-  background: rgba(0, 0, 0, 0.6);
-  padding: 24px;
-  border-radius: 12px;
-  width: 320px;
-  max-width: 100%;
-  text-align: center; 
-}
-
-.auth-card input {
-  width: 100%;
-  padding: 10px;
-  margin: 10px 0;
-  border-radius: 8px;
-  border: 0;
-}
+/* ===== RED LOGOUT BUTTON ===== */
 .logout-btn {
   background: #ff4b4b !important;
   color: white;
@@ -384,7 +394,7 @@ body {
   font-weight: 600;
   margin: 4px 0 0 0 !important;
   cursor: pointer;
-  display: none; /* show it only when user is logged in */
+  display: none; 
   transition: 0.2s ease;
 }
 
@@ -392,13 +402,36 @@ body {
   background: #d53a3a !important;
 }
 
-
-.google-wrapper {
+.auth-layout {
   display: flex;
-  justify-content: center;
-  margin-top: 16px;
+  flex-direction: row; 
+  align-items: center; 
+  justify-content: center; 
+  gap: 60px; 
+  min-height: 100vh;
+  padding: 20px;
+  flex-wrap: wrap; 
 }
 
+.auth-card {
+  background: rgba(0, 0, 0, 0.6);
+  padding: 30px 24px;
+  border-radius: 16px;
+  width: 320px;
+  max-width: 100%;
+  text-align: center;
+}
+
+/* ===== LOGO ===== */
+.auth-logo-box {
+  text-align: center;
+}
+
+.auth-logo-side {
+  width: 260px;
+  max-width: 100%;
+  border-radius: 20px;
+}
 
 /* =============================== ABOUT PAGE ================================*/
 .about-card {
