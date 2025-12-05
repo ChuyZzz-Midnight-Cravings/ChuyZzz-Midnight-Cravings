@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Login - Chuyzzz</title>
   <link rel="stylesheet" href="assets/css/style.css" />
+  <!-- Google Sign-In API -->
   <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 
@@ -25,10 +26,8 @@
         <a href="forgot-password.html">Forgot password?</a>
       </p>
 
-      <button id="google-login" class="btn google">
-        <img src="assets/images/Google.png" alt="Google Icon" />
-        Sign in with Google
-      </button>
+      <!-- Google Sign-In Button -->
+      <div id="google-login-container" class="google-wrapper"></div>
     </div>
 
     <div class="auth-logo-box">

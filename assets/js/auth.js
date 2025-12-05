@@ -13,16 +13,14 @@ function setLoggedInUser(email) {
   localStorage.setItem("loggedUser", email);
 }
 
-function logoutUser() {
-  localStorage.removeItem("loggedUser");
-}
-
 // ===============================
 // DOM CONTENT LOADED
 // ===============================
 document.addEventListener("DOMContentLoaded", () => {
 
+  // -------------------------------
   // LOCAL LOGIN
+  // -------------------------------
   const loginBtn = document.getElementById("login-btn");
   loginBtn?.addEventListener("click", () => {
     const email = document.getElementById("login-email").value.trim();
@@ -40,83 +38,75 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // SIGNUP
-  const signupBtn = document.getElementById("signup-btn");
-  signupBtn?.addEventListener("click", () => {
-    const name = document.getElementById("su-name").value.trim();
-    const email = document.getElementById("su-email").value.trim();
-    const pass = document.getElementById("su-pass").value;
-    const pass2 = document.getElementById("su-pass2").value;
+  // -------------------------------
+  // GOOGLE LOGIN / SIGN-UP
+  // -------------------------------
+  const clientId = "540201718454-mub2h4ufht1b749ot2k3t9f019h2fcnm.apps.googleusercontent.com";
 
-    if (!name || !email || !pass) return alert("Fill all fields.");
-    if (pass !== pass2) return alert("Passwords do not match.");
-
-    const users = getUsers();
-    if (users.some(u => u.email === email)) {
-      return alert("User already exists.");
-    }
-
-    users.push({ name, email, pass });
-    saveUsers(users);
-
-    alert("Account created! You can now log in.");
-    window.location.href = "login.html";
+  // Initialize Google Sign-In
+  google.accounts.id.initialize({
+    client_id: clientId,
+    callback: handleGoogleCredential
   });
 
-  // PASSWORD RESET
-  const resetBtn = document.getElementById("reset-btn");
-  resetBtn?.addEventListener("click", () => {
-    const email = document.getElementById("fp-email").value.trim();
-    const pass1 = document.getElementById("fp-password").value;
-    const pass2 = document.getElementById("fp-password2").value;
+  // Render Google Login button
+  google.accounts.id.renderButton(
+    document.getElementById("google-login-container"),
+    { theme: "outline", size: "large", width: 250, text: "signin_with" }
+  );
 
-    if (!email || !pass1 || !pass2) {
-      alert("Fill all fields.");
-      return;
-    }
+  // Optional: Auto popup (One Tap)
+  google.accounts.id.prompt();
 
-    if (pass1 !== pass2) {
-      alert("Passwords do not match!");
-      return;
-    }
-
-    let users = getUsers();
-    const user = users.find(u => u.email === email);
-
-    if (!user) {
-      alert("No account found with that email.");
-      return;
-    }
-
-    user.pass = pass1;
-    saveUsers(users);
-
-    alert("Password reset successful!");
-    window.location.href = "login.html";
-  });
-
-  // ===============================
-  // GOOGLE LOGIN (GSI)
-  // ===============================
-  const googleLoginBtn = document.getElementById("google-login");
-  googleLoginBtn?.addEventListener("click", () => {
+  // Google Sign-Up Button (custom)
+  const googleSignupBtn = document.getElementById("google-signup");
+  googleSignupBtn?.addEventListener("click", () => {
     google.accounts.id.initialize({
-      client_id: "YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com", // Replace with your real Client ID
-      callback: handleGoogleCredential
+      client_id: clientId,
+      callback: handleGoogleSignup
     });
-    google.accounts.id.prompt(); // shows the Google One Tap or popup
+    google.accounts.id.prompt();
   });
 
+  // -------------------------------
+  // HANDLERS
+  // -------------------------------
   function handleGoogleCredential(response) {
-    // Decode JWT token to get user info
-    const jwt = response.credential;
-    const payload = JSON.parse(atob(jwt.split(".")[1]));
-    const email = payload.email;
+    try {
+      const jwt = response.credential;
+      const payload = JSON.parse(atob(jwt.split(".")[1]));
+      const email = payload.email;
 
-    // Save as logged in user
-    setLoggedInUser(email);
-    alert("Google login successful! Welcome " + email);
-    window.location.href = "index.html";
+      setLoggedInUser(email);
+      alert(`Google login successful! Welcome ${email}`);
+      window.location.href = "index.html";
+    } catch (err) {
+      console.error("Google login error:", err);
+      alert("Google login failed.");
+    }
+  }
+
+  function handleGoogleSignup(response) {
+    try {
+      const jwt = response.credential;
+      const payload = JSON.parse(atob(jwt.split(".")[1]));
+      const email = payload.email;
+
+      const users = getUsers();
+      if (!users.some(u => u.email === email)) {
+        users.push({ name: payload.name || "Google User", email, pass: "" });
+        saveUsers(users);
+        alert(`Google account created for ${email}`);
+      } else {
+        alert(`Account already exists for ${email}`);
+      }
+
+      setLoggedInUser(email);
+      window.location.href = "index.html";
+    } catch (err) {
+      console.error("Google signup error:", err);
+      alert("Google signup failed.");
+    }
   }
 
 });
