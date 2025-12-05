@@ -51,7 +51,6 @@ body {
 .nav {
   display: flex;
   gap: 50px;
-  /* More spacing between buttons */
   align-items: center;
 }
 
@@ -60,25 +59,19 @@ body {
   background: #ffffff;
   color: #560BAD;
   padding: 5px 60px;
-  /* BIGGER buttons (taller + wider) */
   border-radius: 10px;
-  /* More rounded */
   text-decoration: none;
   font-size: 1.25rem;
-  /* Larger text */
   font-weight: 800;
-  /* Bold */
   transition: 0.25s ease;
   border: 3px solid #ffffff;
 }
 
-/* Hover */
 .nav a:hover {
   background: #f5f5f5;
   transform: translateY(-4px);
 }
 
-/* Active page */
 .nav a.active {
   background: #ffb92a;
   color: #111;
@@ -98,7 +91,6 @@ body {
   padding: 0 18px;
 }
 
-/* HERO */
 .hero-card {
   background: rgba(255, 255, 255, 0.06);
   padding: 32px;
@@ -131,7 +123,6 @@ body {
   gap: 40px;
   flex-wrap: wrap;
   text-align: left;
-  /* override old centered text */
 }
 
 .hero-left {
@@ -175,7 +166,6 @@ body {
   margin-right: 12px;
 }
 
-/* MOBILE */
 @media (max-width: 768px) {
   .hero-card {
     flex-direction: column;
