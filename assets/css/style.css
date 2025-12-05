@@ -433,48 +433,68 @@ body {
   border-radius: 20px;
 }
 
-/* =============================== ABOUT PAGE ================================*/
+/* =============================== ABOUT PAGE ================================ */
+
 .about-card {
-  margin: 60px auto;
+  margin: 40px auto 60px auto;
   background: rgba(15, 15, 25, 0.7);
   padding: 40px 30px;
   border-radius: 20px;
-  max-width: 800px;
+  max-width: 700px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7);
   text-align: center;
 }
 
+/* Main title */
 .about-title {
   margin-top: 0;
-  font-size: 3rem;
+  font-size: 2.8rem;
   font-weight: 900;
   color: #a0c4ff;
   text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
+  text-align: center;
 }
 
+/* Section headings */
 .section-title {
-  margin-top: 35px;
-  font-size: 2rem;
+  margin-top: 25px;
+  font-size: 1.6rem;
   font-weight: 700;
   color: #cddbff;
   border-bottom: 2px solid #6272a4;
   display: inline-block;
   padding-bottom: 6px;
+  text-align: center;
 }
 
+/* Paragraphs under each section */
 .about-text {
-  margin-top: 15px;
-  font-size: 1.2rem;
-  line-height: 1.8;
+  margin-top: 10px;
+  font-size: 1.1rem;
+  line-height: 1.6;
   color: #dbe2ff;
-  letter-spacing: 0.5px;
+  text-align: center;
 }
 
-.about-text br {
-  content: "";
-  display: block;
-  margin-bottom: 6px;
+/* Responsive adjustments */
+@media(max-width: 768px) {
+  .about-card {
+    padding: 30px 20px;
+  }
+
+  .about-title {
+    font-size: 2.2rem;
+  }
+
+  .section-title {
+    font-size: 1.4rem;
+  }
+
+  .about-text {
+    font-size: 1rem;
+  }
 }
+
 
 /* =============================== CONTACT PAGE ================================*/
 .contact-card {
