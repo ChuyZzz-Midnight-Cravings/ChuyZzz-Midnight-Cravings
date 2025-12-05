@@ -34,7 +34,8 @@ window.addEventListener('DOMContentLoaded', () => {
     const orderNumber = 'ORD' + Date.now();
     const order = { orderNumber, name, phone, address, payment: pay, items: cart, status: 'Pending' };
     localStorage.setItem('lastOrder', JSON.stringify(order));
-    // also add to admin_orders for admin panel
+
+
     const adminOrders = JSON.parse(localStorage.getItem('admin_orders') || '[]');
     adminOrders.unshift({ id: orderNumber, customer: name, status: 'Pending', total: cart.reduce((s, i) => s + i.price * i.quantity, 0) });
     localStorage.setItem('admin_orders', JSON.stringify(adminOrders));
