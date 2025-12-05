@@ -1,4 +1,3 @@
-// ================= USER STORAGE HELPERS =================
 function getUsers() {
   return JSON.parse(localStorage.getItem("users") || "[]");
 }
@@ -15,10 +14,9 @@ function logoutUser() {
   localStorage.removeItem("loggedUser");
 }
 
-// =============== PAGE SCRIPTS ===============
+
 document.addEventListener("DOMContentLoaded", () => {
 
-  // ================= LOGIN =====================
   const loginBtn = document.getElementById("login-btn");
   if (loginBtn) {
     loginBtn.addEventListener("click", () => {
@@ -38,7 +36,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // ================= SIGNUP =====================
   const signupBtn = document.getElementById("signup-btn");
   if (signupBtn) {
     signupBtn.addEventListener("click", () => {
@@ -55,7 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return alert("User already exists.");
       }
 
-      users.push({ name, email, pass });  // store normal text password
+      users.push({ name, email, pass });  
       saveUsers(users);
 
       alert("Account created! You can now log in.");
@@ -63,7 +60,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // ================= FORGOT PASSWORD =====================
   const resetBtn = document.getElementById("reset-btn");
   if (resetBtn) {
     resetBtn.addEventListener("click", () => {
@@ -89,7 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      user.pass = pass1; // save new password
+      user.pass = pass1; 
       saveUsers(users);
 
       alert("Password reset successful!");
