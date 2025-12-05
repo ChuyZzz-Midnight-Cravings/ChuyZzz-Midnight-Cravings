@@ -517,5 +517,44 @@ body {
   text-align: center;
   margin-top: 18px;
 }
+.auth-card {
+  background: rgba(0, 0, 0, 0.6);
+  padding: 24px;
+  border-radius: 12px;
+  width: 320px;
+  max-width: 100%;
+  text-align: center; /* <-- centers all text and inline elements */
+}
+
+.google-wrapper {
+  display: flex;
+  justify-content: center; /* centers button horizontally */
+  margin-top: 16px;
+}
+
+.btn.google {
+  background: #ffffff;
+  color: #444;
+  display: inline-flex; /* inline-flex so it respects text-align center */
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 10px 18px;
+  border-radius: 12px;
+  font-weight: 700;
+  border: 1px solid #ddd;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn.google img {
+  width: 20px;
+  height: 20px;
+}
+
+.btn.google:hover {
+  background: #f5f5f5;
+}
+
 
 
