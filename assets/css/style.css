@@ -347,27 +347,21 @@ body {
 .success-container,
 .status-container {
   width: 80%;
-  /* Wider container */
   max-width: 900px;
-  /* Bigger limit */
   margin: 120px auto;
-  /* Center on the screen */
 
   text-align: center;
   background: rgba(255, 255, 255, 0.10);
   padding: 50px;
-  /* More padding for bigger look */
   border-radius: 20px;
   backdrop-filter: blur(8px);
 
   font-size: 1.3rem;
-  /* Larger text */
 }
 
 .success-container h1,
 .status-container h1 {
   font-size: 2.2rem;
-  /* Bigger title */
   margin-bottom: 20px;
   font-weight: 800;
 }
@@ -447,10 +441,8 @@ body {
   display: none;
 }
 
-/* Centered content for About & Contact pages */
 .page-center {
   text-align: center !important;
-  /* forces center */
 }
 
 .page-center p,
@@ -459,7 +451,6 @@ body {
   text-align: center !important;
 }
 
-/* FIX: Center layout for About & Contact pages */
 .hero-card.page-center {
   display: block !important;
   text-align: center !important;
@@ -469,7 +460,6 @@ body {
   text-align: center !important;
 }
 
-/* AUTH LAYOUT — Logo on the right */
 .auth-layout {
   display: flex;
   align-items: center;
@@ -495,13 +485,11 @@ body {
 .site-header .right {
   display: flex;
   flex-direction: column;
-  /* Stack username + logout vertically */
   align-items: center;
-  /* Center horizontally */
   justify-content: center;
 }
 
-/* Username style */
+/* style sa username */
 #user-display {
   font-size: 14px;
   font-weight: 600;
@@ -510,21 +498,18 @@ body {
   padding: 0;
 }
 
-/* Smaller, centered Logout button */
+/*gamay nga centered logout btn */
 .logout-btn {
   background: #ff4b4b !important;
   color: white;
   border: none;
   padding: 5px 12px !important;
-  /* Smaller size */
   border-radius: 6px;
   font-size: 12px !important;
   font-weight: 600;
   margin: 4px 0 0 0 !important;
-  /* Remove left margin */
   cursor: pointer;
   display: none;
-  /* Hidden when logged out */
   transition: 0.2s ease;
 }
 
