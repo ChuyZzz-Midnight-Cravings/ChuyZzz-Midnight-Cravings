@@ -557,3 +557,68 @@ body {
   background: #f5f5f5;
   transform: translateY(-2px);
 }
+
+/* ================================
+   ABOUT PAGE STYLING SA MGA CHUY— 
+===================================*/
+.about-card {
+  margin: 60px auto;
+  background: rgba(15, 15, 25, 0.7); /* darker, midnight tone */
+  padding: 40px 30px;
+  border-radius: 20px;
+  max-width: 800px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7);
+  text-align: center;
+}
+
+.about-title {
+  margin-top: 0;
+  font-size: 3rem;
+  font-weight: 900;
+  color: #a0c4ff; 
+  text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
+}
+
+.section-title {
+  margin-top: 35px;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #cddbff; 
+  border-bottom: 2px solid #6272a4; 
+  display: inline-block;
+  padding-bottom: 6px;
+}
+
+.about-text {
+  margin-top: 15px;
+  font-size: 1.2rem;
+  line-height: 1.8;
+  color: #dbe2ff; 
+  letter-spacing: 0.5px;
+}
+
+.about-text br {
+  content: "";
+  display: block;
+  margin-bottom: 6px;
+}
+
+@media (max-width: 768px) {
+  .about-card {
+    padding: 30px 20px;
+    margin-top: 40px;
+  }
+
+  .about-title {
+    font-size: 2.5rem;
+  }
+
+  .section-title {
+    font-size: 1.8rem;
+  }
+
+  .about-text {
+    font-size: 1.1rem;
+  }
+}
+
