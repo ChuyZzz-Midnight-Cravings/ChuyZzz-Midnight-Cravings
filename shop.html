@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <script>
+  if(!localStorage.getItem("loggedUser")){
+    window.location.href = "login.html";
+  }
+</script>
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Shop - Chuyzzz</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+
+<body class="night-bg">
+
+  <header class="site-header">
+  <div class="left">
+    <img src="assets/images/logo-chuyzzz.png" alt="Chuyzzz Logo" class="logo" />
+  </div>
+
+  <nav class="nav">
+    <a href="index.html" class="nav-btn">Home</a>
+    <a href="shop.html" class="nav-btn">Shop</a>
+    <a href="about.html" class="nav-btn">About</a>
+    <a href="contact.html" class="nav-btn">Contact</a>
+    <a href="cart.html" class="nav-btn">Cart (<span id="cart-count">0</span>)</a>
+  </nav>
+
+  <div class="right">
+    <p id="user-display" class="user-display"></p>
+    <button id="logout-btn" class="logout-btn" style="display:none;">Logout</button>
+    <a href="login.html" id="login-link" class="btn small">Login</a>
+  </div>
+</header>
+
+
+  <main class="main-container">
+    <h1 class="section-title">Our Menu</h1>
+
+    <!-- ⭐ CATEGORY: CHIPS -->
+    <h2 class="category-title">Chips</h2>
+    <section id="chips-list" class="product-grid"></section>
+
+    <!-- ⭐ CATEGORY: DRINKS -->
+    <h2 class="category-title">Drinks</h2>
+    <section id="drinks-list" class="product-grid"></section>
+
+  </main>
+
+  <script src="assets/js/shop.js"></script>
+  <script src="assets/js/script.js"></script>
+</body>
+
+</html>
