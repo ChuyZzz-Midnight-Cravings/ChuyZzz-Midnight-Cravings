@@ -7,8 +7,11 @@ const PRODUCTS = [
   {id:'c4',name:'Lunar Choco Drizzle',price:155,img:'assets/images/chips/chooco-drizzle.png', category:'chips'},
   {id:'c5',name:'Ruffles Flamin Hot',price:35,img:'assets/images/chips/ruffles.png', category:'chips'},
   {id:'c6',name:'Lays Classic',price:85,img:'assets/images/chips/lays.png', category:'chips'},
- 
+  {id:'c7',name:'Piattos Cheese',price:40,img:'assets/images/chips/piattos-cheese.png', category:'chips'},
+  {id:'c8',name:'Piattos Nacho Pizza',price:45,img:'assets/images/chips/piattos-pizza.png', category:'chips'},
+  {id:'c9',name:'Piattos Sour Cream & Onion',price:45,img:'assets/images/chips/piattos-sco.png', category:'chips'},
 
+  
   // DRINKS
   {id:'d1',name:'Coke-in-a-Can',price:45,img:'assets/images/drinks/coke.png', category:'drinks'},
   {id:'d2',name:'Sprite-in-a-Can',price:45,img:'assets/images/drinks/sprite.png', category:'drinks'},
