@@ -1,4 +1,4 @@
-
+//  GET LOGGED USER 
 function getLoggedUser() {
   const email = localStorage.getItem("loggedUser");
   if (!email) return null;
@@ -7,6 +7,7 @@ function getLoggedUser() {
   return users.find(u => u.email === email) || null;
 }
 
+// UPDATE HEADER UI 
 function updateHeaderUI() {
   const user = getLoggedUser();
 
@@ -27,8 +28,10 @@ function updateHeaderUI() {
   }
 }
 
+//  LOGOUT 
 document.addEventListener("DOMContentLoaded", () => {
   const logoutBtn = document.getElementById("logout-btn");
+
   if (logoutBtn) {
     logoutBtn.addEventListener("click", () => {
       localStorage.removeItem("loggedUser");
@@ -37,6 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
+//  CART COUNT 
 function updateCartCount() {
   const cart = JSON.parse(localStorage.getItem("cart") || "[]");
   const el = document.getElementById("cart-count");
