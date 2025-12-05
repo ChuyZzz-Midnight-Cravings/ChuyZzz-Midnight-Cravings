@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Admin - Chuyzzz</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body class="night-bg">
+
+  <!-- 🔥 ADDED HEADER HERE -->
+  <header class="site-header">
+    <div class="left">
+      <img src="assets/images/logo-chuyzzz.png" alt="Chuyzzz Logo" class="logo" />
+    </div>
+
+    <nav class="nav">
+      <a href="index.html" class="nav-btn">Home</a>
+      <a href="shop.html" class="nav-btn">Shop</a>
+      <a href="about.html" class="nav-btn">About</a>
+      <a href="contact.html" class="nav-btn">Contact</a>
+      <a href="cart.html" class="nav-btn">Cart (<span id="cart-count">0</span>)</a>
+    </nav>
+
+    <div class="right">
+      <p id="user-display" class="user-display"></p>
+      <button id="logout-btn" class="logout-btn" style="display:none;">Logout</button>
+      <a href="login.html" id="login-link" class="btn small">Login</a>
+    </div>
+  </header>
+  <!-- END HEADER -->
+
+  <main class="admin-container">
+    <aside class="admin-side">
+      <button id="tab-orders" class="btn small">Orders</button>
+      <button id="tab-products" class="btn small">Products</button>
+    </aside>
+
+    <section class="admin-main">
+      <div id="orders-area">
+        <h2>Orders</h2>
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Customer</th>
+              <th>Status</th>
+              <th>Total</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+
+      <div id="products-area" class="hidden">
+        <h2>Products</h2>
+        <div class="admin-product-list"></div>
+        <div class="add-product">
+          <input id="new-prod-name" placeholder="Name">
+          <input id="new-prod-price" placeholder="Price" type="number">
+          <button id="add-prod-btn" class="btn">Add Product</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="assets/js/admin.js"></script>
+  <script src="assets/js/script.js"></script>
+</body>
+</html>
