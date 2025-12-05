@@ -78,9 +78,6 @@ body {
   box-shadow: 0 0 16px rgba(255, 185, 42, 0.6);
 }
 
-
-
-
 /* ===============================
    MAIN CONTAINER
 ================================*/
@@ -94,6 +91,9 @@ body {
   background: rgba(255, 255, 255, 0.06);
   padding: 32px;
   border-radius: 20px;
+
+  /* Safari fix */
+  -webkit-backdrop-filter: blur(6px);
   backdrop-filter: blur(6px);
 }
 
@@ -179,7 +179,6 @@ body {
     font-size: 36px;
   }
 }
-
 
 /* ===============================
    BUTTONS
@@ -348,12 +347,14 @@ body {
   width: 80%;
   max-width: 900px;
   margin: 120px auto;
-
   text-align: center;
   background: rgba(255, 255, 255, 0.10);
   padding: 50px;
   border-radius: 20px;
-  backdrop-filter: blur(8px);
+
+  /* Safari fix */
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
 
   font-size: 1.3rem;
 }
@@ -370,7 +371,6 @@ body {
   font-size: 1.2rem;
   margin-bottom: 10px;
 }
-
 
 /* ===============================
    ADMIN PANELS
@@ -488,7 +488,6 @@ body {
   justify-content: center;
 }
 
-/* style sa username */
 #user-display {
   font-size: 14px;
   font-weight: 600;
@@ -497,7 +496,6 @@ body {
   padding: 0;
 }
 
-/*gamay nga centered logout btn */
 .logout-btn {
   background: #ff4b4b !important;
   color: white;
@@ -515,3 +513,9 @@ body {
 .logout-btn:hover {
   background: #d53a3a !important;
 }
+.menu-btn-wrapper {
+  text-align: center;
+  margin-top: 18px;
+}
+
+
