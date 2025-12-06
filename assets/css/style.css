@@ -436,50 +436,61 @@ body {
 /* =============================== ABOUT PAGE ================================ */
 
 .about-card {
-  margin: 40px auto 60px auto;
-  background: rgba(15, 15, 25, 0.7);
-  padding: 40px 30px;
-  border-radius: 20px;
-  max-width: 700px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7);
+  margin: 60px auto;
+  background: linear-gradient(to bottom right, rgba(20, 20, 35, 0.8), rgba(15, 15, 25, 0.9));
+  padding: 50px 35px;
+  border-radius: 25px;
+  max-width: 750px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.8);
   text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Main title */
+.about-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 18px 35px rgba(0, 0, 0, 0.9);
+}
+
 .about-title {
-  margin-top: 0;
-  font-size: 2.8rem;
+  font-size: 3rem;
   font-weight: 900;
-  color: #a0c4ff;
-  text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
-  text-align: center;
+  color: #ffb92a;
+  text-shadow: 2px 2px 10px rgba(0,0,0,0.6);
+  margin-bottom: 35px;
 }
 
-/* Section headings */
 .section-title {
-  margin-top: 25px;
-  font-size: 1.6rem;
+  font-size: 1.8rem;
   font-weight: 700;
-  color: #cddbff;
-  border-bottom: 2px solid #6272a4;
+  color: #ffffff;
+  margin-top: 30px;
+  margin-bottom: 15px;
+  border-bottom: 2px solid #ffb92a;
   display: inline-block;
-  padding-bottom: 6px;
-  text-align: center;
+  padding-bottom: 4px;
 }
 
-/* Paragraphs under each section */
 .about-text {
-  margin-top: 10px;
-  font-size: 1.1rem;
-  line-height: 1.6;
+  font-size: 1.2rem;
+  line-height: 1.7;
   color: #dbe2ff;
-  text-align: center;
+  max-width: 650px;
+  margin: 0 auto 20px auto;
 }
 
-/* Responsive adjustments */
+@keyframes fadeInUp {
+  from {opacity:0; transform: translateY(20px);}
+  to {opacity:1; transform: translateY(0);}
+}
+
+.about-card, .about-title, .section-title, .about-text {
+  animation: fadeInUp 0.8s ease forwards;
+}
+
+
 @media(max-width: 768px) {
   .about-card {
-    padding: 30px 20px;
+    padding: 35px 20px;
   }
 
   .about-title {
@@ -487,16 +498,15 @@ body {
   }
 
   .section-title {
-    font-size: 1.4rem;
+    font-size: 1.5rem;
   }
 
   .about-text {
-    font-size: 1rem;
+    font-size: 1.1rem;
   }
 }
 
-
-/* =============================== CONTACT PAGE ================================*/
+/* =============================== CONTACT PAGE ================================ */
 .contact-card {
   margin-top: 40px;
   padding: 30px;
@@ -508,6 +518,10 @@ body {
   color: #e0e0e0;
   margin-left: auto;
   margin-right: auto;
+  
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.8s ease forwards;
 }
 
 .contact-card h1 {
@@ -516,6 +530,10 @@ body {
   color: #ffffff;
   margin-bottom: 20px;
   text-shadow: 0 0 8px rgba(0,0,0,0.7);
+  
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.8s ease 0.2s forwards;
 }
 
 .contact-intro {
@@ -523,12 +541,20 @@ body {
   line-height: 1.8;
   margin-bottom: 25px;
   color: #dcdcdc;
+  
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.8s ease 0.4s forwards;
 }
 
 .contact-info p {
   font-size: 1.1rem;
   margin: 8px 0;
   color: #ccc;
+  
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.8s ease 0.6s forwards;
 }
 
 .contact-info strong {
@@ -540,6 +566,10 @@ body {
   font-size: 1rem;
   opacity: 0.7;
   color: #aaa;
+  
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.8s ease 0.8s forwards;
 }
 
 .contact-card a {
@@ -551,6 +581,18 @@ body {
 .contact-card a:hover {
   text-decoration: underline;
   color: #4d90fe;
+}
+
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @media(max-width: 768px) {
@@ -570,6 +612,7 @@ body {
     font-size: 1rem;
   }
 }
+
 /* =============================== STATUS PAGE ================================*/
 .status-container {
   max-width: 600px;
@@ -637,7 +680,7 @@ body {
   max-width: 600px;
   margin: 80px auto;
   padding: 40px 25px;
-  background: rgba(0, 0, 0, 0.6); /* dark, midnight vibe */
+  background: rgba(0, 0, 0, 0.6);
   border-radius: 16px;
   text-align: center;
   color: #fff;
@@ -688,5 +731,6 @@ body {
   color: #ffb92a;
   border-color: #ffb92a;
 }
+
 
 
