@@ -675,6 +675,27 @@ body {
   background: #ffd966;
   transform: translateY(-2px);
 }
+.status-badge {
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+
+.status-badge.pending {
+  background: #555;
+  color: #fff;
+}
+
+.status-badge.processing {
+  background: #ffbb33;
+  color: #000;
+}
+
+.status-badge.delivered {
+  background: #4CAF50;
+  color: #fff;
+  font-weight: bold;
+}
+
 /* =============================== ORDER SUCCESS PAGE ================================*/
 .success-container {
   max-width: 600px;

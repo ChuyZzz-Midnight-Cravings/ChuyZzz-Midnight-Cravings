@@ -31,13 +31,12 @@ const PRODUCTS = [
   {id:'f10', name:'Mango Float', price:90, img:'assets/images/Foods/mango.webp', category:'foods'}
 ];
 
-
-
-function renderShop(){
+function renderShop() {
   const chipsContainer = document.getElementById('chips-list');
   const drinksContainer = document.getElementById('drinks-list');
+  const foodsContainer = document.getElementById('foods-list'); // added
 
-  if(!chipsContainer || !drinksContainer) return;
+  if(!chipsContainer || !drinksContainer || !foodsContainer) return;
 
   PRODUCTS.forEach(p => {
     const card = document.createElement('div');
@@ -51,6 +50,7 @@ function renderShop(){
 
     if(p.category === 'chips') chipsContainer.appendChild(card);
     if(p.category === 'drinks') drinksContainer.appendChild(card);
+    if(p.category === 'foods') foodsContainer.appendChild(card); // added
   });
 }
 
@@ -68,8 +68,11 @@ function addToCart(id){
   }
 
   localStorage.setItem('cart', JSON.stringify(cart));
-  updateCartCount();
-  alert(p.name + ' added to cart');
+  
+  // make sure updateCartCount exists in script.js
+  if(typeof updateCartCount === 'function') updateCartCount();
+
+  alert(`${p.name} added to cart`);
 }
 
 window.addEventListener('DOMContentLoaded', renderShop);

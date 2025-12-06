@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <script>
-    if(!localStorage.getItem("loggedUser")){
+    if (!localStorage.getItem("loggedUser")) {
       window.location.href = "login.html";
     }
   </script>
@@ -12,31 +12,76 @@
   <title>Order Status - Chuyzzz</title>
   <link rel="stylesheet" href="assets/css/style.css" />
 </head>
+
 <body class="night-bg">
   <main class="status-container">
     <h1>Order Status</h1>
+
     <p>Order #: <strong id="os-number">--</strong></p>
-    <p>Status: <strong id="os-status">--</strong></p>
+
+    <p>
+      Status:
+      <strong id="os-status" class="status-badge">--</strong>
+    </p>
+
     <div id="os-items"></div>
+
     <div class="status-actions">
       <a href="shop.html" class="btn">Back to Shop</a>
+
+      <!-- NEW: Mark Delivered Button -->
+      <button id="mark-delivered" class="btn">Mark as Delivered</button>
     </div>
   </main>
 
   <script src="assets/js/script.js"></script>
+
+  <!-- Load last order -->
   <script>
-    const last = JSON.parse(localStorage.getItem('lastOrder')||'null');
-    if(last){
+    const last = JSON.parse(localStorage.getItem('lastOrder') || 'null');
+
+    if (last) {
       document.getElementById('os-number').textContent = last.orderNumber;
-      document.getElementById('os-status').textContent = last.status || 'Pending';
+
+      const statusEl = document.getElementById('os-status');
+      const status = last.status || 'Pending';
+      statusEl.textContent = status;
+
+      // Apply badge style
+      statusEl.classList.remove("pending", "processing", "delivered");
+      if (status.toLowerCase() === "delivered") {
+        statusEl.classList.add("delivered");
+      } else if (status.toLowerCase() === "processing") {
+        statusEl.classList.add("processing");
+      } else {
+        statusEl.classList.add("pending");
+      }
+
+      // Show items
       const items = document.getElementById('os-items');
       items.innerHTML = '';
-      last.items.forEach(it=>{
+      last.items.forEach(it => {
         const p = document.createElement('p');
         p.textContent = `${it.name} x${it.quantity} — ₱${it.price}`;
         items.appendChild(p);
       });
     }
+  </script>
+
+  <!-- NEW: Mark as Delivered -->
+  <script>
+    const btn = document.getElementById("mark-delivered");
+
+    btn.addEventListener("click", () => {
+      let last = JSON.parse(localStorage.getItem("lastOrder"));
+      if (!last) return;
+
+      last.status = "Delivered";
+      localStorage.setItem("lastOrder", JSON.stringify(last));
+      alert("Order marked as Delivered!");
+
+      location.reload();
+    });
   </script>
 </body>
 </html>
