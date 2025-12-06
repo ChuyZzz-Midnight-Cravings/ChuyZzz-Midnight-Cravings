@@ -23,7 +23,8 @@ const PRODUCTS = [
   {id:'f3', name:'Fries', price:70, img:'assets/images/Foods/fries.jpg', category:'foods'},
   {id:'f4', name:'Halo Halo', price:60, img:'assets/images/Foods/halo2.jpg', category:'foods'},
   {id:'f5', name:'Pizza Cheese', price:180, img:'assets/images/Foods/pitza cheez.jpg', category:'foods'},
-  {id:'f6', name:'Spaghetti', price:130, img:'assets/images/Foods/spag.jpg', category:'foods'},
+  {id:'f6', name:'Spaghetti', price:130, img:'assets/images/Foods/spag.jpg', category:'foods'}, 
+  {id:'f7', name:'shawarma', price:75, img:'assets/images/Foods/sawarma.jpg', category:'foods'},           
 
 
   
