@@ -27,7 +27,7 @@ const PRODUCTS = [
   {id:'f7', name:'Shawarma', price:75, img:'assets/images/Foods/sawarma.jpg', category:'foods'},    
   {id:'f8', name:'Siomai', price:130, img:'assets/images/Foods/soimai.jpg', category:'foods'},
   {id:'f9', name:'Siopao', price:130, img:'assets/images/Foods/sopaw.jpg', category:'foods'},      
-
+  {id:'f10', name:'Mango Float', price:130, img:'assets/images/Foods/mango.webp', category:'foods'}
 ];
 
 function renderShop(){
