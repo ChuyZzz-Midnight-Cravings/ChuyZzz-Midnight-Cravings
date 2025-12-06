@@ -20,6 +20,7 @@ const PRODUCTS = [
   // FOODS
   {id:'f1',name:'Burger',price:45,img:'assets/images/Foods/buerger.jpg', category:'foods'},
   {id:'f2',name:'Fried Chicken',price:85,img:'assets/images/Foods/chekin joy.jpg', category:'foods'},
+  {id:'f3',name:'Fries',price:55,img:'assets/images/Foods/fries.jpg', category:'foods'},
   
 ];
 
