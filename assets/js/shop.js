@@ -25,10 +25,9 @@ const PRODUCTS = [
   {id:'f5', name:'Pizza Cheese', price:180, img:'assets/images/Foods/pitza cheez.jpg', category:'foods'},
   {id:'f6', name:'Spaghetti', price:130, img:'assets/images/Foods/spag.jpg', category:'foods'}, 
   {id:'f7', name:'Shawarma', price:75, img:'assets/images/Foods/sawarma.jpg', category:'foods'},    
-   {id:'f6', name:'Siomai', price:130, img:'assets/images/Foods/soimai.jpg', category:'foods'},        
+  {id:'f8', name:'Siomai', price:130, img:'assets/images/Foods/soimai.jpg', category:'foods'},
+  {id:'f9', name:'Siopao', price:130, img:'assets/images/Foods/sopaw.jpg', category:'foods'},      
 
-
-  
 ];
 
 function renderShop(){
