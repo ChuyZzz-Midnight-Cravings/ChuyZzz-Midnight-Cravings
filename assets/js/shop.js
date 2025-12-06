@@ -18,11 +18,15 @@ const PRODUCTS = [
   {id:'d5',name:'Pepsi-in-a-Can',price:85,img:'assets/images/drinks/pepsi.png', category:'drinks'},
 
   // FOODS
-  {id:'f1',name:'Burger',price:45,img:'assets/images/Foods/buerger.jpg', category:'foods'},
-  {id:'f2',name:'Fried Chicken',price:85,img:'assets/images/Foods/chekin joy.jpg', category:'foods'},
-  {id:'f3',name:'Fries',price:55,img:'assets/images/Foods/fries.jpg', category:'foods'},
-  {id:'f4',name:'Halo Halo',price:35,img:'assets/images/Foods/halo2.jpg', category:'foods'},
-  {id:'f5',name:'Pizza Cheese',price:40,img:'assets/images/Foods/pitza cheez.jpg', category:'foods'},
+  {id:'f1', name:'Burger', price:120, img:'assets/images/Foods/buerger.jpg', category:'foods'},
+  {id:'f2', name:'Fried Chicken', price:150, img:'assets/images/Foods/chekin joy.jpg', category:'foods'},
+  {id:'f3', name:'Fries', price:70, img:'assets/images/Foods/fries.jpg', category:'foods'},
+  {id:'f4', name:'Halo Halo', price:60, img:'assets/images/Foods/halo2.jpg', category:'foods'},
+  {id:'f5', name:'Pizza Cheese', price:180, img:'assets/images/Foods/pitza cheez.jpg', category:'foods'},
+  {id:'f6', name:'Spaghetti', price:130, img:'assets/images/Foods/spag.jpg', category:'foods'},
+
+
+  
 ];
 
 function renderShop(){
