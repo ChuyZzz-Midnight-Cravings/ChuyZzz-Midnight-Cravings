@@ -2,16 +2,16 @@
 <html lang="en">
 
 <head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Shop - Chuyzzz</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+
   <script>
     if (!localStorage.getItem("loggedUser")) {
       window.location.href = "login.html";
     }
   </script>
-
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Shop - Chuyzzz</title>
-  <link rel="stylesheet" href="assets/css/style.css" />
 </head>
 
 <body class="night-bg">
@@ -36,6 +36,7 @@
     </div>
   </header>
 
+  <!-- Main content -->
   <main class="main-container">
     <h1 class="section-title">Our Menu</h1>
 
@@ -45,25 +46,12 @@
     <h2 class="category-title">Drinks</h2>
     <section id="drinks-list" class="product-grid"></section>
 
+    <h2 class="category-title">Foods</h2>
+    <section id="foods-list" class="product-grid"></section>
   </main>
 
-  <script src="assets/js/shop.js"></script>
   <script src="assets/js/script.js"></script>
-  <script>
-   
-    const loggedUser = localStorage.getItem('loggedUser');
-    if (loggedUser) {
-      document.getElementById('logout-btn').style.display = 'block';
-      document.getElementById('login-link').style.display = 'none';
-      document.getElementById('user-display').textContent = loggedUser;
-    }
-
-    
-    document.getElementById('logout-btn').addEventListener('click', () => {
-      localStorage.removeItem('loggedUser');
-      window.location.href = 'login.html';
-    });
-  </script>
+  <script src="assets/js/shop.js"></script>
 
 </body>
 </html>
