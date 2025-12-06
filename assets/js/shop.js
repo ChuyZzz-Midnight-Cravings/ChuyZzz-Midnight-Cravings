@@ -19,22 +19,22 @@ const PRODUCTS = [
   {id:'d5', name:'Pepsi-in-a-Can', price:50, img:'assets/images/drinks/pepsi.png', category:'drinks'},
 
   // FOODS
-  {id:'f1', name:'Burger', price:130, img:'assets/images/Foods/burger.jpg', category:'foods'},
-  {id:'f2', name:'Fried Chicken', price:160, img:'assets/images/Foods/manok.jpg', category:'foods'},
+  {id:'f1', name:'Burger', price:130, img:'assets/images/Foods/buerger.jpg', category:'foods'},
+  {id:'f2', name:'Fried Chicken', price:160, img:'assets/images/Foods/chekin joy.jpg', category:'foods'},
   {id:'f3', name:'Fries', price:70, img:'assets/images/Foods/fries.jpg', category:'foods'},
   {id:'f4', name:'Halo Halo', price:65, img:'assets/images/Foods/halo2.jpg', category:'foods'},
-  {id:'f5', name:'Pizza Cheese', price:180, img:'assets/images/Foods/pizza cheese.jpg', category:'foods'},
+  {id:'f5', name:'Pizza Cheese', price:180, img:'assets/images/Foods/pitza cheez.jpg', category:'foods'},
   {id:'f6', name:'Spaghetti', price:135, img:'assets/images/Foods/spag.jpg', category:'foods'}, 
   {id:'f7', name:'Shawarma', price:80, img:'assets/images/Foods/sawarma.jpg', category:'foods'},    
-  {id:'f8', name:'Siomai', price:70, img:'assets/images/Foods/siomai.jpg', category:'foods'},
-  {id:'f9', name:'Siopao', price:70, img:'assets/images/Foods/siopao.jpg', category:'foods'},      
+  {id:'f8', name:'Siomai', price:50, img:'assets/images/Foods/soimai.jpg', category:'foods'},
+  {id:'f9', name:'Siopao', price:50, img:'assets/images/Foods/sopaw.jpg', category:'foods'},      
   {id:'f10', name:'Mango Float', price:90, img:'assets/images/Foods/mango.webp', category:'foods'}
 ];
 
 function renderShop() {
   const chipsContainer = document.getElementById('chips-list');
   const drinksContainer = document.getElementById('drinks-list');
-  const foodsContainer = document.getElementById('foods-list'); // added
+  const foodsContainer = document.getElementById('foods-list');
 
   if(!chipsContainer || !drinksContainer || !foodsContainer) return;
 
@@ -50,7 +50,7 @@ function renderShop() {
 
     if(p.category === 'chips') chipsContainer.appendChild(card);
     if(p.category === 'drinks') drinksContainer.appendChild(card);
-    if(p.category === 'foods') foodsContainer.appendChild(card); // added
+    if(p.category === 'foods') foodsContainer.appendChild(card);
   });
 }
 
@@ -69,10 +69,10 @@ function addToCart(id){
 
   localStorage.setItem('cart', JSON.stringify(cart));
   
-  // make sure updateCartCount exists in script.js
   if(typeof updateCartCount === 'function') updateCartCount();
 
   alert(`${p.name} added to cart`);
 }
 
 window.addEventListener('DOMContentLoaded', renderShop);
+window.addEventListener('DOMContentLoaded', updateCartCount);
