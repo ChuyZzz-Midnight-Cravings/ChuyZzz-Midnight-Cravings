@@ -45,25 +45,13 @@
     <h2 class="category-title">Drinks</h2>
     <section id="drinks-list" class="product-grid"></section>
 
+    <h2 class="category-title">Foods</h2>
+    <section id="foods-list" class="product-grid"></section>
   </main>
 
-  <script src="assets/js/shop.js"></script>
-  <script src="assets/js/script.js"></script>
-  <script>
-   
-    const loggedUser = localStorage.getItem('loggedUser');
-    if (loggedUser) {
-      document.getElementById('logout-btn').style.display = 'block';
-      document.getElementById('login-link').style.display = 'none';
-      document.getElementById('user-display').textContent = loggedUser;
-    }
 
-    
-    document.getElementById('logout-btn').addEventListener('click', () => {
-      localStorage.removeItem('loggedUser');
-      window.location.href = 'login.html';
-    });
-  </script>
+  <script src="assets/js/script.js"></script>
+  <script src="assets/js/shop.js"></script>
 
 </body>
 </html>

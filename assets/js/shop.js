@@ -1,4 +1,3 @@
-
 const PRODUCTS = [
   // CHIPS
   {id:'c1',name:'Midnight Caramel Crumble',price:145,img:'assets/images/chips/caramel-cramble.png', category:'chips'},
@@ -11,20 +10,25 @@ const PRODUCTS = [
   {id:'c8',name:'Piattos Nacho Pizza',price:45,img:'assets/images/chips/piattos-pizza.png', category:'chips'},
   {id:'c9',name:'Piattos Sour Cream & Onion',price:45,img:'assets/images/chips/piattos-sco.png', category:'chips'},
 
-  
   // DRINKS
   {id:'d1',name:'Coke-in-a-Can',price:45,img:'assets/images/drinks/coke.png', category:'drinks'},
   {id:'d2',name:'Sprite-in-a-Can',price:45,img:'assets/images/drinks/sprite.png', category:'drinks'},
   {id:'d3',name:'Royal-in-a-Can',price:88,img:'assets/images/drinks/royal.png', category:'drinks'},
   {id:'d4',name:'Grape Royal',price:85,img:'assets/images/drinks/royal-grape.png', category:'drinks'},
-  {id:'d5',name:'Pepsi-in-a-Can',price:85,img:'assets/images/drinks/pepsi.png', category:'drinks'}
+  {id:'d5',name:'Pepsi-in-a-Can',price:85,img:'assets/images/drinks/pepsi.png', category:'drinks'},
+
+  // FOODS
+  {id:'f1',name:'Burger',price:45,img:'assets/images/Foods/buerger.jpg', category:'foods'},
+  {id:'f2',name:'Fried Chicken',price:85,img:'assets/images/Foods/chekin joy.jpg', category:'foods'},
+  
 ];
 
 function renderShop(){
   const chipsContainer = document.getElementById('chips-list');
   const drinksContainer = document.getElementById('drinks-list');
+  const foodsContainer = document.getElementById('foods-list');
 
-  if(!chipsContainer || !drinksContainer) return;
+  if(!chipsContainer || !drinksContainer || !foodsContainer) return;
 
   PRODUCTS.forEach(p => {
     const card = document.createElement('div');
@@ -38,6 +42,7 @@ function renderShop(){
 
     if(p.category === 'chips') chipsContainer.appendChild(card);
     if(p.category === 'drinks') drinksContainer.appendChild(card);
+    if(p.category === 'foods') foodsContainer.appendChild(card);
   });
 }
 
@@ -60,3 +65,4 @@ function addToCart(id){
 }
 
 window.addEventListener('DOMContentLoaded', renderShop);
+window.addEventListener('DOMContentLoaded', updateCartCount);
