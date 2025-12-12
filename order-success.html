@@ -5,14 +5,103 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Order Success - Chuyzzz</title>
   <link rel="stylesheet" href="assets/css/style.css" />
+  <style>
+    .success-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 80vh;
+      padding: 30px 20px;
+      text-align: center;
+    }
+
+    .success-card {
+      background: rgba(30,30,30,0.85);
+      border-radius: 20px;
+      padding: 40px 30px;
+      max-width: 500px;
+      width: 100%;
+      box-shadow: 0 0 25px rgba(0,0,0,0.6);
+      transition: all 0.3s ease;
+    }
+
+    .success-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 35px rgba(0,0,0,0.8);
+    }
+
+    .success-card h1 {
+      color: #06b6d4;
+      margin-bottom: 15px;
+      font-size: 2rem;
+    }
+
+    .success-card p {
+      color: #fff;
+      margin-bottom: 25px;
+      font-size: 1.1rem;
+    }
+
+    .status-actions {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+    }
+
+    .status-actions .btn {
+      padding: 10px 25px;
+      border-radius: 12px;
+      font-weight: 600;
+      text-decoration: none;
+      color: #fff;
+      background: #1e90ff;
+      transition: all 0.3s ease;
+    }
+
+    .status-actions .btn:hover {
+      background: #06b6d4;
+      transform: translateY(-2px);
+    }
+
+    .status-actions .btn.alt {
+      background: transparent;
+      border: 2px solid #06b6d4;
+      color: #06b6d4;
+    }
+
+    .status-actions .btn.alt:hover {
+      background: #06b6d4;
+      color: #fff;
+      transform: translateY(-2px);
+    }
+
+    /* Success Icon */
+    .checkmark {
+      font-size: 4rem;
+      color: #06b6d4;
+      margin-bottom: 20px;
+      animation: pop 0.5s ease-out;
+    }
+
+    @keyframes pop {
+      0% { transform: scale(0); opacity: 0; }
+      60% { transform: scale(1.2); opacity: 1; }
+      100% { transform: scale(1); }
+    }
+  </style>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 </head>
 <body class="night-bg">
   <main class="success-container">
-    <h1>Thank you for your order!</h1>
-    <p>Your order has been placed successfully.</p>
-    <div class="status-actions">
-      <a href="shop.html" class="btn">Continue Shopping</a>
-      <a href="order-status.html" class="btn alt">View Order Status</a>
+    <div class="success-card">
+      <i class="fa-solid fa-circle-check checkmark"></i>
+      <h1>Thank you for your order!</h1>
+      <p>Your order has been placed successfully. We are preparing it for you.</p>
+      <div class="status-actions">
+        <a href="shop.html" class="btn">Continue Shopping</a>
+        <a href="order-status.html" class="btn alt">View Order Status</a>
+      </div>
     </div>
   </main>
 

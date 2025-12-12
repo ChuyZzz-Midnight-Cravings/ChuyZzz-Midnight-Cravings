@@ -1,188 +1,116 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Contact - Chuyzzz</title>
-  <link rel="stylesheet" href="assets/css/style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Login - Chuyzzz</title>
+  <link rel="stylesheet" href="assets/css/login.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-  <style>
-    /* Centered nav */
-    header.site-header {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      position: relative;
-      padding: 1rem 2rem;
-    }
-
-    nav.nav {
-      display: flex;
-      gap: 2rem;
-    }
-
-    nav.nav a.nav-btn {
-      text-decoration: none;
-      color: #fff;
-      font-weight: 600;
-      font-size: 1rem;
-      transition: 0.3s;
-    }
-
-    nav.nav a.nav-btn:hover {
-      color: #06b6d4;
-    }
-
-    .right {
-      position: absolute;
-      right: 2rem;
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
-
-    .hamburger-menu {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      cursor: pointer;
-    }
-
-    .hamburger-dropdown {
-      position: absolute;
-      top: 3rem;
-      right: 0;
-      display: none;
-      flex-direction: column;
-      background: rgba(0,0,0,0.85);
-      padding: 0.5rem 1rem;
-      border-radius: 12px;
-      gap: 0.5rem;
-    }
-
-    .hamburger-dropdown.show {
-      display: flex;
-    }
-
-    .hamburger-dropdown a {
-      color: #fff;
-      text-decoration: none;
-    }
-
-    .hamburger-dropdown a:hover {
-      color: #06b6d4;
-    }
-  </style>
+  <!-- Google Sign-In -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 
 <body class="night-bg">
 
-  <header class="site-header">
-    <nav class="nav">
-      <a href="index.html" class="nav-btn">Home</a>
-      <a href="shop.html" class="nav-btn">Shop</a>
-      <a href="about.html" class="nav-btn">About</a>
-      <a href="contact.html" class="nav-btn">Contact</a>
-      <a href="cart.html" class="nav-btn">Cart (<span id="cart-count">0</span>)</a>
-    </nav>
+  <main class="auth-layout">
 
-    <div class="right">
-      <p id="user-display" class="user-display"></p>
-      <a href="login.html" id="login-link" class="btn small">Login</a>
+    <!-- Login Card -->
+    <div class="auth-card">
+      <img src="assets/images/logo-chuyzzz.png" class="auth-logo" alt="Chuyzzz Logo" />
 
-      <!-- Hamburger Menu Icon -->
-      <div class="hamburger-menu" id="hamburger-menu">
-        <span></span>
-        <span></span>
-        <span></span>
+      <h2 class="auth-title">Welcome Back</h2>
+
+      <!-- Email Input -->
+      <div class="input-group">
+        <i class="fa-solid fa-envelope input-icon"></i>
+        <input id="login-email" type="email" placeholder="Email" />
       </div>
 
-      <!-- Hamburger Dropdown -->
-      <div class="hamburger-dropdown" id="hamburger-dropdown">
-        <a href="profile.html" class="dropdown-item">Profile</a>
-        <a href="index.html" class="dropdown-item">Home</a>
-        <a href="about.html" class="dropdown-item">About</a>
-        <a href="shop.html" class="dropdown-item">Shop</a>
-        <a href="contact.html" class="dropdown-item">Contact</a>
-        <a href="#" id="dropdown-logout" class="dropdown-logout">Logout</a>
+      <!-- Password Input -->
+      <div class="input-group password-group">
+        <i class="fa-solid fa-lock input-icon"></i>
+        <input id="login-pass" type="password" placeholder="Password" />
+        <i class="fa-solid fa-eye toggle-pass" id="toggle-pass"></i>
       </div>
-    </div>
-  </header>
 
-  <main class="main-container">
-    <div class="hero-card page-center contact-card">
-      <h1>Contact Us</h1>
-      <p class="contact-intro">
-        Have questions, feedback, or concerns?<br>
-        We’d love to hear from you!
+      <!-- Login Button -->
+      <button id="login-btn" class="btn big">Login</button>
+
+      <p class="auth-links">
+        <a href="signup.html">Create account</a> • 
+        <a href="forgot-password.html">Forgot password?</a>
       </p>
 
-      <div class="contact-info">
-        <p><strong>📍 Location:</strong> Damilag, Manolo Fortich Bukidnon</p>
-        <p><strong>📞 Phone:</strong> 0912-345-6789</p>
-        <p><strong>📧 Email:</strong> support@chuyzzz.com</p>
-        <p><strong>🕐 Service Hours:</strong> 8:00 PM – 2:00 AM</p>
-      </div>
-
-      <p class="contact-note">
-        We respond as fast as possible—especially during peak craving hours!
-      </p>
+      <!-- Google Sign-In -->
+      <div id="google-login-container" class="google-wrapper"></div>
     </div>
+
   </main>
 
-  <script src="assets/js/script.js"></script>
   <script>
-    // ===== HEADER & USER LOGIC =====
-    document.addEventListener("DOMContentLoaded", () => {
-      const userDisplay = document.getElementById("user-display");
-      const loginLink = document.getElementById("login-link");
-      const dropdownLogout = document.getElementById("dropdown-logout");
-      const hamburger = document.getElementById("hamburger-menu");
-      const dropdown = document.getElementById("hamburger-dropdown");
-      const cartCountEl = document.getElementById("cart-count");
+    // Show/Hide Password
+    const togglePass = document.getElementById('toggle-pass');
+    const passInput = document.getElementById('login-pass');
+    togglePass.addEventListener('click', () => {
+      if(passInput.type === 'password'){
+        passInput.type = 'text';
+        togglePass.classList.replace('fa-eye','fa-eye-slash');
+      } else {
+        passInput.type = 'password';
+        togglePass.classList.replace('fa-eye-slash','fa-eye');
+      }
+    });
 
-      function updateHeaderUI() {
-        const email = localStorage.getItem("loggedUser");
-        if (email) {
-          const users = JSON.parse(localStorage.getItem("users") || "[]");
-          const user = users.find(u => u.email === email);
-          if (user) {
-            userDisplay.textContent = "Hello, " + user.name + "!";
-            loginLink.style.display = "none";
-            dropdownLogout.style.display = "block";
-          }
-        } else {
-          userDisplay.textContent = "";
-          loginLink.style.display = "inline-block";
-          dropdownLogout.style.display = "none";
-        }
+    // Normal Login Validation
+    document.getElementById('login-btn').addEventListener('click', () => {
+      const email = document.getElementById('login-email').value.trim();
+      const pass = document.getElementById('login-pass').value.trim();
+
+      if (!email || !pass) {
+        alert("Please fill all fields!");
+        return;
       }
 
-      // Logout
-      dropdownLogout.addEventListener("click", () => {
-        localStorage.removeItem("loggedUser");
-        window.location.href = "login.html";
-      });
+      const users = JSON.parse(localStorage.getItem('users') || '[]');
+      const user = users.find(u => u.email === email);
 
-      // Hamburger toggle
-      hamburger.addEventListener("click", e => {
-        e.stopPropagation();
-        dropdown.classList.toggle("show");
-      });
+      if (!user) {
+        alert("User not found. Please sign up first.");
+        return;
+      }
 
-      document.addEventListener("click", e => {
-        if (!dropdown.contains(e.target) && !hamburger.contains(e.target)) {
-          dropdown.classList.remove("show");
-        }
-      });
-
-      // Cart count
-      const cart = JSON.parse(localStorage.getItem(`cart_${localStorage.getItem("loggedUser")}`) || "[]");
-      if (cartCountEl) cartCountEl.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
-
-      updateHeaderUI();
+      localStorage.setItem('loggedUser', email);
+      window.location.href = 'profile.html';
     });
-  </script>
 
+    // Google Sign-In
+    window.onload = function() {
+      google.accounts.id.initialize({
+        client_id: '540201718454-mub2h4ufht1b749ot2k3t9f019h2fcnm.apps.googleusercontent.com',
+        callback: handleGoogleSignIn
+      });
+      google.accounts.id.renderButton(
+        document.getElementById('google-login-container'),
+        { theme: 'filled_blue', size: 'large', shape: 'rectangular', width: '100%' }
+      );
+    };
+
+    function handleGoogleSignIn(response) {
+      const profile = jwt_decode(response.credential);
+      const name = profile.name;
+      const email = profile.email;
+
+      localStorage.setItem('loggedUser', email);
+      const users = JSON.parse(localStorage.getItem('users') || '[]');
+      if (!users.find(u => u.email === email)) {
+        users.push({ name: name, email: email });
+        localStorage.setItem('users', JSON.stringify(users));
+      }
+
+      window.location.href = 'index.html';
+    }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
 </body>
 </html>
