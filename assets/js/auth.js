@@ -13,18 +13,84 @@ function setLoggedInUser(email) {
   localStorage.setItem("loggedUser", email);
 }
 
+function getLoggedUser() {
+  const email = localStorage.getItem("loggedUser");
+  if (!email) return null;
+  const users = getUsers();
+  return users.find(u => u.email === email) || null;
+}
+
 // ===============================
 // DOM CONTENT LOADED
 // ===============================
 document.addEventListener("DOMContentLoaded", () => {
 
-  // -------------------------------
-  // LOCAL LOGIN
-  // -------------------------------
+  // ===== Header & Dropdown Elements =====
+  const userDisplay = document.getElementById("user-display");
+  const loginLink = document.getElementById("login-link");
+  const dropdownUser = document.getElementById("dropdown-user");
+  const dropdownLogout = document.getElementById("dropdown-logout");
+  const hamburger = document.getElementById("hamburger-menu");
+  const dropdown = document.getElementById("hamburger-dropdown");
+  const cartCountEl = document.getElementById("cart-count");
+
+  // ===== Update Header UI =====
+  function updateHeaderUI() {
+    const user = getLoggedUser();
+
+    if (userDisplay) userDisplay.textContent = user ? "Hello, " + user.name + "!" : "";
+    if (loginLink) loginLink.style.display = user ? "none" : "inline-block";
+    if (dropdownUser) dropdownUser.textContent = user ? user.name : "";
+    if (dropdownLogout) dropdownLogout.style.display = user ? "block" : "none";
+
+    // Ensure logout in dropdown is functional
+    if (dropdown) {
+      let existingLogout = dropdown.querySelector(".dropdown-logout");
+      if (!existingLogout && user) {
+        const logoutLink = document.createElement("a");
+        logoutLink.href = "#";
+        logoutLink.textContent = "Logout";
+        logoutLink.classList.add("dropdown-logout");
+        logoutLink.addEventListener("click", () => {
+          localStorage.removeItem("loggedUser");
+          window.location.href = "login.html";
+        });
+        dropdown.appendChild(logoutLink);
+      }
+    }
+  }
+
+  // ===== Logout Button =====
+  dropdownLogout?.addEventListener("click", () => {
+    localStorage.removeItem("loggedUser");
+    window.location.href = "login.html";
+  });
+
+  // ===== Hamburger Toggle =====
+  if (hamburger && dropdown) {
+    hamburger.addEventListener("click", e => {
+      e.stopPropagation();
+      dropdown.classList.toggle("show");
+    });
+
+    document.addEventListener("click", e => {
+      if (!dropdown.contains(e.target) && !hamburger.contains(e.target)) {
+        dropdown.classList.remove("show");
+      }
+    });
+  }
+
+  // ===== Cart Count =====
+  if (cartCountEl) {
+    const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+    cartCountEl.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+  }
+
+  // ===== LOCAL LOGIN =====
   const loginBtn = document.getElementById("login-btn");
   loginBtn?.addEventListener("click", () => {
-    const email = document.getElementById("login-email").value.trim();
-    const pass = document.getElementById("login-pass").value;
+    const email = document.getElementById("login-email")?.value.trim();
+    const pass = document.getElementById("login-pass")?.value;
 
     const users = getUsers();
     const user = users.find(u => u.email === email && u.pass === pass);
@@ -38,35 +104,33 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // -------------------------------
-  // GOOGLE LOGIN / SIGN-UP
-  // -------------------------------
+  // ===== GOOGLE LOGIN / SIGNUP =====
   const clientId = "540201718454-mub2h4ufht1b749ot2k3t9f019h2fcnm.apps.googleusercontent.com";
-
-  google.accounts.id.initialize({
-    client_id: clientId,
-    callback: handleGoogleCredential
-  });
-
-  google.accounts.id.renderButton(
-    document.getElementById("google-login-container"),
-    { theme: "outline", size: "large", width: 250, text: "signin_with" }
-  );
-
-  google.accounts.id.prompt();
-
-  const googleSignupBtn = document.getElementById("google-signup");
-  googleSignupBtn?.addEventListener("click", () => {
+  if (typeof google !== "undefined" && google.accounts) {
     google.accounts.id.initialize({
       client_id: clientId,
-      callback: handleGoogleSignup
+      callback: handleGoogleCredential
     });
-    google.accounts.id.prompt();
-  });
 
-  // -------------------------------
-  // HANDLERS
-  // -------------------------------
+    const googleBtnContainer = document.getElementById("google-login-container");
+    if (googleBtnContainer) {
+      google.accounts.id.renderButton(
+        googleBtnContainer,
+        { theme: "outline", size: "large", width: 250, text: "signin_with" }
+      );
+      google.accounts.id.prompt();
+    }
+
+    const googleSignupBtn = document.getElementById("google-signup");
+    googleSignupBtn?.addEventListener("click", () => {
+      google.accounts.id.initialize({
+        client_id: clientId,
+        callback: handleGoogleSignup
+      });
+      google.accounts.id.prompt();
+    });
+  }
+
   function handleGoogleCredential(response) {
     try {
       const jwt = response.credential;
@@ -105,85 +169,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // -------------------------------
-  // UPDATE HEADER UI & HAMBURGER
-  // -------------------------------
-  function getLoggedUser() {
-    const email = localStorage.getItem("loggedUser");
-    if (!email) return null;
-    const users = getUsers();
-    return users.find(u => u.email === email) || null;
-  }
-
-  function updateHeaderUI() {
-    const user = getLoggedUser();
-
-    const nameBox = document.getElementById("user-display");
-    const logoutBtn = document.getElementById("logout-btn");
-    const loginLink = document.getElementById("login-link");
-    const hamburgerDropdown = document.getElementById("hamburger-dropdown");
-
-    if (!nameBox || !logoutBtn || !loginLink || !hamburgerDropdown) return;
-
-    // Clear previous logout in dropdown
-    const existingLogout = hamburgerDropdown.querySelector(".dropdown-logout");
-    if (existingLogout) existingLogout.remove();
-
-    if (user) {
-      nameBox.textContent = "Hello, " + user.name + "!";
-      logoutBtn.style.display = "inline-block";
-      loginLink.style.display = "none";
-
-      // Add logout inside dropdown
-      const logoutLink = document.createElement("a");
-      logoutLink.href = "#";
-      logoutLink.textContent = "Logout";
-      logoutLink.classList.add("dropdown-logout");
-      logoutLink.addEventListener("click", () => {
-        localStorage.removeItem("loggedUser");
-        window.location.href = "login.html";
-      });
-      hamburgerDropdown.appendChild(logoutLink);
-
-    } else {
-      nameBox.textContent = "";
-      logoutBtn.style.display = "none";
-      loginLink.style.display = "inline-block";
-    }
-  }
-
-  // Logout main button
-  const logoutBtn = document.getElementById("logout-btn");
-  logoutBtn?.addEventListener("click", () => {
-    localStorage.removeItem("loggedUser");
-    window.location.href = "login.html";
-  });
-
-  // Hamburger toggle
-  const hamburger = document.getElementById("hamburger-menu");
-  const dropdown = document.getElementById("hamburger-dropdown");
-
-  if (hamburger && dropdown) {
-    hamburger.addEventListener("click", (e) => {
-      e.stopPropagation();
-      dropdown.classList.toggle("show");
-    });
-
-    document.addEventListener("click", (e) => {
-      if (!dropdown.contains(e.target) && !hamburger.contains(e.target)) {
-        dropdown.classList.remove("show");
-      }
-    });
-  }
-
-  // Cart count
-  function updateCartCount() {
-    const cart = JSON.parse(localStorage.getItem("cart") || "[]");
-    const el = document.getElementById("cart-count");
-    if (el) el.textContent = cart.reduce((s, i) => s + i.quantity, 0);
-  }
-
+  // ===== INITIALIZE =====
   updateHeaderUI();
-  updateCartCount();
-
 });

@@ -1110,9 +1110,26 @@ body {
   flex-direction: column;
 }
 
-/* ===== Responsive for Small Screens ===== */
+/* Responsive Hamburger for Small Screens */
 @media screen and (max-width: 900px) {
   .nav {
-    display: none; /* Hide normal nav on mobile */
+    display: none; /* Hide nav links */
+  }
+
+  .hamburger-menu {
+    display: flex; /* Show hamburger icon */
+  }
+
+  .hamburger-dropdown {
+    position: absolute;
+    right: 0;
+    top: 60px;
+    display: none;
+    flex-direction: column;
+  }
+
+  .hamburger-dropdown.show {
+    display: flex;
   }
 }
+

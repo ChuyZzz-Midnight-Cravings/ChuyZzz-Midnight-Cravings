@@ -7,14 +7,15 @@
   <link rel="stylesheet" href="assets/css/style.css">
   <link rel="stylesheet" href="assets/css/about.css">
 </head>
-
 <body class="night-bg">
 
+  <!-- ===== HEADER ===== -->
   <header class="site-header">
     <div class="left">
       <img src="assets/images/logo-chuyzzz.png" alt="Chuyzzz Logo" class="logo" />
     </div>
 
+    <!-- Desktop Nav -->
     <nav class="nav">
       <a href="index.html" class="nav-btn">Home</a>
       <a href="shop.html" class="nav-btn">Shop</a>
@@ -23,140 +24,59 @@
       <a href="cart.html" class="nav-btn">Cart (<span id="cart-count">0</span>)</a>
     </nav>
 
+    <!-- Right Section -->
     <div class="right">
-  <!-- User display (shown if logged in) -->
-  <p id="user-display" class="user-display"></p>
+      <!-- Logged-in User -->
+      <p id="user-display" class="user-display"></p>
 
-  <!-- Logout button (hidden by default) -->
-  <button id="logout-btn" class="logout-btn hidden">Logout</button>
+      <!-- Login link -->
+      <a href="login.html" id="login-link" class="btn small">Login</a>
 
-  <!-- Login link (shown if not logged in) -->
-  <a href="login.html" id="login-link" class="btn small">Login</a>
+      <!-- Hamburger Menu Icon -->
+      <div class="hamburger-menu" id="hamburger-menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
 
-  <!-- Hamburger Menu Icon -->
-  <div class="hamburger-menu" id="hamburger-menu">
-    <span></span>
-    <span></span>
-    <span></span>
-  </div>
-
-  <!-- Hamburger Dropdown -->
-  <div class="hamburger-dropdown" id="hamburger-dropdown">
-    <p class="dropdown-user" id="dropdown-user"></p>
-    <a href="profile.html" class="dropdown-item">Profile</a>
-    <a href="index.html" class="dropdown-item">Home</a>
-    <a href="about.html" class="dropdown-item">About</a>
-    <a href="services.html" class="dropdown-item">Services</a>
-    <a href="contact.html" class="dropdown-item">Contact</a>
-    <a href="#" class="dropdown-logout" id="dropdown-logout">Logout</a>
-  </div>
-</div>
-
+      <!-- Hamburger Dropdown -->
+      <div class="hamburger-dropdown" id="hamburger-dropdown">
+        <a href="profile.html" class="dropdown-item">Profile</a>
+        <a href="index.html" class="dropdown-item">Home</a>
+        <a href="about.html" class="dropdown-item">About</a>
+        <a href="services.html" class="dropdown-item">Services</a>
+        <a href="contact.html" class="dropdown-item">Contact</a>
+        <a href="#" id="dropdown-logout" class="dropdown-logout">Logout</a>
+      </div>
+    </div>
   </header>
 
+  <!-- ===== MAIN ===== -->
   <main class="main-container">
     <div class="hero-card page-center about-card">
-
       <h1 class="about-title">ABOUT CHUYZZZ</h1>
-
       <p class="about-intro">
-        Chuyzzz delivers the best quality snacks straight to your doorsteps!<br>  
+        Chuyzzz delivers the best quality snacks straight to your doorsteps!<br>
         Fresh, tasty, and affordable.
       </p>
 
       <h2 class="section-title">Our Story:</h2>
       <p class="about-text">
-        Chuyzzz Midnight Snack was founded to provide delicious, affordable,<br>  
+        Chuyzzz Midnight Snack was founded to provide delicious, affordable,<br>
         and high-quality snacks to satisfy your late-night cravings.
       </p>
 
       <h2 class="section-title">Our Mission:</h2>
       <p class="about-text">
-        To bring convenience and satisfaction<br> straight to your door anytime  
-        you need a snack!
+        To bring convenience and satisfaction<br> straight to your door anytime you need a snack!
       </p>
-
     </div>
   </main>
 
   <footer class="site-footer">© Chuyzzz Midnight Snack</footer>
 
-  <script src="assets/js/script.js"></script>
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-
-      // ===== GET LOGGED USER =====
-      function getLoggedUser() {
-        const email = localStorage.getItem("loggedUser");
-        if (!email) return null;
-        const users = JSON.parse(localStorage.getItem("users") || "[]");
-        return users.find(u => u.email === email) || null;
-      }
-
-      // ===== UPDATE HEADER UI =====
-      function updateHeaderUI() {
-        const user = getLoggedUser();
-        const nameBox = document.getElementById("user-display");
-        const logoutBtn = document.getElementById("logout-btn");
-        const loginLink = document.getElementById("login-link");
-        const dropdownLogout = document.getElementById("dropdown-logout");
-
-        if (!nameBox || !logoutBtn || !loginLink || !dropdownLogout) return;
-
-        if (user) {
-          nameBox.textContent = "Hello, " + user.name + "!";
-          logoutBtn.style.display = "inline-block";
-          dropdownLogout.style.display = "block";
-          loginLink.style.display = "none";
-        } else {
-          nameBox.textContent = "";
-          logoutBtn.style.display = "none";
-          dropdownLogout.style.display = "none";
-          loginLink.style.display = "inline-block";
-        }
-      }
-
-      // ===== LOGOUT =====
-      const logoutBtn = document.getElementById("logout-btn");
-      const dropdownLogout = document.getElementById("dropdown-logout");
-
-      if (logoutBtn) {
-        logoutBtn.addEventListener("click", () => {
-          localStorage.removeItem("loggedUser");
-          window.location.href = "login.html";
-        });
-      }
-
-      if (dropdownLogout) {
-        dropdownLogout.addEventListener("click", () => {
-          localStorage.removeItem("loggedUser");
-          window.location.href = "login.html";
-        });
-      }
-
-      // ===== HAMBURGER TOGGLE =====
-      const hamburger = document.getElementById("hamburger-menu");
-      const dropdown = document.getElementById("hamburger-dropdown");
-
-      if (hamburger && dropdown) {
-        hamburger.addEventListener("click", () => {
-          dropdown.classList.toggle("show");
-        });
-      }
-
-      // ===== CART COUNT =====
-      function updateCartCount() {
-        const cart = JSON.parse(localStorage.getItem("cart") || "[]");
-        const el = document.getElementById("cart-count");
-        if (el) el.textContent = cart.reduce((s, i) => s + i.quantity, 0);
-      }
-
-      // INITIALIZE HEADER AND CART
-      updateHeaderUI();
-      updateCartCount();
-
-    });
-  </script>
+  <!-- ===== SCRIPTS ===== -->
+  <script src="assets/js/auth.js"></script>
 
 </body>
 </html>
