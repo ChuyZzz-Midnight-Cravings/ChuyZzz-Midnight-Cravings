@@ -276,6 +276,117 @@ body {
   padding: 12px;
   border-radius: 10px;
 }
+/* ===== CART ITEMS ===== */
+.cart-items {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Individual cart item */
+.cart-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 12px 16px;
+  border-radius: 12px;
+  transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
+}
+
+.cart-item:hover {
+  background: rgba(30, 30, 50, 0.85);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* Product image */
+.cart-item img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 12px;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+}
+
+/* Product details */
+.cart-item h4 {
+  margin: 0;
+  color: #1e90ff;
+  font-size: 16px;
+}
+
+.cart-item p {
+  margin: 4px 0 0;
+  color: #ccc;
+  font-size: 14px;
+}
+
+/* Quantity controls */
+.cart-quantity {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.qty-btn {
+  background: rgba(30, 30, 50, 0.8);
+  border: none;
+  color: #fff;
+  font-weight: bold;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.qty-btn:hover {
+  background: #1e90ff;
+  transform: scale(1.15);
+}
+
+/* Price on the right */
+.cart-item > div:last-child {
+  margin-left: auto;
+  font-weight: 700;
+  color: #fff;
+  text-align: right;
+  min-width: 90px;
+  font-size: 16px;
+}
+
+/* ===== REMOVE BUTTON ===== */
+.remove-btn {
+  background: rgba(255, 0, 0, 0.7); /* slightly transparent red */
+  color: #fff; /* keep text white */
+  border: none;
+  border-radius: 8px;
+  padding: 6px 12px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.3s, transform 0.2s;
+}
+
+/* Hover effect */
+.remove-btn:hover {
+  background-color: #ff4d4d; /* brighter red for impact */
+  color: #fff; /* ensure text stays white */
+  transform: scale(1.05);
+}
+
+
+/* Align quantity and remove nicely */
+.cart-quantity,
+.remove-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+
 
 /* =============================== CHECKOUT ================================*/
 .checkout-grid {
