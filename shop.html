@@ -5,9 +5,10 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Shop - Chuyzzz</title>
-  <link rel="stylesheet" href="assets/css/style.css" />
 
-  <!-- Redirect to login if not logged in -->
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
   <script>
     if (!localStorage.getItem("loggedUser")) {
       window.location.href = "login.html";
@@ -17,10 +18,9 @@
 
 <body class="night-bg">
 
-  <!-- Header / Navbar -->
   <header class="site-header">
     <div class="left">
-      <img src="assets/images/logo-chuyzzz.png" alt="Chuyzzz Logo" class="logo" />
+      <img src="assets/images/logo-chuyzzz.png" alt="Chuyzzz Store Logo" class="logo">
     </div>
 
     <nav class="nav">
@@ -33,12 +33,10 @@
 
     <div class="right">
       <p id="user-display" class="user-display"></p>
-      <button id="logout-btn" class="logout-btn">Logout</button>
       <a href="login.html" id="login-link" class="btn small">Login</a>
     </div>
   </header>
 
-  <!-- Main content -->
   <main class="main-container">
     <h1 class="section-title">Our Menu</h1>
 

@@ -1,3 +1,4 @@
+// Keep your existing PRODUCTS array intact
 const PRODUCTS = [
   // CHIPS
   {id:'c1', name:'Midnight Caramel Crumble', price:120, img:'assets/images/chips/caramel-cramble.png', category:'chips'},
@@ -31,6 +32,7 @@ const PRODUCTS = [
   {id:'f10', name:'Mango Float', price:90, img:'assets/images/Foods/mango.webp', category:'foods'}
 ];
 
+// Render shop products with automatic "In Cart" detection
 function renderShop() {
   const chipsContainer = document.getElementById('chips-list');
   const drinksContainer = document.getElementById('drinks-list');
@@ -38,22 +40,42 @@ function renderShop() {
 
   if(!chipsContainer || !drinksContainer || !foodsContainer) return;
 
+  const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+
   PRODUCTS.forEach(p => {
     const card = document.createElement('div');
     card.className = 'product-card';
+
+    // Check if product is in cart
+    const found = cart.find(i => i.id === p.id);
+    const btnText = found ? `In Cart (${found.quantity})` : 'Add to Cart';
+
     card.innerHTML = `
       <img src="${p.img}" alt="${p.name}">
       <h3>${p.name}</h3>
       <p>₱${p.price}</p>
-      <button class="btn" onclick="addToCart('${p.id}')">Add to Cart</button>
+      <button class="btn">${btnText}</button>
     `;
 
+    // Append to correct category
     if(p.category === 'chips') chipsContainer.appendChild(card);
     if(p.category === 'drinks') drinksContainer.appendChild(card);
     if(p.category === 'foods') foodsContainer.appendChild(card);
+
+    // Button click
+    const btn = card.querySelector('button');
+    btn.addEventListener('click', () => {
+      addToCart(p.id);
+
+      // Update button text dynamically
+      const updatedCart = JSON.parse(localStorage.getItem('cart') || '[]');
+      const updatedItem = updatedCart.find(i => i.id === p.id);
+      btn.textContent = `In Cart (${updatedItem.quantity})`;
+    });
   });
 }
 
+// Add to cart function (unchanged)
 function addToCart(id){
   const p = PRODUCTS.find(x => x.id === id);
   if(!p) return;
@@ -64,15 +86,23 @@ function addToCart(id){
   if(found) {
     found.quantity += 1;
   } else {
-    cart.push({id:p.id, name:p.name, price:p.price, image:p.img, quantity:1});
+    cart.push({id:p.id, name:p.name, price:p.price, img:p.img, quantity:1});
   }
 
   localStorage.setItem('cart', JSON.stringify(cart));
   
   if(typeof updateCartCount === 'function') updateCartCount();
-
-  alert(`${p.name} added to cart`);
 }
 
-window.addEventListener('DOMContentLoaded', renderShop);
-window.addEventListener('DOMContentLoaded', updateCartCount);
+// Update header cart count
+function updateCartCount() {
+  const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+  const count = cart.reduce((acc, i) => acc + i.quantity, 0);
+  const cartCount = document.getElementById('cart-count');
+  if(cartCount) cartCount.textContent = count;
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  renderShop();
+  updateCartCount();
+});
