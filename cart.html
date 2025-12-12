@@ -1,19 +1,22 @@
 <!doctype html>
 <html lang="en">
+
 <head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Cart - Chuyzzz</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+
   <script>
     if (!localStorage.getItem("loggedUser")) {
       window.location.href = "login.html";
     }
   </script>
-
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Cart - Chuyzzz</title>
-  <link rel="stylesheet" href="assets/css/style.css" />
 </head>
+
 <body class="night-bg">
 
+  <!-- ===== HEADER ===== -->
   <header class="site-header">
     <div class="left">
       <img src="assets/images/logo-chuyzzz.png" alt="Chuyzzz Logo" class="logo" />
@@ -29,20 +32,34 @@
 
     <div class="right">
       <p id="user-display" class="user-display"></p>
-      <button id="logout-btn" class="logout-btn hidden">Logout</button>
       <a href="login.html" id="login-link" class="btn small">Login</a>
+
+      <div class="hamburger-menu" id="hamburger-menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+      <div class="hamburger-dropdown" id="hamburger-dropdown">
+        <a href="profile.html" class="dropdown-item">Profile</a>
+        <a href="index.html" class="dropdown-item">Home</a>
+        <a href="about.html" class="dropdown-item">About</a>
+        <a href="shop.html" class="dropdown-item">Shop</a>
+        <a href="contact.html" class="dropdown-item">Contact</a>
+        <a href="#" id="dropdown-logout" class="dropdown-logout">Logout</a>
+      </div>
     </div>
   </header>
 
   <main class="main-container">
-    <h1>Your Cart</h1>
-
+    <h1 class="section-title">Your Cart</h1>
     <div id="cart-items" class="cart-items"></div>
 
     <div class="cart-summary">
       <p>Subtotal: ₱<span id="cart-subtotal">0</span></p>
       <p>Delivery: ₱<span id="cart-delivery">0</span></p>
       <h3>Total: ₱<span id="cart-total">0</span></h3>
+
       <div class="cart-actions">
         <a href="shop.html" class="btn alt">Continue Shopping</a>
         <a href="checkout.html" class="btn">Proceed to Checkout</a>
@@ -50,7 +67,9 @@
     </div>
   </main>
 
-  <script src="assets/js/cart.js"></script>
+  <footer class="site-footer">© Chuyzzz Midnight Snack</footer>
+
   <script src="assets/js/script.js"></script>
+  <script src="assets/js/cart.js"></script>
 </body>
 </html>

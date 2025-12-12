@@ -11,9 +11,8 @@
 
   <header class="site-header">
     <div class="left">
-      <img src="assets/images/logo-chuyzzz.png" alt="Chuyzzz Logo" class="logo" />
-    </div>
-
+    <img src="assets/images/logo-chuyzzz.png" alt="Chuyzzz Logo" class="logo" />
+  </div>
     <nav class="nav">
       <a href="index.html" class="nav-btn">Home</a>
       <a href="shop.html" class="nav-btn">Shop</a>
@@ -24,8 +23,24 @@
 
     <div class="right">
       <p id="user-display" class="user-display"></p>
-      <button id="logout-btn" class="logout-btn hidden">Logout</button>
       <a href="login.html" id="login-link" class="btn small">Login</a>
+
+      <!-- Hamburger Menu Icon -->
+      <div class="hamburger-menu" id="hamburger-menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+      <!-- Hamburger Dropdown -->
+      <div class="hamburger-dropdown" id="hamburger-dropdown">
+        <a href="profile.html" class="dropdown-item">Profile</a>
+        <a href="index.html" class="dropdown-item">Home</a>
+        <a href="about.html" class="dropdown-item">About</a>
+        <a href="shop.html" class="dropdown-item">Shop</a>
+        <a href="contact.html" class="dropdown-item">Contact</a>
+        <a href="#" id="dropdown-logout" class="dropdown-logout">Logout</a>
+      </div>
     </div>
   </header>
 
@@ -54,6 +69,59 @@
   </main>
 
   <script src="assets/js/script.js"></script>
+  <script>
+    // ===== HEADER AND CART UPDATE =====
+    document.addEventListener("DOMContentLoaded", () => {
+      const userDisplay = document.getElementById("user-display");
+      const loginLink = document.getElementById("login-link");
+      const dropdownLogout = document.getElementById("dropdown-logout");
+      const hamburger = document.getElementById("hamburger-menu");
+      const dropdown = document.getElementById("hamburger-dropdown");
+      const cartCountEl = document.getElementById("cart-count");
+
+      // Update header UI
+      function updateHeaderUI() {
+        const email = localStorage.getItem("loggedUser");
+        if (email) {
+          const users = JSON.parse(localStorage.getItem("users") || "[]");
+          const user = users.find(u => u.email === email);
+          if (user) {
+            userDisplay.textContent = "Hello, " + user.name + "!";
+            loginLink.style.display = "none";
+            dropdownLogout.style.display = "block";
+          }
+        } else {
+          userDisplay.textContent = "";
+          loginLink.style.display = "inline-block";
+          dropdownLogout.style.display = "none";
+        }
+      }
+
+      // Logout
+      dropdownLogout.addEventListener("click", () => {
+        localStorage.removeItem("loggedUser");
+        window.location.href = "login.html";
+      });
+
+      // Hamburger toggle
+      hamburger.addEventListener("click", e => {
+        e.stopPropagation();
+        dropdown.classList.toggle("show");
+      });
+
+      document.addEventListener("click", e => {
+        if (!dropdown.contains(e.target) && !hamburger.contains(e.target)) {
+          dropdown.classList.remove("show");
+        }
+      });
+
+      // Cart count
+      const cart = JSON.parse(localStorage.getItem(`cart_${localStorage.getItem("loggedUser")}`) || "[]");
+      if (cartCountEl) cartCountEl.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+
+      updateHeaderUI();
+    });
+  </script>
 
 </body>
 </html>
