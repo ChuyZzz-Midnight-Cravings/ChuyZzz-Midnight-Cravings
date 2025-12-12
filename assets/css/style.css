@@ -1094,7 +1094,7 @@ body {
   margin-bottom: 8px;
 }
 
-/* Optional: glow for user name on desktop top-right */
+/*glow for user name on desktop top-right */
 .user-display {
   font-weight: 600;
   color: #ffcf57;
@@ -1131,4 +1131,310 @@ body {
   .hamburger-dropdown.show {
     display: flex;
   }
+/* Night/Chuyzzz Background */
+body.night-bg {
+  font-family: 'Poppins', sans-serif;
+  color: #fff;
+  min-height: 100vh;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  background: url('../images/bg-chuyzzz.png') no-repeat center center fixed;
+  background-size: cover;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Glowing stars overlay */
+body.night-bg::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  background: 
+      radial-gradient(1px 1px at 15% 20%, #fff, transparent),
+      radial-gradient(1px 1px at 50% 50%, #fff, transparent),
+      radial-gradient(1px 1px at 85% 80%, #fff, transparent);
+  background-size: 200px 200px;
+  opacity: 0.25;
+  z-index: 0;
+}
+
+/* Subtle neon gradient overlay for glow effect */
+body.night-bg::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  background: radial-gradient(circle at 25% 30%, rgba(6,182,212,0.08), transparent 40%),
+              radial-gradient(circle at 70% 80%, rgba(255, 0, 128,0.05), transparent 50%);
+  z-index: 0;
+}
+
+/* Profile Card */
+.profile-card {
+  position: relative;
+  background: rgba(0,0,0,0.65); /* semi-transparent dark to stand out */
+  border-radius: 25px;
+  padding: 4rem 3rem;
+  max-width: 800px;
+  margin: 3rem auto;
+  box-shadow: 0 0 40px rgba(6,182,212,0.6);
+  z-index: 1;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.profile-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 60px rgba(6,182,212,0.7);
+}
+
+/* Profile Title */
+.profile-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 3rem; /* BIG and impactful */
+  color: #06b6d4;
+  margin-bottom: 2rem;
+  text-shadow: 0 0 10px #06b6d4;
+}
+
+/* Form Inputs */
+.input-group input {
+  width: 100%;
+  padding: 1rem 1rem 1rem 3rem;
+  border-radius: 15px;
+  border: none;
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+  font-size: 1.25rem; /* bigger text */
+}
+.input-group .input-icon {
+  position: absolute;
+  top: 50%;
+  left: 0.8rem;
+  transform: translateY(-50%);
+  color: #06b6d4;
+  font-size: 1.25rem;
+}
+
+/* Buttons */
+.btn.big {
+  font-size: 1.25rem;
+  padding: 1rem 2rem;
+  border-radius: 15px;
+  background: #06b6d4;
+  color: #fff;
+  transition: 0.3s;
+  box-shadow: 0 0 20px rgba(6,182,212,0.5);
+}
+.btn.big:hover {
+  background: #0e7490;
+  box-shadow: 0 0 30px rgba(6,182,212,0.7);
+}
+
+.btn.alt {
+  font-size: 1.1rem;
+  padding: 0.9rem 1.8rem;
+  border-radius: 15px;
+  background: rgba(255,0,128,0.7);
+  color: #fff;
+}
+.btn.alt:hover {
+  background: rgba(255,0,128,1);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .profile-card {
+    margin: 2rem 1rem;
+    padding: 2rem;
+  }
+  .profile-title {
+    font-size: 2.2rem;
+  }
+  .input-group input {
+    font-size: 1.1rem;
+  }
+  .btn.big {
+    font-size: 1.1rem;
+    padding: 0.9rem 1.5rem;
+  }
+}
+.profile-title {
+  font-size: 3rem; 
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.input-group input {
+  font-size: 1.5rem; 
+  padding: 1rem 1rem 1rem 3rem;
+}
+
+.profile-actions .btn.big {
+  font-size: 1.5rem; 
+  padding: 1rem 2rem;
+}
+/* === Night Background === */
+body.night-bg {
+  background: url('../images/bg-chuyzzz.png') no-repeat center center fixed;
+  background-size: cover;
+  font-family: 'Poppins', sans-serif;
+  color: #fff;
+  min-height: 100vh;
+}
+
+/* === Sign-Up Layout === */
+.auth-layout {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3rem;
+  flex-wrap: wrap;
+  padding: 2rem;
+}
+
+/* === Sign-Up Card === */
+.auth-card {
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 25px;
+  padding: 3rem;
+  width: 400px;
+  max-width: 95%;
+  box-shadow: 0 0 25px rgba(6,182,212,0.7);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.auth-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  color: #06b6d4;
+  text-align: center;
+  text-shadow: 0 0 10px #06b6d4, 0 0 20px #0e7490;
+}
+
+/* === Input Fields === */
+.input-group {
+  position: relative;
+  width: 100%;
+  margin-bottom: 1.5rem;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 1rem 1rem 1rem 3rem;
+  border-radius: 12px;
+  border: none;
+  font-size: 1.2rem;
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+  transition: 0.2s;
+}
+
+.input-group input::placeholder {
+  color: #c0c0c0;
+  font-size: 1.1rem;
+}
+
+.input-group i.input-icon {
+  position: absolute;
+  top: 50%;
+  left: 1rem;
+  transform: translateY(-50%);
+  color: #06b6d4;
+  font-size: 1.2rem;
+}
+
+/* === Buttons === */
+.btn.big {
+  width: 100%;
+  padding: 1rem 0;
+  font-size: 1.4rem;
+  font-weight: 600;
+  border-radius: 15px;
+  background: #06b6d4;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 0 15px #06b6d4;
+  transition: 0.3s;
+  margin-top: 1rem;
+}
+
+.btn.big:hover {
+  background: #0e7490;
+  box-shadow: 0 0 25px #0e7490;
+}
+
+/* === Links === */
+.auth-links {
+  margin-top: 1.5rem;
+  font-size: 1rem;
+  color: #fff;
+}
+
+.auth-links a {
+  color: #06b6d4;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.auth-links a:hover {
+  text-decoration: underline;
+}
+
+/* === Google Login Wrapper === */
+.google-wrapper {
+  margin-top: 1.5rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+/* === Logo Section === */
+.auth-logo-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.auth-logo-side {
+  width: 200px;
+  max-width: 80%;
+  margin-top: 2rem;
+}
+
+/* === Responsive === */
+@media (max-width: 768px) {
+  .auth-layout {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .auth-card {
+    padding: 2rem;
+    width: 90%;
+  }
+
+  .auth-title {
+    font-size: 2rem;
+  }
+
+  .btn.big {
+    font-size: 1.2rem;
+    padding: 0.8rem 0;
+  }
+}
+
 }

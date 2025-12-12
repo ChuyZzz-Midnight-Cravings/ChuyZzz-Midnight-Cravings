@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Sign Up - Chuyzzz</title>
   <link rel="stylesheet" href="assets/css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <!-- Google Sign-In -->
   <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
@@ -13,29 +15,75 @@
 
   <main class="auth-layout">
 
+    <!-- Sign-Up Card -->
     <div class="auth-card">
-      <h2>Create Account</h2>
+      <h2 class="auth-title">Create Your Account</h2>
 
-      <input id="su-name" placeholder="Full Name" />
-      <input id="su-email" placeholder="Email" />
-      <input id="su-pass" type="password" placeholder="Password" />
-      <input id="su-pass2" type="password" placeholder="Confirm Password" />
+      <div class="input-group">
+        <i class="fa-solid fa-user input-icon"></i>
+        <input id="su-name" type="text" placeholder="Full Name">
+      </div>
+      <div class="input-group">
+        <i class="fa-solid fa-envelope input-icon"></i>
+        <input id="su-email" type="email" placeholder="Email">
+      </div>
+      <div class="input-group">
+        <i class="fa-solid fa-lock input-icon"></i>
+        <input id="su-pass" type="password" placeholder="Password">
+      </div>
+      <div class="input-group">
+        <i class="fa-solid fa-lock input-icon"></i>
+        <input id="su-pass2" type="password" placeholder="Confirm Password">
+      </div>
 
-      <button id="signup-btn" class="btn">Create Account</button>
+      <button id="signup-btn" class="btn big">Create Account</button>
 
-      <p class="auth-links mt-10">
+      <p class="auth-links">
         Already have an account? <a href="login.html">Login</a>
       </p>
 
-     <div id="google-login-container" class="google-wrapper"></div>
+      <div id="google-login-container" class="google-wrapper"></div>
     </div>
 
+    <!-- Logo Section -->
     <div class="auth-logo-box">
       <img src="assets/images/logo-chuyzzz.png" class="auth-logo-side" alt="Chuyzzz Logo" />
     </div>
 
   </main>
 
-  <script src="assets/js/auth.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const signupBtn = document.getElementById("signup-btn");
+      const nameInput = document.getElementById("su-name");
+      const emailInput = document.getElementById("su-email");
+      const passInput = document.getElementById("su-pass");
+      const pass2Input = document.getElementById("su-pass2");
+
+      signupBtn.addEventListener("click", () => {
+        const name = nameInput.value.trim();
+        const email = emailInput.value.trim();
+        const pass = passInput.value.trim();
+        const pass2 = pass2Input.value.trim();
+
+        // Check if all fields are filled
+        if (!name || !email || !pass || !pass2) {
+          alert("Please fill all the fields!");
+          return;
+        }
+
+        // Check if passwords match
+        if (pass !== pass2) {
+          alert("Passwords do not match!");
+          return;
+        }
+
+        // If everything is valid, redirect to login.html
+        alert("Account created successfully! Redirecting to login...");
+        window.location.href = "login.html";
+      });
+    });
+  </script>
+
 </body>
 </html>

@@ -1,174 +1,159 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Profile - Chuyzzz</title>
-  <link rel="stylesheet" href="assets/css/style.css">
-  <link rel="stylesheet" href="assets/css/profile.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Profile - Chuyzzz</title>
+<link rel="stylesheet" href="assets/css/style.css">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body class="night-bg">
 
-  <!-- ===== HEADER ===== -->
-  <header class="site-header">
-    <div class="left">
-      <img src="assets/images/logo-chuyzzz.png" alt="Chuyzzz Logo" class="logo" />
+<header class="site-header">
+  <div class="left">
+  </div>
+  <nav class="nav">
+    <a href="index.html" class="nav-btn">Home</a>
+    <a href="shop.html" class="nav-btn">Shop</a>
+    <a href="about.html" class="nav-btn">About</a>
+    <a href="contact.html" class="nav-btn">Contact</a>
+    <a href="cart.html" class="nav-btn">Cart (<span id="cart-count">0</span>)</a>
+  </nav>
+  <div class="right">
+    <p id="user-display" class="user-display"></p>
+    <a href="login.html" id="login-link" class="btn small">Login</a>
+    <div class="hamburger-menu" id="hamburger-menu">
+      <span></span><span></span><span></span>
+    </div>
+    <div class="hamburger-dropdown" id="hamburger-dropdown">
+      <p id="dropdown-user" class="dropdown-user"></p>
+      <a href="profile.html" class="dropdown-item"><i class="fa-solid fa-user"></i> Profile</a>
+      <a href="index.html" class="dropdown-item"><i class="fa-solid fa-house"></i> Home</a>
+      <a href="about.html" class="dropdown-item"><i class="fa-solid fa-info-circle"></i> About</a>
+      <a href="services.html" class="dropdown-item"><i class="fa-solid fa-gear"></i> Services</a>
+      <a href="contact.html" class="dropdown-item"><i class="fa-solid fa-envelope"></i> Contact</a>
+      <a href="#" id="dropdown-logout" class="dropdown-logout"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+    </div>
+  </div>
+</header>
+
+<main class="main-container">
+  <div class="profile-card page-center">
+    <h1 class="profile-title">Your Profile</h1>
+
+    <div class="profile-info">
+      <div class="input-group">
+        <i class="fa-solid fa-user input-icon"></i>
+        <input type="text" id="profile-name" placeholder="Enter your name" />
+      </div>
+      <div class="input-group">
+        <i class="fa-solid fa-envelope input-icon"></i>
+        <input type="email" id="profile-email" placeholder="Enter your email" />
+      </div>
+      <div class="input-group">
+        <i class="fa-solid fa-lock input-icon"></i>
+        <input type="password" id="profile-pass" placeholder="********" disabled />
+      </div>
     </div>
 
-    <nav class="nav">
-      <a href="index.html" class="nav-btn">Home</a>
-      <a href="shop.html" class="nav-btn">Shop</a>
-      <a href="about.html" class="nav-btn">About</a>
-      <a href="contact.html" class="nav-btn">Contact</a>
-      <a href="cart.html" class="nav-btn">Cart (<span id="cart-count">0</span>)</a>
-    </nav>
-
-    <div class="right">
-      <p id="user-display" class="user-display"></p>
-      <a href="login.html" id="login-link" class="btn small">Login</a>
-
-      <!-- Hamburger Menu -->
-      <div class="hamburger-menu" id="hamburger-menu">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-
-      <div class="hamburger-dropdown" id="hamburger-dropdown">
-        <p id="dropdown-user" class="dropdown-user"></p>
-        <a href="profile.html" class="dropdown-item"><i class="fa-solid fa-user"></i> Profile</a>
-        <a href="index.html" class="dropdown-item"><i class="fa-solid fa-house"></i> Home</a>
-        <a href="about.html" class="dropdown-item"><i class="fa-solid fa-info-circle"></i> About</a>
-        <a href="services.html" class="dropdown-item"><i class="fa-solid fa-gear"></i> Services</a>
-        <a href="contact.html" class="dropdown-item"><i class="fa-solid fa-envelope"></i> Contact</a>
-        <a href="#" id="dropdown-logout" class="dropdown-logout"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
-      </div>
+    <div class="profile-actions">
+      <button id="save-profile" class="btn big">Save Changes</button>
+      <a href="#" id="logout-btn-main" class="btn alt">Logout</a>
     </div>
-  </header>
+  </div>
+</main>
 
-  <!-- ===== MAIN ===== -->
-  <main class="main-container">
-    <div class="profile-card page-center">
-      <h1 class="profile-title">Your Profile</h1>
+<footer class="site-footer">© Chuyzzz Midnight Snack • All Rights Reserved</footer>
 
-      <div class="profile-info">
-        <div class="input-group">
-          <i class="fa-solid fa-user input-icon"></i>
-          <input type="text" id="profile-name" placeholder="Enter your name" />
-        </div>
+<script src="assets/js/auth.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const nameInput = document.getElementById("profile-name");
+  const emailInput = document.getElementById("profile-email");
+  const saveBtn = document.getElementById("save-profile");
+  const logoutBtnMain = document.getElementById("logout-btn-main");
+  const dropdownLogout = document.getElementById("dropdown-logout");
+  const userDisplay = document.getElementById("user-display");
+  const dropdownUser = document.getElementById("dropdown-user");
+  const hamburger = document.getElementById("hamburger-menu");
+  const dropdown = document.getElementById("hamburger-dropdown");
+  const cartCountEl = document.getElementById("cart-count");
+  const loginLink = document.getElementById("login-link");
 
-        <div class="input-group">
-          <i class="fa-solid fa-envelope input-icon"></i>
-          <input type="email" id="profile-email" placeholder="Enter your email" />
-        </div>
+  function getLoggedUser() {
+    const email = localStorage.getItem("loggedUser");
+    if (!email) return null;
+    const users = JSON.parse(localStorage.getItem("users") || "[]");
+    return users.find(u => u.email === email) || null;
+  }
 
-        <div class="input-group">
-          <i class="fa-solid fa-lock input-icon"></i>
-          <input type="password" id="profile-pass" placeholder="********" disabled />
-        </div>
-      </div>
+  function initializeProfile() {
+    const user = getLoggedUser();
+    if (!user) {
+      window.location.href = "login.html";
+      return;
+    }
 
-      <div class="profile-actions">
-        <button id="save-profile" class="btn big">Save Changes</button>
-        <a href="#" id="logout-btn-main" class="btn alt">Logout</a>
-      </div>
-    </div>
-  </main>
+    userDisplay.textContent = "Hello, " + user.name + "!";
+    dropdownUser.textContent = user.name;
+    loginLink.style.display = "none";
 
-  <footer class="site-footer">© Chuyzzz Midnight Snack • All Rights Reserved</footer>
+    nameInput.value = user.name;
+    emailInput.value = user.email;
 
-  <!-- ===== SCRIPTS ===== -->
-  <script src="assets/js/auth.js"></script>
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const nameInput = document.getElementById("profile-name");
-      const emailInput = document.getElementById("profile-email");
-      const saveBtn = document.getElementById("save-profile");
-      const logoutBtnMain = document.getElementById("logout-btn-main");
-      const dropdownLogout = document.getElementById("dropdown-logout");
-      const userDisplay = document.getElementById("user-display");
-      const dropdownUser = document.getElementById("dropdown-user");
-      const hamburger = document.getElementById("hamburger-menu");
-      const dropdown = document.getElementById("hamburger-dropdown");
-      const cartCountEl = document.getElementById("cart-count");
-      const loginLink = document.getElementById("login-link");
+    if (cartCountEl) {
+      const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+      cartCountEl.textContent = cart.reduce((s, i) => s + i.quantity, 0);
+    }
+  }
 
-      function getLoggedUser() {
-        const email = localStorage.getItem("loggedUser");
-        if (!email) return null;
-        const users = JSON.parse(localStorage.getItem("users") || "[]");
-        return users.find(u => u.email === email) || null;
-      }
-
-      function initializeProfile() {
-        const user = getLoggedUser();
-        if (!user) {
-          window.location.href = "login.html";
-          return;
-        }
-
-        userDisplay.textContent = "Hello, " + user.name + "!";
-        dropdownUser.textContent = user.name;
-        loginLink.style.display = "none";
-
-        nameInput.value = user.name;
-        emailInput.value = user.email;
-
-        if (cartCountEl) {
-          const cart = JSON.parse(localStorage.getItem("cart") || "[]");
-          cartCountEl.textContent = cart.reduce((s, i) => s + i.quantity, 0);
-        }
-      }
-
-      saveBtn?.addEventListener("click", () => {
-        const user = getLoggedUser();
-        if (!user) return;
-
-        const newName = nameInput.value.trim();
-        const newEmail = emailInput.value.trim();
-
-        if (!newName || !newEmail) {
-          alert("Name and email cannot be empty!");
-          return;
-        }
-
-        const users = JSON.parse(localStorage.getItem("users") || "[]");
-        const index = users.findIndex(u => u.email === user.email);
-        if (index !== -1) {
-          users[index].name = newName;
-          users[index].email = newEmail;
-          localStorage.setItem("users", JSON.stringify(users));
-          localStorage.setItem("loggedUser", newEmail);
-          alert("Profile updated successfully!");
-          initializeProfile();
-        }
-      });
-
-      logoutBtnMain?.addEventListener("click", () => {
-        localStorage.removeItem("loggedUser");
-        window.location.href = "login.html";
-      });
-
-      dropdownLogout?.addEventListener("click", () => {
-        localStorage.removeItem("loggedUser");
-        window.location.href = "login.html";
-      });
-
-      if (hamburger && dropdown) {
-        hamburger.addEventListener("click", e => {
-          e.stopPropagation();
-          dropdown.classList.toggle("show");
-        });
-        document.addEventListener("click", e => {
-          if (!dropdown.contains(e.target) && !hamburger.contains(e.target)) {
-            dropdown.classList.remove("show");
-          }
-        });
-      }
-
+  saveBtn?.addEventListener("click", () => {
+    const user = getLoggedUser();
+    if (!user) return;
+    const newName = nameInput.value.trim();
+    const newEmail = emailInput.value.trim();
+    if (!newName || !newEmail) {
+      alert("Name and email cannot be empty!");
+      return;
+    }
+    const users = JSON.parse(localStorage.getItem("users") || "[]");
+    const index = users.findIndex(u => u.email === user.email);
+    if (index !== -1) {
+      users[index].name = newName;
+      users[index].email = newEmail;
+      localStorage.setItem("users", JSON.stringify(users));
+      localStorage.setItem("loggedUser", newEmail);
+      alert("Profile updated successfully!");
       initializeProfile();
+    }
+  });
+
+  logoutBtnMain?.addEventListener("click", () => {
+    localStorage.removeItem("loggedUser");
+    window.location.href = "login.html";
+  });
+
+  dropdownLogout?.addEventListener("click", () => {
+    localStorage.removeItem("loggedUser");
+    window.location.href = "login.html";
+  });
+
+  if (hamburger && dropdown) {
+    hamburger.addEventListener("click", e => {
+      e.stopPropagation();
+      dropdown.classList.toggle("show");
     });
-  </script>
+    document.addEventListener("click", e => {
+      if (!dropdown.contains(e.target) && !hamburger.contains(e.target)) {
+        dropdown.classList.remove("show");
+      }
+    });
+  }
+
+  initializeProfile();
+});
+</script>
+
 </body>
 </html>
