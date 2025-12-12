@@ -4,36 +4,34 @@ body.night-bg {
   background-size: cover;
   font-family: 'Poppins', sans-serif;
   color: #fff;
+  margin: 0;
+  padding: 0;
 }
 
 /* Center Layout */
 .auth-layout {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
   padding: 1rem;
 }
 
-/* Login Card */
+/* Login/Signup Card */
 .auth-card {
   background: rgba(0,0,0,0.75);
   padding: 2.5rem 2rem;
   border-radius: 25px;
   box-shadow: 0 0 25px rgba(6,182,212,0.7);
-  width: 400px;
-  max-width: 95%;
+  width: 100%;
+  max-width: 400px;
   text-align: center;
   position: relative;
+  box-sizing: border-box;
 }
 
-/* Logo */
-.auth-logo {
-  width: 120px;
-  margin-bottom: 1rem;
-}
-
-/* Title */
+/* Card Title */
 .auth-title {
   font-family: 'Orbitron', sans-serif;
   font-size: 2rem;
@@ -46,16 +44,18 @@ body.night-bg {
 .input-group {
   position: relative;
   margin-bottom: 1.5rem;
+  width: 100%;
 }
 
 .input-group input {
   width: 100%;
-  padding: 1rem 1rem 1rem 2.8rem; /* leave space for icon inside */
+  padding: 0.9rem 1rem 0.9rem 2.8rem; /* space for icon inside */
   border-radius: 12px;
   border: none;
   background: rgba(255,255,255,0.1);
   color: #fff;
   font-size: 1rem;
+  box-sizing: border-box;
   transition: 0.3s;
 }
 
@@ -77,10 +77,14 @@ body.night-bg {
   transform: translateY(-50%);
   color: #06b6d4;
   font-size: 1.2rem;
-  pointer-events: none; /* icon won’t interfere with typing */
+  pointer-events: none;
 }
 
-/* Password Toggle */
+/* Password Toggle Eye */
+.password-group {
+  position: relative;
+}
+
 .password-group .toggle-pass {
   position: absolute;
   top: 50%;
@@ -131,4 +135,35 @@ body.night-bg {
   margin-top: 1rem;
   display: flex;
   justify-content: center;
+}
+
+.auth-logo {
+  width: 120px;
+  margin-bottom: 1rem;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+
+  /* Glow effect */
+  filter: drop-shadow(0 0 8px #06b6d4)
+          drop-shadow(0 0 15px #06b6d4)
+          drop-shadow(0 0 20px #06b6d4);
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+.auth-logo:hover {
+  transform: scale(1.05);
+  filter: drop-shadow(0 0 12px #0e7490)
+          drop-shadow(0 0 20px #0e7490)
+          drop-shadow(0 0 25px #0e7490);
+}   
+
+/* Responsive */
+@media (max-width: 480px) {
+  .auth-card {
+    padding: 2rem 1.5rem;
+  }
+
+  .input-group input {
+    padding-left: 2.5rem;
+  }
 }

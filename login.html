@@ -4,8 +4,10 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Login - Chuyzzz</title>
-  <link rel="stylesheet" href="assets/css/style.css" />
-  <!-- Google Sign-In API -->
+  <link rel="stylesheet" href="assets/css/login.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <!-- Google Sign-In -->
   <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 
@@ -13,29 +15,102 @@
 
   <main class="auth-layout">
 
+    <!-- Login Card -->
     <div class="auth-card">
-      <h2>Login</h2>
+      <img src="assets/images/logo-chuyzzz.png" class="auth-logo" alt="Chuyzzz Logo" />
 
-      <input id="login-email" placeholder="Email" />
-      <input id="login-pass" type="password" placeholder="Password" />
+      <h2 class="auth-title">Welcome Back</h2>
 
-      <button id="login-btn" class="btn">Login</button>
+      <!-- Email Input -->
+      <div class="input-group">
+        <i class="fa-solid fa-envelope input-icon"></i>
+        <input id="login-email" type="email" placeholder="Email" />
+      </div>
+
+      <!-- Password Input -->
+      <div class="input-group password-group">
+        <i class="fa-solid fa-lock input-icon"></i>
+        <input id="login-pass" type="password" placeholder="Password" />
+        <i class="fa-solid fa-eye toggle-pass" id="toggle-pass"></i>
+      </div>
+
+      <!-- Login Button -->
+      <button id="login-btn" class="btn big">Login</button>
 
       <p class="auth-links">
         <a href="signup.html">Create account</a> • 
         <a href="forgot-password.html">Forgot password?</a>
       </p>
 
-      <!-- Google Sign-In Button -->
+      <!-- Google Sign-In -->
       <div id="google-login-container" class="google-wrapper"></div>
-    </div>
-
-    <div class="auth-logo-box">
-      <img src="assets/images/logo-chuyzzz.png" class="auth-logo-side" alt="Chuyzzz Logo" />
     </div>
 
   </main>
 
-  <script src="assets/js/auth.js"></script>
+  <script>
+    // Show/Hide Password
+    const togglePass = document.getElementById('toggle-pass');
+    const passInput = document.getElementById('login-pass');
+    togglePass.addEventListener('click', () => {
+      if(passInput.type === 'password'){
+        passInput.type = 'text';
+        togglePass.classList.replace('fa-eye','fa-eye-slash');
+      } else {
+        passInput.type = 'password';
+        togglePass.classList.replace('fa-eye-slash','fa-eye');
+      }
+    });
+
+    // Normal Login Validation
+    document.getElementById('login-btn').addEventListener('click', () => {
+      const email = document.getElementById('login-email').value.trim();
+      const pass = document.getElementById('login-pass').value.trim();
+
+      if (!email || !pass) {
+        alert("Please fill all fields!");
+        return;
+      }
+
+      const users = JSON.parse(localStorage.getItem('users') || '[]');
+      const user = users.find(u => u.email === email);
+
+      if (!user) {
+        alert("User not found. Please sign up first.");
+        return;
+      }
+
+      localStorage.setItem('loggedUser', email);
+      window.location.href = 'profile.html';
+    });
+
+    // Google Sign-In
+    window.onload = function() {
+      google.accounts.id.initialize({
+        client_id: 'YOUR_GOOGLE_CLIENT_ID',
+        callback: handleGoogleSignIn
+      });
+      google.accounts.id.renderButton(
+        document.getElementById('google-login-container'),
+        { theme: 'filled_blue', size: 'large', shape: 'rectangular', width: '100%' }
+      );
+    };
+
+    function handleGoogleSignIn(response) {
+      const profile = jwt_decode(response.credential);
+      const name = profile.name;
+      const email = profile.email;
+
+      localStorage.setItem('loggedUser', email);
+      const users = JSON.parse(localStorage.getItem('users') || '[]');
+      if (!users.find(u => u.email === email)) {
+        users.push({ name: name, email: email });
+        localStorage.setItem('users', JSON.stringify(users));
+      }
+
+      window.location.href = 'profile.html';
+    }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
 </body>
 </html>
