@@ -21,6 +21,21 @@ function getLoggedUser() {
 }
 
 // ===============================
+// PER-USER CART
+// ===============================
+function getUserCart() {
+  const user = getLoggedUser();
+  const key = user ? `cart_${user.email}` : "cart";
+  return JSON.parse(localStorage.getItem(key) || "[]");
+}
+
+function saveUserCart(cart) {
+  const user = getLoggedUser();
+  const key = user ? `cart_${user.email}` : "cart";
+  localStorage.setItem(key, JSON.stringify(cart));
+}
+
+// ===============================
 // DOM CONTENT LOADED
 // ===============================
 document.addEventListener("DOMContentLoaded", () => {
@@ -34,16 +49,21 @@ document.addEventListener("DOMContentLoaded", () => {
   const dropdown = document.getElementById("hamburger-dropdown");
   const cartCountEl = document.getElementById("cart-count");
 
+  const messageBox = document.createElement("div");
+  messageBox.style.color = "#1e90ff";
+  messageBox.style.textAlign = "center";
+  messageBox.style.margin = "8px 0";
+  document.body.prepend(messageBox);
+
   // ===== Update Header UI =====
   function updateHeaderUI() {
     const user = getLoggedUser();
-
     if (userDisplay) userDisplay.textContent = user ? "Hello, " + user.name + "!" : "";
     if (loginLink) loginLink.style.display = user ? "none" : "inline-block";
     if (dropdownUser) dropdownUser.textContent = user ? user.name : "";
     if (dropdownLogout) dropdownLogout.style.display = user ? "block" : "none";
 
-    // Ensure logout in dropdown is functional
+    // Logout in dropdown
     if (dropdown) {
       let existingLogout = dropdown.querySelector(".dropdown-logout");
       if (!existingLogout && user) {
@@ -82,26 +102,56 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // ===== Cart Count =====
   if (cartCountEl) {
-    const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+    const cart = getUserCart();
     cartCountEl.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
   }
 
   // ===== LOCAL LOGIN =====
   const loginBtn = document.getElementById("login-btn");
   loginBtn?.addEventListener("click", () => {
-    const email = document.getElementById("login-email")?.value.trim();
+    const email = document.getElementById("login-email")?.value.trim().toLowerCase();
     const pass = document.getElementById("login-pass")?.value;
 
     const users = getUsers();
-    const user = users.find(u => u.email === email && u.pass === pass);
+    const user = users.find(u => u.email.toLowerCase() === email && u.pass === pass);
 
     if (user) {
       setLoggedInUser(email);
-      alert("Login successful!");
-      window.location.href = "index.html";
+      messageBox.textContent = "✅ Login successful!";
+      setTimeout(() => window.location.href = "index.html", 800);
     } else {
-      alert("Incorrect email or password.");
+      messageBox.textContent = "❌ Incorrect email or password.";
     }
+  });
+
+  // ===== FORGOT PASSWORD =====
+  const resetBtn = document.getElementById("reset-btn");
+  resetBtn?.addEventListener("click", () => {
+    const email = document.getElementById("fp-email")?.value.trim().toLowerCase();
+    const password = document.getElementById("fp-password")?.value;
+    const password2 = document.getElementById("fp-password2")?.value;
+
+    if (!email || !password || !password2) {
+      messageBox.textContent = "⚠️ Please fill all fields.";
+      return;
+    }
+
+    if (password !== password2) {
+      messageBox.textContent = "⚠️ Passwords do not match.";
+      return;
+    }
+
+    const users = getUsers();
+    const userIndex = users.findIndex(u => u.email.toLowerCase() === email);
+    if (userIndex === -1) {
+      messageBox.textContent = "❌ No account found with this email.";
+      return;
+    }
+
+    users[userIndex].pass = password;
+    saveUsers(users);
+    messageBox.textContent = "✅ Password reset successful!";
+    setTimeout(() => window.location.href = "login.html", 1000);
   });
 
   // ===== GOOGLE LOGIN / SIGNUP =====
@@ -131,42 +181,59 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  function handleGoogleCredential(response) {
+  // ===== JWT DECODE FUNCTION =====
+  function decodeJwtResponse(token) {
     try {
-      const jwt = response.credential;
-      const payload = JSON.parse(atob(jwt.split(".")[1]));
-      const email = payload.email;
-
-      setLoggedInUser(email);
-      alert(`Google login successful! Welcome ${email}`);
-      window.location.href = "index.html";
+      const base64Url = token.split('.')[1];
+      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+      const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+      }).join(''));
+      return JSON.parse(jsonPayload);
     } catch (err) {
-      console.error("Google login error:", err);
-      alert("Google login failed.");
+      console.error("JWT decode error:", err);
+      return null;
     }
   }
 
-  function handleGoogleSignup(response) {
-    try {
-      const jwt = response.credential;
-      const payload = JSON.parse(atob(jwt.split(".")[1]));
-      const email = payload.email;
-
-      const users = getUsers();
-      if (!users.some(u => u.email === email)) {
-        users.push({ name: payload.name || "Google User", email, pass: "" });
-        saveUsers(users);
-        alert(`Google account created for ${email}`);
-      } else {
-        alert(`Account already exists for ${email}`);
-      }
-
-      setLoggedInUser(email);
-      window.location.href = "index.html";
-    } catch (err) {
-      console.error("Google signup error:", err);
-      alert("Google signup failed.");
+  function handleGoogleCredential(response) {
+    const payload = decodeJwtResponse(response.credential);
+    if (!payload || !payload.email) {
+      messageBox.textContent = "❌ Google login failed.";
+      return;
     }
+    const email = payload.email;
+    setLoggedInUser(email);
+
+    const users = getUsers();
+    if (!users.some(u => u.email === email)) {
+      users.push({ name: payload.name || "Google User", email, pass: "" });
+      saveUsers(users);
+    }
+
+    messageBox.textContent = `✅ Google login successful! Welcome ${email}`;
+    setTimeout(() => window.location.href = "index.html", 800);
+  }
+
+  function handleGoogleSignup(response) {
+    const payload = decodeJwtResponse(response.credential);
+    if (!payload || !payload.email) {
+      messageBox.textContent = "❌ Google signup failed.";
+      return;
+    }
+    const email = payload.email;
+
+    const users = getUsers();
+    if (!users.some(u => u.email === email)) {
+      users.push({ name: payload.name || "Google User", email, pass: "" });
+      saveUsers(users);
+      messageBox.textContent = `✅ Google account created for ${email}`;
+    } else {
+      messageBox.textContent = `⚠️ Account already exists for ${email}`;
+    }
+
+    setLoggedInUser(email);
+    setTimeout(() => window.location.href = "index.html", 800);
   }
 
   // ===== INITIALIZE =====

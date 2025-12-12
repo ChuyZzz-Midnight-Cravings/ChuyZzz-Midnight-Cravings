@@ -48,6 +48,7 @@
 
   </main>
 
+  <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
   <script>
     // Show/Hide Password
     const togglePass = document.getElementById('toggle-pass');
@@ -81,13 +82,13 @@
       }
 
       localStorage.setItem('loggedUser', email);
-      window.location.href = 'profile.html';
+      window.location.href = 'index.html';
     });
 
     // Google Sign-In
     window.onload = function() {
       google.accounts.id.initialize({
-        client_id: 'YOUR_GOOGLE_CLIENT_ID',
+        client_id: '540201718454-mub2h4ufht1b749ot2k3t9f019h2fcnm.apps.googleusercontent.com',
         callback: handleGoogleSignIn
       });
       google.accounts.id.renderButton(
@@ -108,9 +109,8 @@
         localStorage.setItem('users', JSON.stringify(users));
       }
 
-      window.location.href = 'profile.html';
+      window.location.href = 'index.html';
     }
   </script>
-  <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
 </body>
 </html>

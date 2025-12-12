@@ -1,0 +1,127 @@
+/* Night Theme Background */
+body.night-bg {
+  background: url('../images/bg-chuyzzz.png') no-repeat center center fixed;
+  background-size: cover;
+  font-family: 'Poppins', sans-serif;
+  color: #fff;
+  margin: 0;
+  padding: 0;
+}
+
+/* Center Layout */
+.auth-layout {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 1rem;
+}
+
+/* Login/Signup Card */
+.auth-card {
+  background: rgba(0,0,0,0.75);
+  padding: 2.5rem 2rem;
+  border-radius: 25px;
+  box-shadow: 0 0 25px rgba(6,182,212,0.7);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  position: relative;
+  box-sizing: border-box;
+}
+
+/* Card Title */
+.auth-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: #06b6d4;
+  text-shadow: 0 0 10px #06b6d4;
+}
+
+/* Input Groups */
+.input-group {
+  position: relative;
+  margin-bottom: 1.5rem;
+  width: 100%;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 0.9rem 1rem;
+  border-radius: 12px;
+  border: none;
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+  font-size: 1rem;
+  box-sizing: border-box;
+  transition: 0.3s;
+}
+
+.input-group input::placeholder {
+  color: #ccc;
+}
+
+.input-group input:focus {
+  outline: none;
+  background: rgba(6,182,212,0.1);
+  box-shadow: 0 0 10px #06b6d4;
+}
+
+/* Password Toggle Eye */
+.password-group {
+  position: relative;
+}
+
+.password-group .toggle-pass {
+  position: absolute;
+  top: 50%;
+  right: 1rem;
+  transform: translateY(-50%);
+  color: #06b6d4;
+  cursor: pointer;
+}
+
+/* Buttons */
+.btn.big {
+  width: 100%;
+  padding: 1rem;
+  background: #06b6d4;
+  color: #fff;
+  border-radius: 12px;
+  border: none;
+  font-weight: 600;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn.big:hover {
+  background: #0e7490;
+  box-shadow: 0 0 15px #06b6d4;
+}
+
+/* Links */
+.auth-links {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}
+
+.auth-links a {
+  color: #06b6d4;
+  text-decoration: none;
+  transition: 0.2s;
+}
+
+.auth-links a:hover {
+  color: #0e7490;
+  text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .auth-card {
+    padding: 2rem 1.5rem;
+  }
+}
