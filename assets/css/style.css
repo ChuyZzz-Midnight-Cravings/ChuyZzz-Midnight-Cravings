@@ -879,15 +879,19 @@ body {
     color: #d7f7ff;
     margin-bottom: 30px;
 }
-
-/* HERO RIGHT LOGO */
 .hero-right img {
     width: 360px;
     max-width: 100%;
-    border-radius: 20px;
+    border-radius: 50%; 
+    
+    
+    box-shadow: inset 0 0 15px rgba(0, 200, 255, 0.3);
+    filter: none;
+    transition: transform 0.3s ease;
+}
 
-    box-shadow: 0 0 35px rgba(0,200,255,0.35);
-    filter: drop-shadow(0 0 10px rgba(0,200,255,0.3));
+.hero-right img:hover {
+    transform: scale(1.05); 
 }
 
 /* HERO BUTTONS */
@@ -994,4 +998,124 @@ body {
 
     color: #b8e9ff;
     text-shadow: 0 0 8px rgba(0,200,255,0.6);
+}
+/* ===== Right Section ===== */
+.right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  position: relative; /* Needed for dropdown positioning */
+}
+
+/* ===== Hamburger Menu ===== */
+.hamburger-menu {
+  display: none; /* Hidden on desktop */
+  flex-direction: column;
+  justify-content: space-between;
+  width: 28px;
+  height: 22px;
+  cursor: pointer;
+}
+
+.hamburger-menu span {
+  display: block;
+  height: 4px;
+  width: 100%;
+  background: #00baff; /* Neon Blue */
+  border-radius: 2px;
+  transition: 0.3s ease;
+  box-shadow: 0 0 5px #00baff, 0 0 10px #00baff;
+}
+
+/* ===== Hamburger Dropdown ===== */
+.hamburger-dropdown {
+  display: none;
+  position: absolute;
+  top: 50px; /* Below hamburger icon */
+  right: 0;
+  background: rgba(0, 0, 0, 0.9);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  flex-direction: column;
+  gap: 12px;
+  padding: 12px 18px;
+  z-index: 1000;
+  min-width: 160px;
+  box-shadow: 0 8px 25px rgba(0, 0, 255, 0.5);
+}
+
+/* ===== Glow for Hamburger Dropdown Links ===== */
+.hamburger-dropdown .dropdown-item {
+  color: #b8e9ff;
+  text-decoration: none;
+  font-weight: 700;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: 0.2s;
+
+  /* Neon Glow Effect */
+  text-shadow:
+     0 0 5px #00baff,
+     0 0 10px #00baff,
+     0 0 20px #00baff,
+     0 0 30px #00baff;
+}
+
+.hamburger-dropdown .dropdown-item:hover {
+  background: rgba(255,255,255,0.1);
+  text-shadow:
+     0 0 10px #00ffff,
+     0 0 20px #00ffff,
+     0 0 30px #00ffff,
+     0 0 40px #00ffff;
+}
+
+/* Logout link with stronger glow */
+.hamburger-dropdown .dropdown-logout {
+  color: #ffb92a;
+  border-top: 1px solid rgba(255,255,255,0.2);
+  margin-top: 6px;
+  text-shadow:
+     0 0 5px #ffb92a,
+     0 0 10px #ffb92a,
+     0 0 20px #ffb92a,
+     0 0 30px #ffb92a;
+}
+
+/* Logged-in User Display in dropdown */
+.hamburger-dropdown .dropdown-user {
+  font-weight: 700;
+  color: #5ed8ff;
+  text-shadow:
+     0 0 5px #5ed8ff,
+     0 0 10px #5ed8ff,
+     0 0 20px #5ed8ff;
+  margin-bottom: 8px;
+}
+
+/* Optional: glow for user name on desktop top-right */
+.user-display {
+  font-weight: 600;
+  color: #ffcf57;
+  text-shadow:
+     0 0 5px #ffcf57,
+     0 0 10px #ffcf57,
+     0 0 20px #ffcf57;
+}
+
+/* Show dropdown */
+.hamburger-dropdown.show {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ===== Responsive for Small Screens ===== */
+@media screen and (max-width: 900px) {
+  .nav {
+    display: none; /* Hide normal nav on mobile */
+  }
+
+  .hamburger-menu {
+    display: flex; /* Show hamburger */
+  }
 }
