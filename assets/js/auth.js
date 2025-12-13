@@ -49,12 +49,23 @@ document.addEventListener("DOMContentLoaded", () => {
   const dropdown = document.getElementById("hamburger-dropdown");
   const cartCountEl = document.getElementById("cart-count");
 
+  // ===== Message Box =====
   const messageBox = document.createElement("div");
   messageBox.style.color = "#1e90ff";
   messageBox.style.textAlign = "center";
   messageBox.style.margin = "8px 0";
   messageBox.style.wordBreak = "break-word"; // responsive text wrap
+  messageBox.style.transition = "opacity 0.4s ease";
   document.body.prepend(messageBox);
+
+  function showMessage(msg, duration = 3000) {
+    messageBox.textContent = msg;
+    messageBox.style.opacity = "1";
+    setTimeout(() => {
+      messageBox.style.opacity = "0";
+      setTimeout(() => messageBox.textContent = '', 400);
+    }, duration);
+  }
 
   // ===== Update Header UI =====
   function updateHeaderUI() {
@@ -64,7 +75,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (dropdownUser) dropdownUser.textContent = user ? user.name : "";
     if (dropdownLogout) dropdownLogout.style.display = user ? "block" : "none";
 
-    // Logout in dropdown
     if (dropdown) {
       let existingLogout = dropdown.querySelector(".dropdown-logout");
       if (!existingLogout && user) {
@@ -72,7 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
         logoutLink.href = "#";
         logoutLink.textContent = "Logout";
         logoutLink.classList.add("dropdown-logout");
-        logoutLink.style.wordBreak = "break-word"; // responsive
+        logoutLink.style.wordBreak = "break-word";
         logoutLink.addEventListener("click", () => {
           localStorage.removeItem("loggedUser");
           window.location.href = "login.html";
@@ -103,11 +113,14 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ===== Cart Count =====
-  if (cartCountEl) {
-    const cart = getUserCart();
-    cartCountEl.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
-    cartCountEl.style.wordBreak = "break-word"; // responsive
+  function updateCartCount() {
+    if (cartCountEl) {
+      const cart = getUserCart();
+      cartCountEl.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+      cartCountEl.style.wordBreak = "break-word";
+    }
   }
+  updateCartCount();
 
   // ===== LOCAL LOGIN =====
   const loginBtn = document.getElementById("login-btn");
@@ -120,10 +133,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (user) {
       setLoggedInUser(email);
-      messageBox.textContent = "✅ Login successful!";
+      showMessage("✅ Login successful!");
       setTimeout(() => window.location.href = "index.html", 800);
     } else {
-      messageBox.textContent = "❌ Incorrect email or password.";
+      showMessage("❌ Incorrect email or password.");
     }
   });
 
@@ -135,25 +148,25 @@ document.addEventListener("DOMContentLoaded", () => {
     const password2 = document.getElementById("fp-password2")?.value;
 
     if (!email || !password || !password2) {
-      messageBox.textContent = "⚠️ Please fill all fields.";
+      showMessage("⚠️ Please fill all fields.");
       return;
     }
 
     if (password !== password2) {
-      messageBox.textContent = "⚠️ Passwords do not match.";
+      showMessage("⚠️ Passwords do not match.");
       return;
     }
 
     const users = getUsers();
     const userIndex = users.findIndex(u => u.email.toLowerCase() === email);
     if (userIndex === -1) {
-      messageBox.textContent = "❌ No account found with this email.";
+      showMessage("❌ No account found with this email.");
       return;
     }
 
     users[userIndex].pass = password;
     saveUsers(users);
-    messageBox.textContent = "✅ Password reset successful!";
+    showMessage("✅ Password reset successful!");
     setTimeout(() => window.location.href = "login.html", 1000);
   });
 
@@ -169,19 +182,9 @@ document.addEventListener("DOMContentLoaded", () => {
     if (googleBtnContainer) {
       google.accounts.id.renderButton(
         googleBtnContainer,
-        { theme: "outline", size: "large", width: 250, text: "signin_with" }
+        { theme: "outline", size: "large", width: '100%', text: "signin_with" }
       );
-      google.accounts.id.prompt();
     }
-
-    const googleSignupBtn = document.getElementById("google-signup");
-    googleSignupBtn?.addEventListener("click", () => {
-      google.accounts.id.initialize({
-        client_id: clientId,
-        callback: handleGoogleSignup
-      });
-      google.accounts.id.prompt();
-    });
   }
 
   // ===== JWT DECODE FUNCTION =====
@@ -202,7 +205,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function handleGoogleCredential(response) {
     const payload = decodeJwtResponse(response.credential);
     if (!payload || !payload.email) {
-      messageBox.textContent = "❌ Google login failed.";
+      showMessage("❌ Google login failed.");
       return;
     }
     const email = payload.email.toLowerCase();
@@ -214,28 +217,7 @@ document.addEventListener("DOMContentLoaded", () => {
       saveUsers(users);
     }
 
-    messageBox.textContent = `✅ Google login successful! Welcome ${payload.name || email}`;
-    setTimeout(() => window.location.href = "index.html", 800);
-  }
-
-  function handleGoogleSignup(response) {
-    const payload = decodeJwtResponse(response.credential);
-    if (!payload || !payload.email) {
-      messageBox.textContent = "❌ Google signup failed.";
-      return;
-    }
-    const email = payload.email.toLowerCase();
-
-    const users = getUsers();
-    if (!users.some(u => u.email.toLowerCase() === email)) {
-      users.push({ name: payload.name || "Google User", email, pass: "" });
-      saveUsers(users);
-      messageBox.textContent = `✅ Google account created for ${email}`;
-    } else {
-      messageBox.textContent = `⚠️ Account already exists for ${email}`;
-    }
-
-    setLoggedInUser(email);
+    showMessage(`✅ Google login successful! Welcome ${payload.name || email}`);
     setTimeout(() => window.location.href = "index.html", 800);
   }
 
@@ -244,12 +226,104 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // ===== RESPONSIVE HEADER & MESSAGE BOX =====
   function responsiveUI() {
-    if (window.innerWidth <= 768) {
-      messageBox.style.fontSize = "0.85rem";
-    } else {
-      messageBox.style.fontSize = "1rem";
-    }
+    // Message box
+    messageBox.style.fontSize = window.innerWidth <= 768 ? "0.85rem" : "1rem";
+
+    // Hamburger dropdown width
+    if (dropdown) dropdown.style.width = window.innerWidth <= 480 ? "90%" : "200px";
   }
   window.addEventListener("resize", responsiveUI);
   responsiveUI();
+
+  // ===== Auto update cart dynamically =====
+  setInterval(updateCartCount, 2000);
+
+
+  // ===============================
+  // EXTRA RESPONSIVE & MOBILE ENHANCEMENTS
+  // ===============================
+  const header = document.querySelector(".site-header");
+  const footer = document.querySelector(".site-footer");
+  const mainContainer = document.querySelector(".main-container");
+  const heroCard = document.querySelector(".hero-card");
+  const heroLeft = document.querySelector(".hero-left");
+  const heroRight = document.querySelector(".hero-right");
+  const previewGrid = document.querySelector(".preview-grid");
+  const navLinks = document.querySelectorAll(".nav .nav-btn");
+
+  if (header) {
+    header.style.position = "sticky";
+    header.style.top = "0";
+    header.style.zIndex = "1000";
+    header.style.flexWrap = "wrap";
+    header.style.padding = "0.5rem 1rem";
+  }
+
+  if (footer) {
+    footer.style.textAlign = "center";
+    footer.style.padding = "1rem";
+    footer.style.fontSize = "0.9rem";
+  }
+
+  if (mainContainer) {
+    mainContainer.style.padding = "1rem";
+  }
+
+  function adjustHeroLayout() {
+    const width = window.innerWidth;
+    if (!heroCard) return;
+
+    if (width <= 480) {
+      heroCard.style.flexDirection = "column";
+      heroCard.style.alignItems = "center";
+      if (heroLeft) heroLeft.style.textAlign = "center";
+      if (heroRight) heroRight.style.marginTop = "1rem";
+      if (heroRight) heroRight.style.width = "60%";
+    } else if (width <= 768) {
+      heroCard.style.flexDirection = "row";
+      heroCard.style.justifyContent = "space-between";
+      if (heroLeft) heroLeft.style.textAlign = "left";
+      if (heroRight) heroRight.style.marginTop = "0";
+      if (heroRight) heroRight.style.width = "40%";
+    } else {
+      heroCard.style.flexDirection = "";
+      heroCard.style.justifyContent = "";
+      if (heroRight) heroRight.style.width = "";
+    }
+  }
+  window.addEventListener("resize", adjustHeroLayout);
+  adjustHeroLayout();
+
+  function adjustNavLinks() {
+    const width = window.innerWidth;
+    navLinks.forEach(link => {
+      link.style.display = width <= 768 ? "block" : "inline-block";
+      link.style.margin = width <= 768 ? "0.4rem 0" : "0 0.5rem";
+    });
+  }
+  window.addEventListener("resize", adjustNavLinks);
+  adjustNavLinks();
+
+  function adjustFooter() {
+    const width = window.innerWidth;
+    if (footer) {
+      footer.style.fontSize = width <= 480 ? "0.8rem" : "0.9rem";
+      footer.style.padding = width <= 480 ? "0.8rem 0.5rem" : "1rem";
+    }
+  }
+  window.addEventListener("resize", adjustFooter);
+  adjustFooter();
+
+  function adjustPreviewGrid() {
+    if (!previewGrid) return;
+    const width = window.innerWidth;
+    if (width <= 480) previewGrid.style.gridTemplateColumns = "1fr";
+    else if (width <= 768) previewGrid.style.gridTemplateColumns = "repeat(2, 1fr)";
+    else previewGrid.style.gridTemplateColumns = "";
+  }
+  window.addEventListener("resize", adjustPreviewGrid);
+  adjustPreviewGrid();
+
+  document.body.style.transition = "all 0.3s ease";
+
 });
