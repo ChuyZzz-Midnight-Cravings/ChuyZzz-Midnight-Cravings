@@ -1,15 +1,18 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Order Status - Chuyzzz</title>
-  <link rel="stylesheet" href="assets/css/order-status.css" />
-  <script>
-    if (!localStorage.getItem("loggedUser")) {
-      window.location.href = "login.html";
-    }
-  </script>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Order Status - Chuyzzz</title>
+<link rel="stylesheet" href="assets/css/order-status.css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+<script>
+  if (!localStorage.getItem("loggedUser")) {
+    window.location.href = "login.html";
+  }
+</script>
 </head>
 
 <body class="night-bg">
@@ -29,16 +32,39 @@
 
     <div id="os-items"></div>
 
+    <div class="shipping-payment">
+      <p>Shipping: <strong id="shipping-method">Standard Delivery</strong></p>
+      <p>Payment: <strong id="payment-method">GCash</strong></p>
+      <p>Total Amount: <strong id="total-amount">₱0</strong></p>
+    </div>
+
     <div class="status-actions">
       <a href="shop.html" class="btn">Back to Shop</a>
       <button id="mark-delivered" class="btn">Mark as Delivered</button>
     </div>
   </main>
 
-  <script src="assets/js/script.js"></script>
-
   <script>
-    // Load last order or create one for demo
+    // --- DISTANCE & SHIPPING LOGIC ---
+    const storeLocation = { lat: 8.5060, lng: 125.0176 }; // Store coordinates (Manolo Fortich, Bukidnon)
+
+    function getDistanceFromStore(userLat, userLng) {
+      const R = 6371; // Earth radius in km
+      const dLat = (userLat - storeLocation.lat) * Math.PI / 180;
+      const dLng = (userLng - storeLocation.lng) * Math.PI / 180;
+      const a =
+        Math.sin(dLat/2) * Math.sin(dLat/2) +
+        Math.cos(storeLocation.lat * Math.PI/180) * Math.cos(userLat * Math.PI/180) *
+        Math.sin(dLng/2) * Math.sin(dLng/2);
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+      return R * c; // Distance in km
+    }
+
+    function calculateDelivery(distanceKm) {
+      return Math.max(50, distanceKm * 20); // Minimum ₱50
+    }
+
+    // --- LOAD LAST ORDER ---
     let last = JSON.parse(localStorage.getItem('lastOrder') || 'null');
     if (!last) {
       last = {
@@ -47,7 +73,9 @@
         items: [
           {name: 'Midnight Caramel Chips', quantity: 2, price: 120},
           {name: 'Choco Shake', quantity: 1, price: 80}
-        ]
+        ],
+        shipping: 'Standard Delivery',
+        payment: 'GCash'
       };
       localStorage.setItem('lastOrder', JSON.stringify(last));
     }
@@ -56,19 +84,44 @@
     const itemsEl = document.getElementById('os-items');
     const steps = document.querySelectorAll('.progress-step');
     const line = document.getElementById('progress-line');
+    const shippingEl = document.getElementById('shipping-method');
+    const totalEl = document.getElementById('total-amount');
 
     // Display order number
     document.getElementById('os-number').textContent = last.orderNumber;
 
+    // Display payment method
+    document.getElementById('payment-method').textContent = last.payment;
+
     // Display items
+    let subtotal = 0;
     itemsEl.innerHTML = '';
     last.items.forEach(it => {
       const p = document.createElement('p');
       p.textContent = `${it.name} x${it.quantity} — ₱${it.price}`;
       itemsEl.appendChild(p);
+      subtotal += it.price * it.quantity;
     });
 
-    // Status sequence
+    // Default shipping
+    let shippingFee = 80; // fallback
+    shippingEl.textContent = last.shipping;
+
+    // Try geolocation for dynamic delivery
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(pos => {
+        const distanceKm = getDistanceFromStore(pos.coords.latitude, pos.coords.longitude);
+        shippingFee = calculateDelivery(distanceKm);
+        shippingEl.textContent = `${last.shipping} (₱${shippingFee})`;
+        totalEl.textContent = `₱${(subtotal + shippingFee).toFixed(2)}`;
+      }, () => {
+        totalEl.textContent = `₱${(subtotal + shippingFee).toFixed(2)}`;
+      });
+    } else {
+      totalEl.textContent = `₱${(subtotal + shippingFee).toFixed(2)}`;
+    }
+
+    // --- STATUS PROGRESS ---
     const sequence = ['Pending', 'Processing', 'Out for Delivery', 'Delivered'];
     let currentIndex = sequence.indexOf(last.status);
 
@@ -87,13 +140,13 @@
 
       if (currentIndex < sequence.length - 1) {
         currentIndex++;
-        setTimeout(updateProgress, 3000); // 3 seconds per stage
+        setTimeout(updateProgress, 3000);
       }
     }
 
     updateProgress(); // Start animation
 
-    // Mark as Delivered manually
+    // Manual mark as delivered
     document.getElementById("mark-delivered")?.addEventListener("click", () => {
       last.status = "Delivered";
       localStorage.setItem("lastOrder", JSON.stringify(last));

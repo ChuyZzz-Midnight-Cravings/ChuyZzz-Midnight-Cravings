@@ -1,122 +1,150 @@
-/* ===== Body & Layout ===== */
+/* ========================
+   NIGHT THEME BACKGROUND
+======================== */
 body.night-bg {
-  background-color: #0d0d0d;
-  color: #fff;
+  background: url('../images/bg-chuyzzz.png') no-repeat center center fixed;
+  background-size: cover;
   font-family: 'Poppins', sans-serif;
+  color: #fff;
   margin: 0;
   padding: 0;
+  overflow-x: hidden;
 }
 
+/* ========================
+   MAIN CONTAINER
+======================== */
 .status-container {
   max-width: 600px;
-  margin: 50px auto;
-  background-color: #1a1a1a;
-  padding: 30px 20px;
-  border-radius: 15px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.7);
-  text-align: center;
-}
-
-.status-container h1 {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 2rem;
-  margin-bottom: 20px;
-}
-
-.status-container p {
-  margin: 10px 0;
-  font-size: 1.1rem;
-}
-
-/* ===== Status Badge ===== */
-.status-badge {
-  display: inline-block;
-  padding: 6px 12px;
+  margin: 3rem auto 4rem auto;
+  background: rgba(20, 20, 30, 0.8);
+  padding: 2rem;
   border-radius: 20px;
+  box-shadow: 0 0 30px rgba(30,144,255,0.6);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+/* HEADER */
+h1 {
+  text-align: center;
+  font-family: 'Orbitron', sans-serif;
+  margin-bottom: 1rem;
+  color: #1e90ff;
+  text-shadow: 0 0 8px #1e90ff;
+}
+
+/* STATUS BADGE */
+.status-badge {
+  padding: 0.3rem 0.8rem;
+  border-radius: 15px;
   font-weight: 600;
-  color: #fff;
-  transition: all 0.5s ease;
+  text-transform: uppercase;
+  box-shadow: 0 0 8px rgba(30,144,255,0.5);
+  display: inline-block;
 }
 
-.status-badge.pending {
-  background-color: #ffa500; /* orange */
-}
+.pending { background: rgba(255,165,0,0.8); color: #000; }
+.processing { background: rgba(30,144,255,0.8); color: #fff; }
+.out-for-delivery { background: rgba(255,111,97,0.8); color: #fff; }
+.delivered { background: rgba(50,205,50,0.8); color: #000; }
 
-.status-badge.processing {
-  background-color: #1e90ff; /* blue */
-}
-
-.status-badge.out-for-delivery {
-  background-color: #ff69b4; /* pink */
-}
-
-.status-badge.delivered {
-  background-color: #28a745; /* green */
-}
-
-/* ===== Progress Bar ===== */
+/* PROGRESS BAR */
 .progress-bar {
   display: flex;
   justify-content: space-between;
   position: relative;
-  margin: 30px 0;
-  padding: 0 10px;
+  margin: 2rem 0;
 }
 
 .progress-step {
+  flex: 1;
+  text-align: center;
+  font-size: 0.85rem;
+  color: #aaa;
   position: relative;
   z-index: 1;
-  width: 25%;
-  text-align: center;
-  font-size: 0.9rem;
-  color: #bbb;
-  transition: color 0.5s ease;
+  transition: color 0.3s;
 }
 
 .progress-step.active {
   color: #fff;
-  font-weight: 600;
+  font-weight: bold;
+  text-shadow: 0 0 5px #1e90ff;
 }
 
 .progress-line {
   position: absolute;
   top: 50%;
-  left: 12.5%;
+  left: 0;
   height: 4px;
-  background-color: #1e90ff;
-  width: 0;
+  background: #1e90ff;
+  width: 0%;
+  transition: width 0.5s ease;
   z-index: 0;
   border-radius: 2px;
-  transition: width 1s ease;
 }
 
-/* ===== Items List ===== */
+/* ITEMS LIST */
 #os-items p {
-  background-color: #222;
-  margin: 5px 0;
-  padding: 8px 12px;
-  border-radius: 8px;
+  background: rgba(0,0,0,0.3);
+  margin: 0.5rem 0;
+  padding: 0.5rem 0.8rem;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(30,144,255,0.4);
 }
 
-/* ===== Buttons ===== */
-.btn {
-  display: inline-block;
-  background-color: #1e90ff;
+/* SHIPPING & PAYMENT */
+.shipping-payment {
+  margin-top: 1.5rem;
+  background: rgba(0,0,0,0.3);
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(30,144,255,0.3);
+}
+
+.shipping-payment p {
+  margin: 0.4rem 0;
+}
+
+/* ACTION BUTTONS */
+.status-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+
+.status-actions .btn {
+  flex: 1;
+  margin: 0.3rem;
+  padding: 0.8rem;
+  background: rgba(30,144,255,0.8);
   color: #fff;
-  padding: 10px 20px;
-  margin: 10px 5px 0 5px;
   border: none;
-  border-radius: 10px;
-  text-decoration: none;
+  border-radius: 12px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
+  text-align: center;
+  transition: all 0.3s;
+  box-shadow: 0 0 15px rgba(30,144,255,0.5);
 }
 
-.btn:hover {
-  background-color: #0b61c3;
+.status-actions .btn:hover {
+  background: rgba(50,205,50,0.8);
+  box-shadow: 0 0 20px rgba(50,205,50,0.6);
 }
 
-.status-actions {
-  margin-top: 20px;
+/* RESPONSIVE */
+@media screen and (max-width: 480px) {
+  .status-container {
+    margin: 1rem;
+    padding: 1rem;
+  }
+  .status-actions {
+    flex-direction: column;
+  }
+  .status-actions .btn {
+    width: 100%;
+  }
 }

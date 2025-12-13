@@ -5,17 +5,10 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Cart - Chuyzzz</title>
-  <link rel="stylesheet" href="assets/css/style.css" />
-
-  <script>
-    if (!localStorage.getItem("loggedUser")) {
-      window.location.href = "login.html";
-    }
-  </script>
+  <link rel="stylesheet" href="assets/css/cart.css" />
 </head>
 
-<body class="night-bg">
-
+<body>
   <!-- ===== HEADER ===== -->
   <header class="site-header">
     <div class="left">
@@ -31,26 +24,29 @@
     </nav>
 
     <div class="right">
+      <!-- User display -->
       <p id="user-display" class="user-display"></p>
-      <a href="login.html" id="login-link" class="btn small">Login</a>
-
+      <!-- Hamburger Menu Icon -->
       <div class="hamburger-menu" id="hamburger-menu">
         <span></span>
         <span></span>
         <span></span>
       </div>
 
+      <!-- Hamburger Dropdown -->
       <div class="hamburger-dropdown" id="hamburger-dropdown">
+        <span id="dropdown-user" class="dropdown-user"></span>
         <a href="profile.html" class="dropdown-item">Profile</a>
         <a href="index.html" class="dropdown-item">Home</a>
         <a href="about.html" class="dropdown-item">About</a>
-        <a href="shop.html" class="dropdown-item">Shop</a>
+        <a href="services.html" class="dropdown-item">Services</a>
         <a href="contact.html" class="dropdown-item">Contact</a>
         <a href="#" id="dropdown-logout" class="dropdown-logout">Logout</a>
       </div>
     </div>
   </header>
 
+  <!-- ===== MAIN ===== -->
   <main class="main-container">
     <h1 class="section-title">Your Cart</h1>
     <div id="cart-items" class="cart-items"></div>
@@ -67,9 +63,12 @@
     </div>
   </main>
 
+  <!-- ===== FOOTER ===== -->
   <footer class="site-footer">© Chuyzzz Midnight Snack</footer>
 
-  <script src="assets/js/script.js"></script>
+  <!-- ===== SCRIPTS ===== -->
+  <script src="assets/js/auth.js"></script>
   <script src="assets/js/cart.js"></script>
 </body>
+
 </html>

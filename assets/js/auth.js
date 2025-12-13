@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
   messageBox.style.color = "#1e90ff";
   messageBox.style.textAlign = "center";
   messageBox.style.margin = "8px 0";
-  messageBox.style.wordBreak = "break-word"; // responsive text wrap
+  messageBox.style.wordBreak = "break-word";
   messageBox.style.transition = "opacity 0.4s ease";
   document.body.prepend(messageBox);
 
@@ -127,7 +127,6 @@ document.addEventListener("DOMContentLoaded", () => {
   loginBtn?.addEventListener("click", () => {
     const email = document.getElementById("login-email")?.value.trim().toLowerCase();
     const pass = document.getElementById("login-pass")?.value;
-
     const users = getUsers();
     const user = users.find(u => u.email.toLowerCase() === email && u.pass === pass);
 
@@ -151,7 +150,6 @@ document.addEventListener("DOMContentLoaded", () => {
       showMessage("⚠️ Please fill all fields.");
       return;
     }
-
     if (password !== password2) {
       showMessage("⚠️ Passwords do not match.");
       return;
@@ -187,14 +185,13 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // ===== JWT DECODE FUNCTION =====
   function decodeJwtResponse(token) {
     try {
       const base64Url = token.split('.')[1];
       const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-      const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
-        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-      }).join(''));
+      const jsonPayload = decodeURIComponent(atob(base64).split('').map(c =>
+        '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
+      ).join(''));
       return JSON.parse(jsonPayload);
     } catch (err) {
       console.error("JWT decode error:", err);
@@ -221,109 +218,73 @@ document.addEventListener("DOMContentLoaded", () => {
     setTimeout(() => window.location.href = "index.html", 800);
   }
 
-  // ===== INITIALIZE =====
+  // ===== PROFILE PAGE FUNCTIONS =====
+  const profileName = document.getElementById("profile-name");
+  const profileEmail = document.getElementById("profile-email");
+  const saveProfileBtn = document.getElementById("save-profile");
+  const logoutProfileBtn = document.getElementById("logout-btn-main");
+
+  function initializeProfilePage() {
+    const user = getLoggedUser();
+    if (!user) return;
+    if (profileName) profileName.value = user.name;
+    if (profileEmail) profileEmail.value = user.email;
+  }
+
+  saveProfileBtn?.addEventListener("click", () => {
+    const user = getLoggedUser();
+    if (!user) return;
+    const newName = profileName.value.trim();
+    const newEmail = profileEmail.value.trim();
+    if (!newName || !newEmail) return alert("Name and email cannot be empty!");
+
+    const users = getUsers();
+    const index = users.findIndex(u => u.email === user.email);
+    if (index !== -1) {
+      users[index].name = newName;
+      users[index].email = newEmail;
+      saveUsers(users);
+      setLoggedInUser(newEmail);
+      alert("Profile updated successfully!");
+      initializeProfilePage();
+      updateHeaderUI();
+    }
+  });
+
+  logoutProfileBtn?.addEventListener("click", () => {
+    localStorage.removeItem("loggedUser");
+    window.location.href = "login.html";
+  });
+
+  initializeProfilePage();
   updateHeaderUI();
 
-  // ===== RESPONSIVE HEADER & MESSAGE BOX =====
+  // ===== RESPONSIVE ADJUSTMENTS =====
   function responsiveUI() {
-    // Message box
     messageBox.style.fontSize = window.innerWidth <= 768 ? "0.85rem" : "1rem";
-
-    // Hamburger dropdown width
     if (dropdown) dropdown.style.width = window.innerWidth <= 480 ? "90%" : "200px";
   }
   window.addEventListener("resize", responsiveUI);
   responsiveUI();
 
-  // ===== Auto update cart dynamically =====
+  // ===== AUTO UPDATE CART =====
   setInterval(updateCartCount, 2000);
 
-
-  // ===============================
-  // EXTRA RESPONSIVE & MOBILE ENHANCEMENTS
-  // ===============================
-  const header = document.querySelector(".site-header");
+  // ===== FOOTER STICKY =====
   const footer = document.querySelector(".site-footer");
   const mainContainer = document.querySelector(".main-container");
-  const heroCard = document.querySelector(".hero-card");
-  const heroLeft = document.querySelector(".hero-left");
-  const heroRight = document.querySelector(".hero-right");
-  const previewGrid = document.querySelector(".preview-grid");
-  const navLinks = document.querySelectorAll(".nav .nav-btn");
-
-  if (header) {
-    header.style.position = "sticky";
-    header.style.top = "0";
-    header.style.zIndex = "1000";
-    header.style.flexWrap = "wrap";
-    header.style.padding = "0.5rem 1rem";
-  }
-
-  if (footer) {
-    footer.style.textAlign = "center";
-    footer.style.padding = "1rem";
-    footer.style.fontSize = "0.9rem";
-  }
-
-  if (mainContainer) {
-    mainContainer.style.padding = "1rem";
-  }
-
-  function adjustHeroLayout() {
-    const width = window.innerWidth;
-    if (!heroCard) return;
-
-    if (width <= 480) {
-      heroCard.style.flexDirection = "column";
-      heroCard.style.alignItems = "center";
-      if (heroLeft) heroLeft.style.textAlign = "center";
-      if (heroRight) heroRight.style.marginTop = "1rem";
-      if (heroRight) heroRight.style.width = "60%";
-    } else if (width <= 768) {
-      heroCard.style.flexDirection = "row";
-      heroCard.style.justifyContent = "space-between";
-      if (heroLeft) heroLeft.style.textAlign = "left";
-      if (heroRight) heroRight.style.marginTop = "0";
-      if (heroRight) heroRight.style.width = "40%";
+  function fixFooter() {
+    if (!footer || !mainContainer) return;
+    const bodyHeight = document.body.offsetHeight;
+    const windowHeight = window.innerHeight;
+    if (bodyHeight < windowHeight) {
+      footer.style.position = "absolute";
+      footer.style.bottom = "0";
+      footer.style.width = "100%";
     } else {
-      heroCard.style.flexDirection = "";
-      heroCard.style.justifyContent = "";
-      if (heroRight) heroRight.style.width = "";
+      footer.style.position = "relative";
     }
   }
-  window.addEventListener("resize", adjustHeroLayout);
-  adjustHeroLayout();
-
-  function adjustNavLinks() {
-    const width = window.innerWidth;
-    navLinks.forEach(link => {
-      link.style.display = width <= 768 ? "block" : "inline-block";
-      link.style.margin = width <= 768 ? "0.4rem 0" : "0 0.5rem";
-    });
-  }
-  window.addEventListener("resize", adjustNavLinks);
-  adjustNavLinks();
-
-  function adjustFooter() {
-    const width = window.innerWidth;
-    if (footer) {
-      footer.style.fontSize = width <= 480 ? "0.8rem" : "0.9rem";
-      footer.style.padding = width <= 480 ? "0.8rem 0.5rem" : "1rem";
-    }
-  }
-  window.addEventListener("resize", adjustFooter);
-  adjustFooter();
-
-  function adjustPreviewGrid() {
-    if (!previewGrid) return;
-    const width = window.innerWidth;
-    if (width <= 480) previewGrid.style.gridTemplateColumns = "1fr";
-    else if (width <= 768) previewGrid.style.gridTemplateColumns = "repeat(2, 1fr)";
-    else previewGrid.style.gridTemplateColumns = "";
-  }
-  window.addEventListener("resize", adjustPreviewGrid);
-  adjustPreviewGrid();
-
-  document.body.style.transition = "all 0.3s ease";
-
+  window.addEventListener("resize", fixFooter);
+  fixFooter();
 });

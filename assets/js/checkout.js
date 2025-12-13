@@ -1,5 +1,43 @@
-// --- CART.JS ---
+// ===============================
+// CART + CHECKOUT JS
+// ===============================
 
+// --- STORE LOCATION ---
+const storeLocation = { lat: 8.5060, lng: 125.0176 };
+
+// --- Haversine formula to calculate distance ---
+function getDistanceFromStore(userLat, userLng) {
+  const R = 6371; // Earth radius in km
+  const dLat = (userLat - storeLocation.lat) * Math.PI / 180;
+  const dLng = (userLng - storeLocation.lng) * Math.PI / 180;
+  const a =
+    Math.sin(dLat/2) * Math.sin(dLat/2) +
+    Math.cos(storeLocation.lat * Math.PI/180) * Math.cos(userLat * Math.PI/180) *
+    Math.sin(dLng/2) * Math.sin(dLng/2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+  return R * c; // km
+}
+
+// --- Delivery calculation: ₱20 per km, minimum ₱50 ---
+function calculateDelivery(distanceKm) {
+  return Math.max(50, distanceKm * 20);
+}
+
+// --- SHIPPING OPTIONS ---
+const shippingOptions = [
+  { method: 'Standard Delivery', price: 50 },
+  { method: 'Express Delivery', price: 100 }
+];
+
+function selectShipping(index) {
+  const option = shippingOptions[index];
+  document.getElementById('shipping-method').textContent = option.method;
+  const checkoutForm = document.getElementById('checkout-form');
+  if (checkoutForm) checkoutForm.dataset.shippingPrice = option.price;
+  updateCheckoutTotal();
+}
+
+// --- CART FUNCTIONS ---
 function renderCartPage() {
   const container = document.getElementById('cart-items');
   if (!container) return;
@@ -14,7 +52,6 @@ function renderCartPage() {
     updateTotals();
     updateCartCount();
 
-    // Disable checkout button
     if (checkoutBtn) {
       checkoutBtn.style.pointerEvents = 'none';
       checkoutBtn.style.opacity = '0.5';
@@ -43,7 +80,6 @@ function renderCartPage() {
     container.appendChild(el);
   });
 
-  // Attach event listeners
   document.querySelectorAll('.qty-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       changeQty(parseInt(btn.dataset.index), parseInt(btn.dataset.delta));
@@ -59,7 +95,6 @@ function renderCartPage() {
   updateTotals();
   updateCartCount();
 
-  // Enable checkout button if cart has items
   if (checkoutBtn) {
     checkoutBtn.style.pointerEvents = 'auto';
     checkoutBtn.style.opacity = '1';
@@ -85,11 +120,20 @@ function removeItem(index) {
 
 function updateTotals() {
   const cart = JSON.parse(localStorage.getItem('cart') || '[]');
-  const subtotal = cart.reduce((s, i) => s + i.price * i.quantity, 0);
-  const delivery = subtotal > 0 ? 80 : 0; // Temporary fallback, updated in checkout
+  let subtotal = cart.reduce((s, i) => s + i.price * i.quantity, 0);
+
+  // Get shipping from checkout form
+  let delivery = 80; // fallback
+  const checkoutForm = document.getElementById('checkout-form');
+  if (checkoutForm && checkoutForm.dataset.shippingPrice) {
+    delivery = parseFloat(checkoutForm.dataset.shippingPrice);
+  }
+
+  const total = subtotal + delivery;
+
   document.getElementById('cart-subtotal').textContent = subtotal.toFixed(2);
   document.getElementById('cart-delivery').textContent = delivery.toFixed(2);
-  document.getElementById('cart-total').textContent = (subtotal + delivery).toFixed(2);
+  document.getElementById('cart-total').textContent = total.toFixed(2);
 }
 
 function updateCartCount() {
@@ -99,36 +143,11 @@ function updateCartCount() {
   if (cartCount) cartCount.textContent = count;
 }
 
-window.addEventListener('DOMContentLoaded', renderCartPage);
-
-// --- CHECKOUT.JS ---
-
-// Store location: Manolo Fortich, Bukidnon
-const storeLocation = { lat: 8.5060, lng: 125.0176 };
-
-// Haversine formula to calculate distance in km
-function getDistanceFromStore(userLat, userLng) {
-  const R = 6371; // Earth radius in km
-  const dLat = (userLat - storeLocation.lat) * Math.PI / 180;
-  const dLng = (userLng - storeLocation.lng) * Math.PI / 180;
-  const a = 
-    Math.sin(dLat/2) * Math.sin(dLat/2) +
-    Math.cos(storeLocation.lat * Math.PI/180) * Math.cos(userLat * Math.PI/180) *
-    Math.sin(dLng/2) * Math.sin(dLng/2);
-  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-  return R * c; // Distance in km
-}
-
-// Delivery calculation: ₱20 per km, minimum ₱50
-function calculateDelivery(distanceKm) {
-  return Math.max(50, distanceKm * 20);
-}
-
-// Load checkout recap
+// --- CHECKOUT RECAP ---
 function loadCheckoutRecap() {
   const cart = JSON.parse(localStorage.getItem('cart') || '[]');
   let subtotal = cart.reduce((s, i) => s + i.price * i.quantity, 0);
-  let delivery = 80; // fallback
+  let delivery = 80; // default fallback
   let total = subtotal + delivery;
 
   const items = document.getElementById('checkout-items');
@@ -141,7 +160,6 @@ function loadCheckoutRecap() {
 
   updateCartCount();
 
-  // Disable checkout if cart empty
   const placeOrderBtn = document.getElementById('place-order');
   if (cart.length === 0 && placeOrderBtn) {
     placeOrderBtn.disabled = true;
@@ -151,21 +169,22 @@ function loadCheckoutRecap() {
     placeOrderBtn.title = "";
   }
 
-  // Try geolocation for dynamic delivery
+  // Geolocation for distance-based delivery
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(position => {
       const distanceKm = getDistanceFromStore(position.coords.latitude, position.coords.longitude);
       delivery = calculateDelivery(distanceKm);
       total = subtotal + delivery;
 
+      const checkoutForm = document.getElementById('checkout-form');
+      if (checkoutForm) checkoutForm.dataset.distanceKm = distanceKm.toFixed(2);
+      if (checkoutForm && !checkoutForm.dataset.shippingPrice) checkoutForm.dataset.shippingPrice = delivery;
+
       document.getElementById('recap-subtotal').textContent = subtotal.toFixed(2);
       document.getElementById('recap-delivery').textContent = delivery.toFixed(2);
       document.getElementById('recap-total').textContent = total.toFixed(2);
-
-      // Store distance
-      document.getElementById('checkout-form').dataset.distanceKm = distanceKm.toFixed(2);
     }, () => {
-      // Fallback
+      // fallback
       document.getElementById('recap-subtotal').textContent = subtotal.toFixed(2);
       document.getElementById('recap-delivery').textContent = delivery.toFixed(2);
       document.getElementById('recap-total').textContent = total.toFixed(2);
@@ -177,64 +196,72 @@ function loadCheckoutRecap() {
   }
 }
 
-// DOMContentLoaded
+function updateCheckoutTotal() {
+  const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+  let subtotal = cart.reduce((s, i) => s + i.price * i.quantity, 0);
+  const checkoutForm = document.getElementById('checkout-form');
+  const delivery = checkoutForm && checkoutForm.dataset.shippingPrice ? parseFloat(checkoutForm.dataset.shippingPrice) : 80;
+  const total = subtotal + delivery;
+
+  document.getElementById('recap-subtotal').textContent = subtotal.toFixed(2);
+  document.getElementById('recap-delivery').textContent = delivery.toFixed(2);
+  document.getElementById('recap-total').textContent = total.toFixed(2);
+}
+
+// --- PLACE ORDER ---
+function placeOrder() {
+  const name = document.getElementById('del-name').value.trim();
+  const phone = document.getElementById('del-phone').value.trim();
+  const address = document.getElementById('del-address').value.trim();
+  const payment = document.querySelector('input[name="payment"]:checked').value;
+  const shipping = document.getElementById('shipping-method').textContent;
+
+  const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+  if (!name || !phone || !address) { alert('Please fill delivery info'); return; }
+  if (cart.length === 0) { alert('Cart is empty'); return; }
+
+  const checkoutForm = document.getElementById('checkout-form');
+  const distanceKm = checkoutForm && checkoutForm.dataset.distanceKm ? parseFloat(checkoutForm.dataset.distanceKm) : 0;
+  const delivery = checkoutForm && checkoutForm.dataset.shippingPrice ? parseFloat(checkoutForm.dataset.shippingPrice) : calculateDelivery(distanceKm);
+  const subtotal = cart.reduce((s, i) => s + i.price * i.quantity, 0);
+  const total = subtotal + delivery;
+
+  const order = {
+    orderNumber: 'ORD' + Date.now(),
+    name, phone, address, payment, shipping,
+    items: cart, subtotal, delivery, total,
+    distanceKm, status: 'Pending', date: new Date().toISOString()
+  };
+
+  localStorage.setItem('lastOrder', JSON.stringify(order));
+  const adminOrders = JSON.parse(localStorage.getItem('admin_orders') || '[]');
+  adminOrders.unshift(order);
+  localStorage.setItem('admin_orders', JSON.stringify(adminOrders));
+
+  localStorage.removeItem('cart');
+  updateCartCount();
+
+  window.location.href = 'order-success.html';
+}
+
+// --- INIT DOM ---
 window.addEventListener('DOMContentLoaded', () => {
+  renderCartPage();
   loadCheckoutRecap();
 
   // Payment toggle
   document.querySelectorAll('input[name="payment"]').forEach(radio => {
     radio.addEventListener('change', () => {
-      const selected = document.querySelector('input[name="payment"]:checked').value;
-      document.getElementById('card-section').style.display = selected === 'card' ? 'block' : 'none';
+      document.getElementById('card-section').style.display =
+        document.querySelector('input[name="payment"]:checked').value === 'Card' ? 'block' : 'none';
     });
   });
 
-  // Place order
-  document.getElementById('place-order').addEventListener('click', () => {
-    const name = document.getElementById('del-name').value.trim();
-    const phone = document.getElementById('del-phone').value.trim();
-    const address = document.getElementById('del-address').value.trim();
-    const payment = document.querySelector('input[name="payment"]:checked').value;
-
-    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
-    if (!name || !phone || !address) {
-      alert('Please fill delivery info');
-      return;
-    }
-    if (cart.length === 0) {
-      alert('Your cart is empty');
-      return;
-    }
-
-    const orderNumber = 'ORD' + Date.now();
-    const subtotal = cart.reduce((s, i) => s + i.price * i.quantity, 0);
-    const distanceKm = parseFloat(document.getElementById('checkout-form').dataset.distanceKm) || 0;
-    const delivery = calculateDelivery(distanceKm);
-    const total = subtotal + delivery;
-
-    const order = {
-      orderNumber,
-      name,
-      phone,
-      address,
-      payment,
-      items: cart,
-      subtotal,
-      delivery,
-      total,
-      distanceKm,
-      status: 'Pending',
-      date: new Date().toISOString()
-    };
-    localStorage.setItem('lastOrder', JSON.stringify(order));
-
-    const adminOrders = JSON.parse(localStorage.getItem('admin_orders') || '[]');
-    adminOrders.unshift(order);
-    localStorage.setItem('admin_orders', JSON.stringify(adminOrders));
-
-    localStorage.removeItem('cart');
-    updateCartCount();
-
-    window.location.href = 'order-success.html';
+  // Shipping select
+  document.getElementById('shipping-select')?.addEventListener('change', e => {
+    selectShipping(parseInt(e.target.value));
   });
+
+  // Place order
+  document.getElementById('place-order')?.addEventListener('click', placeOrder);
 });

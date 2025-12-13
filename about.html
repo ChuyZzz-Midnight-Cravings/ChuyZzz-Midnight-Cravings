@@ -9,37 +9,31 @@
 </head>
 <body class="night-bg">
 
-  <!-- ===== HEADER ===== -->
   <header class="site-header">
-    <div class="left">
-      <img src="assets/images/logo-chuyzzz.png" alt="Chuyzzz Logo" class="logo" />
+  <div class="left">
+    <img src="assets/images/logo-chuyzzz.png" alt="Chuyzzz Logo" class="logo" />
+  </div>
+
+  <nav class="nav">
+    <a href="index.html" class="nav-btn">Home</a>
+    <a href="shop.html" class="nav-btn">Shop</a>
+    <a href="about.html" class="nav-btn">About</a>
+    <a href="contact.html" class="nav-btn">Contact</a>
+    <a href="cart.html" class="nav-btn">Cart (<span id="cart-count">0</span>)</a>
+  </nav>
+
+  <div class="right">
+    <p id="user-display" class="user-display"></p>
+    <a href="login.html" id="login-link" class="btn small">Login</a>
+
+    <!-- Hamburger Menu Icon -->
+    <div class="hamburger-menu" id="hamburger-menu">
+      <span></span>
+      <span></span>
+      <span></span>
     </div>
 
-    <!-- Desktop Nav -->
-    <nav class="nav">
-      <a href="index.html" class="nav-btn">Home</a>
-      <a href="shop.html" class="nav-btn">Shop</a>
-      <a href="about.html" class="nav-btn">About</a>
-      <a href="contact.html" class="nav-btn">Contact</a>
-      <a href="cart.html" class="nav-btn">Cart (<span id="cart-count">0</span>)</a>
-    </nav>
-
-    <!-- Right Section -->
-    <div class="right">
-      <!-- Logged-in User -->
-      <p id="user-display" class="user-display"></p>
-
-      <!-- Login link -->
-      <a href="login.html" id="login-link" class="btn small">Login</a>
-
-      <!-- Hamburger Menu Icon -->
-      <div class="hamburger-menu" id="hamburger-menu">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-
-      <!-- Hamburger Dropdown -->
+     <!-- Hamburger Dropdown -->
       <div class="hamburger-dropdown" id="hamburger-dropdown">
         <a href="profile.html" class="dropdown-item">Profile</a>
         <a href="index.html" class="dropdown-item">Home</a>
@@ -49,7 +43,7 @@
         <a href="#" id="dropdown-logout" class="dropdown-logout">Logout</a>
       </div>
     </div>
-  </header>
+</header>
 
   <!-- ===== MAIN ===== -->
   <main class="main-container">
