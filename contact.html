@@ -4,15 +4,55 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Contact - Chuyzzz</title>
+
+  <!-- Main CSS -->
   <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/contact.css">
+
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+  <!-- Leaflet CSS & JS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+  <style>
+    /* ===== Footer fixed ===== */
+    .site-footer {
+      background-color: rgba(0,0,0,0.8);
+      color: #fff;
+      text-align: center;
+      padding: 15px 0;
+      width: 100%;
+    }
+
+    /* ===== Main spacing for footer ===== */
+    .main-container {
+      min-height: calc(100vh - 80px); 
+      padding-bottom: 20px;
+    }
+
+    /* ===== Leaflet Map Container ===== */
+    .map-container {
+      width: 100%;
+      max-width: 750px;
+      height: 400px;
+      margin: 40px auto;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+    }
+  </style>
 </head>
 
 <body class="night-bg">
 
+  <!-- ===== HEADER ===== -->
   <header class="site-header">
     <div class="left">
-    <img src="assets/images/logo-chuyzzz.png" alt="Chuyzzz Logo" class="logo" />
-  </div>
+      <img src="assets/images/logo-chuyzzz.png" alt="Chuyzzz Logo" class="logo" />
+    </div>
+
     <nav class="nav">
       <a href="index.html" class="nav-btn">Home</a>
       <a href="shop.html" class="nav-btn">Shop</a>
@@ -34,6 +74,7 @@
 
       <!-- Hamburger Dropdown -->
       <div class="hamburger-dropdown" id="hamburger-dropdown">
+        <span id="dropdown-user" class="dropdown-user"></span>
         <a href="profile.html" class="dropdown-item">Profile</a>
         <a href="index.html" class="dropdown-item">Home</a>
         <a href="about.html" class="dropdown-item">About</a>
@@ -44,33 +85,43 @@
     </div>
   </header>
 
+  <!-- ===== MAIN ===== -->
   <main class="main-container">
+    <div class="contact-container">
 
-    <div class="hero-card page-center contact-card">
-      <h1>Contact Us</h1>
-
-      <p class="contact-intro">
-        Have questions, feedback, or concerns?<br>
-        We’d love to hear from you!
-      </p>
-
-      <div class="contact-info">
-        <p><strong>📍 Location:</strong> Damilag, Manolo Fortich Bukidnon</p>
-        <p><strong>📞 Phone:</strong> 0912-345-6789</p>
-        <p><strong>📧 Email:</strong> support@chuyzzz.com</p>
-        <p><strong>🕐 Service Hours:</strong> 8:00 PM – 2:00 AM</p>
+      <!-- Contact Info Card -->
+      <div class="contact-card">
+        <h2>Contact Info</h2>
+        <div class="contact-info">
+          <p>📍 <strong>Location:</strong> Damilag, Manolo Fortich Bukidnon</p>
+          <p>📞 <strong>Phone:</strong> 0912-345-6789</p>
+          <p>📧 <strong>Email:</strong> ChuyZzz@gmail.com</p>
+          <p>🕐 <strong>Service Hours:</strong> 8:00 PM – 2:00 AM</p>
+        </div>
+        <p>We respond quickly—especially during peak craving hours!</p>
       </div>
 
-      <p class="contact-note">
-        We respond as fast as possible—especially during peak craving hours!
-      </p>
+      <!-- Contact Form Card -->
+      <div class="contact-form-card">
+        <h2>Send a Message</h2>
+        <form id="contact-form">
+          <input type="text" placeholder="Your Name" required />
+          <input type="email" placeholder="Your Email" required />
+          <textarea rows="5" placeholder="Your Message" required></textarea>
+          <button type="submit">Send Message</button>
+        </form>
+      </div>
+
     </div>
 
+    <!-- Leaflet Map -->
+    <div id="map" class="map-container"></div>
   </main>
 
-  <script src="assets/js/script.js"></script>
+  <footer class="site-footer">© Chuyzzz Midnight Snack</footer>
+
+  <!-- ===== SCRIPTS ===== -->
   <script>
-    // ===== HEADER AND CART UPDATE =====
     document.addEventListener("DOMContentLoaded", () => {
       const userDisplay = document.getElementById("user-display");
       const loginLink = document.getElementById("login-link");
@@ -79,7 +130,7 @@
       const dropdown = document.getElementById("hamburger-dropdown");
       const cartCountEl = document.getElementById("cart-count");
 
-      // Update header UI
+      // Update header & cart
       function updateHeaderUI() {
         const email = localStorage.getItem("loggedUser");
         if (email) {
@@ -89,12 +140,18 @@
             userDisplay.textContent = "Hello, " + user.name + "!";
             loginLink.style.display = "none";
             dropdownLogout.style.display = "block";
+            document.getElementById("dropdown-user").textContent = user.name;
           }
         } else {
           userDisplay.textContent = "";
           loginLink.style.display = "inline-block";
           dropdownLogout.style.display = "none";
+          document.getElementById("dropdown-user").textContent = "";
         }
+
+        // Update cart count
+        const cart = JSON.parse(localStorage.getItem(`cart_${localStorage.getItem("loggedUser")}`) || "[]");
+        if (cartCountEl) cartCountEl.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
       }
 
       // Logout
@@ -115,13 +172,38 @@
         }
       });
 
-      // Cart count
-      const cart = JSON.parse(localStorage.getItem(`cart_${localStorage.getItem("loggedUser")}`) || "[]");
-      if (cartCountEl) cartCountEl.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
-
       updateHeaderUI();
+
+      // Contact form
+      const form = document.getElementById("contact-form");
+      form.addEventListener("submit", e => {
+        e.preventDefault();
+        alert("Thank you! Your message has been sent.");
+        form.reset();
+      });
+
+      // ===== Initialize Leaflet Map =====
+      const map = L.map('map').setView([8.1234567, 124.9123456], 15);
+
+      // Dark tiles for night theme
+      L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png', {
+        maxZoom: 20,
+        attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a> contributors'
+      }).addTo(map);
+
+      // Custom snack icon marker
+      const snackIcon = L.icon({
+        iconUrl: 'assets/images/icon.png',
+        iconSize: [40, 40],
+        iconAnchor: [20, 40],
+        popupAnchor: [0, -35]
+      });
+
+      L.marker([8.1234567, 124.9123456], { icon: snackIcon })
+        .addTo(map)
+        .bindPopup('<b>Chuyzzz Midnight Snack</b><br>Damilag, Manolo Fortich Bukidnon.')
+        .openPopup();
     });
   </script>
-
 </body>
 </html>
