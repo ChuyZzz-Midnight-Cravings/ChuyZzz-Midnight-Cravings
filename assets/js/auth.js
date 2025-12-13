@@ -10,14 +10,14 @@ function saveUsers(users) {
 }
 
 function setLoggedInUser(email) {
-  localStorage.setItem("loggedUser", email);
+  localStorage.setItem("loggedUser", email.toLowerCase());
 }
 
 function getLoggedUser() {
   const email = localStorage.getItem("loggedUser");
   if (!email) return null;
   const users = getUsers();
-  return users.find(u => u.email === email) || null;
+  return users.find(u => u.email.toLowerCase() === email.toLowerCase()) || null;
 }
 
 // ===============================
@@ -53,6 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
   messageBox.style.color = "#1e90ff";
   messageBox.style.textAlign = "center";
   messageBox.style.margin = "8px 0";
+  messageBox.style.wordBreak = "break-word"; // responsive text wrap
   document.body.prepend(messageBox);
 
   // ===== Update Header UI =====
@@ -71,6 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
         logoutLink.href = "#";
         logoutLink.textContent = "Logout";
         logoutLink.classList.add("dropdown-logout");
+        logoutLink.style.wordBreak = "break-word"; // responsive
         logoutLink.addEventListener("click", () => {
           localStorage.removeItem("loggedUser");
           window.location.href = "login.html";
@@ -104,6 +106,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (cartCountEl) {
     const cart = getUserCart();
     cartCountEl.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+    cartCountEl.style.wordBreak = "break-word"; // responsive
   }
 
   // ===== LOCAL LOGIN =====
@@ -202,16 +205,16 @@ document.addEventListener("DOMContentLoaded", () => {
       messageBox.textContent = "❌ Google login failed.";
       return;
     }
-    const email = payload.email;
+    const email = payload.email.toLowerCase();
     setLoggedInUser(email);
 
     const users = getUsers();
-    if (!users.some(u => u.email === email)) {
+    if (!users.some(u => u.email.toLowerCase() === email)) {
       users.push({ name: payload.name || "Google User", email, pass: "" });
       saveUsers(users);
     }
 
-    messageBox.textContent = `✅ Google login successful! Welcome ${email}`;
+    messageBox.textContent = `✅ Google login successful! Welcome ${payload.name || email}`;
     setTimeout(() => window.location.href = "index.html", 800);
   }
 
@@ -221,10 +224,10 @@ document.addEventListener("DOMContentLoaded", () => {
       messageBox.textContent = "❌ Google signup failed.";
       return;
     }
-    const email = payload.email;
+    const email = payload.email.toLowerCase();
 
     const users = getUsers();
-    if (!users.some(u => u.email === email)) {
+    if (!users.some(u => u.email.toLowerCase() === email)) {
       users.push({ name: payload.name || "Google User", email, pass: "" });
       saveUsers(users);
       messageBox.textContent = `✅ Google account created for ${email}`;
@@ -238,4 +241,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // ===== INITIALIZE =====
   updateHeaderUI();
+
+  // ===== RESPONSIVE HEADER & MESSAGE BOX =====
+  function responsiveUI() {
+    if (window.innerWidth <= 768) {
+      messageBox.style.fontSize = "0.85rem";
+    } else {
+      messageBox.style.fontSize = "1rem";
+    }
+  }
+  window.addEventListener("resize", responsiveUI);
+  responsiveUI();
 });

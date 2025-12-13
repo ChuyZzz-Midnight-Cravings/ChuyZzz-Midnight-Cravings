@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="assets/css/login.css" />
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
 </head>
 
 <body class="night-bg">
@@ -59,19 +60,25 @@
         const pass = passInput.value.trim();
         const pass2 = pass2Input.value.trim();
 
-        // Check if all fields are filled
         if (!name || !email || !pass || !pass2) {
           alert("Please fill all the fields!");
           return;
         }
 
-        // Check if passwords match
         if (pass !== pass2) {
           alert("Passwords do not match!");
           return;
         }
 
-        // If everything is valid, redirect to login.html
+        // Save user in localStorage
+        const users = JSON.parse(localStorage.getItem('users') || '[]');
+        if (users.some(u => u.email.toLowerCase() === email.toLowerCase())) {
+          alert("Account already exists!");
+          return;
+        }
+        users.push({ name, email, pass });
+        localStorage.setItem('users', JSON.stringify(users));
+
         alert("Account created successfully! Redirecting to login...");
         window.location.href = "login.html";
       });
