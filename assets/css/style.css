@@ -386,39 +386,88 @@ body {
   border-radius: 20px;
 }
 
-/* =============================== ABOUT PAGE ================================ */
+/* =============================== GLOBAL NEON STYLES ================================ */
 
-.about-card {
-  margin: 60px auto;
-  background: linear-gradient(to bottom right, rgba(20, 20, 35, 0.8), rgba(15, 15, 25, 0.9));
-  padding: 50px 35px;
-  border-radius: 25px;
-  max-width: 750px;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.8);
-  text-align: center;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+/* Neon Animation Keyframes */
+@keyframes neonPulse {
+  0% {
+    box-shadow: 0 0 10px #00f0ff, 0 0 20px #00f0ff;
+  }
+  50% {
+    box-shadow: 0 0 20px #00f0ff, 0 0 40px #00f0ff;
+  }
+  100% {
+    box-shadow: 0 0 10px #00f0ff, 0 0 20px #00f0ff;
+  }
 }
 
-.about-card:hover {
+/* ===== GENERAL CARD STYLES ===== */
+.card, .contact-card, .contact-form-card, .about-card {
+  transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+  border-radius: 15px;
+  background-color: rgba(20, 20, 35, 0.9); /* slightly darker for better contrast */
+  color: #e0f8ff; /* readable light cyan text */
+}
+
+.card:hover, .contact-card:hover, .contact-form-card:hover, .about-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 18px 35px rgba(0, 0, 0, 0.9);
+  animation: neonPulse 1.5s infinite alternate;
+  border-color: #00f0ff;
+}
+
+/* ===== CONTACT PAGE ===== */
+.contact-card,
+.contact-form-card {
+  border: 2px solid rgba(0, 240, 255, 0.6);
+  padding: 30px;
+  width: 350px;
+  text-align: center;
+  box-shadow: 0 8px 15px rgba(0, 240, 255, 0.3);
+}
+
+.contact-card h2,
+.contact-form-card h2 {
+  color: #00f0ff;
+  text-shadow: 0 0 5px #00f0ff, 0 0 10px #00d0ff; /* reduced glow for readability */
+}
+
+.contact-info p {
+  color: #e0f8ff; /* readable cyan */
+  font-size: 14px;
+}
+
+.contact-form-card input:focus,
+.contact-form-card textarea:focus {
+  box-shadow: 0 0 8px #00f0ff;
+  background-color: rgba(0, 0, 0, 0.4);
+  color: #e0f8ff;
+}
+
+/* ===== ABOUT PAGE ===== */
+.about-card {
+  margin: 60px auto;
+  padding: 50px 35px;
+  max-width: 750px;
+  box-shadow: 0 12px 25px rgba(0, 240, 255, 0.3);
+  text-align: center;
+  border-radius: 25px;
 }
 
 .about-title {
   font-size: 3rem;
   font-weight: 900;
-  color: #ffb92a;
-  text-shadow: 2px 2px 10px rgba(0,0,0,0.6);
+  color: #00f0ff;
+  text-shadow: 0 0 5px #00bfff, 1px 1px 2px rgba(0,0,0,0.8); /* subtle dark shadow improves readability */
   margin-bottom: 35px;
 }
 
 .section-title {
   font-size: 1.8rem;
   font-weight: 700;
-  color: #ffffff;
+  color: #e0f8ff; /* readable light cyan */
   margin-top: 30px;
   margin-bottom: 15px;
-  border-bottom: 2px solid #ffb92a;
+  border-bottom: 2px solid #00f0ff;
   display: inline-block;
   padding-bottom: 4px;
 }
@@ -426,10 +475,43 @@ body {
 .about-text {
   font-size: 1.2rem;
   line-height: 1.7;
-  color: #dbe2ff;
+  color: #e0f8ff; /* readable cyan */
   max-width: 650px;
   margin: 0 auto 20px auto;
 }
+
+/* ===== MAP STYLES ===== */
+.map-container {
+  width: 100%;
+  max-width: 750px;
+  height: 400px;
+  margin: 40px auto;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 8px 15px rgba(0, 240, 255, 0.3), 0 8px 20px rgba(0, 0, 0, 0.5);
+}
+
+/* ===== FOOTER ===== */
+.site-footer {
+  background-color: rgba(0, 0, 0, 0.9);
+  color: #e0f8ff;
+  text-align: center;
+  padding: 15px 0;
+}
+
+/* ===== RESPONSIVE ===== */
+@media screen and (max-width: 900px) {
+  .contact-container {
+    flex-direction: column;
+    gap: 30px;
+    padding: 30px 15px;
+  }
+
+  .map-container {
+    height: 300px;
+  }
+}
+
 
 @keyframes fadeInUp {
   from {opacity:0; transform: translateY(20px);}
@@ -936,29 +1018,81 @@ body {
 }
 
 /* =============================== FOOTER ================================*/
+/* =============================== FOOTER ================================ */
 .site-footer {
     margin-top: 60px;
     padding: 25px 0;
     text-align: center;
 
-    background: rgba(0,0,30,0.4);
+    /* Make background semi-transparent for backdrop-filter */
+    background-color: rgba(0, 0, 30, 0.5);
 
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
+    /* Apply blur effect */
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px); /* Safari support */
 
-    border-top: 1px solid rgba(0,200,255,0.25);
-    box-shadow: 0 -5px 25px rgba(0,200,255,0.2);
+    /* Border & shadow for neon glow effect */
+    border-top: 1px solid rgba(0, 200, 255, 0.25);
+    box-shadow: 0 -5px 25px rgba(0, 200, 255, 0.2);
 
     color: #b8e9ff;
-    text-shadow: 0 0 8px rgba(0,200,255,0.6);
+    text-shadow: 0 0 8px rgba(0, 200, 255, 0.6);
+
+    position: relative;
+    z-index: 10;
+
+    /* Optional: smooth transition when hovered or blurred */
+    transition: backdrop-filter 0.3s ease, background-color 0.3s ease;
 }
-/* ===== Right Section ===== */
+
+/* Footer content styling */
+.site-footer .footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Social icons */
+.site-footer .footer-socials {
+    display: flex;
+    gap: 15px;
+}
+
+.site-footer .footer-socials a {
+    color: #00baff;
+    font-size: 1.2rem;
+    transition: 0.3s;
+    text-shadow:
+        0 0 5px #00baff,
+        0 0 10px #00baff,
+        0 0 20px #00baff;
+}
+
+.site-footer .footer-socials a:hover {
+    color: #00ffff;
+    text-shadow:
+        0 0 10px #00ffff,
+        0 0 20px #00ffff,
+        0 0 30px #00ffff;
+    transform: translateY(-2px);
+}
+
+/* Contact info */
+.site-footer .footer-contact {
+    font-size: 0.9rem;
+    color: #b8e9ff;
+    text-shadow: 0 0 5px #00baff;
+}
+
+/* Right section (header dropdown) */
 .right {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  position: relative; /* Needed for dropdown positioning */
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    position: relative; /* Needed for dropdown positioning */
 }
+
 
 /* ===== Hamburger Menu ===== */
 .hamburger-menu {
@@ -985,11 +1119,11 @@ body {
 .hamburger-dropdown {
   display: none;
   position: absolute;
-  top: 50px; /* Below hamburger icon */
+  top: 50px; 
   right: 0;
   background: rgba(0, 0, 0, 0.9);
   backdrop-filter: blur(10px);
-  border-radius: 12px;
+  border-radius: 12px;  
   flex-direction: column;
   gap: 12px;
   padding: 12px 18px;
@@ -999,62 +1133,63 @@ body {
 }
 
 /* ===== Glow for Hamburger Dropdown Links ===== */
-.hamburger-dropdown .dropdown-item {
+/* Dropdown links */
+.hamburger-dropdown .dropdown-item,
+.hamburger-dropdown .dropdown-logout {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* space between icon & text */
   color: #b8e9ff;
   text-decoration: none;
   font-weight: 700;
   padding: 8px 12px;
-  border-radius: 6px;
-  transition: 0.2s;
+  border-radius: 8px;
+  transition: 0.25s ease;
 
-  /* Neon Glow Effect */
   text-shadow:
-     0 0 5px #00baff,
-     0 0 10px #00baff,
-     0 0 20px #00baff,
-     0 0 30px #00baff;
+    0 0 5px #00baff,
+    0 0 10px #00baff,
+    0 0 20px #00baff;
 }
 
-.hamburger-dropdown .dropdown-item:hover {
-  background: rgba(255,255,255,0.1);
-  text-shadow:
-     0 0 10px #00ffff,
-     0 0 20px #00ffff,
-     0 0 30px #00ffff,
-     0 0 40px #00ffff;
-}
-
-/* Logout link with stronger glow */
-.hamburger-dropdown .dropdown-logout {
-  color: #ffb92a;
-  border-top: 1px solid rgba(255,255,255,0.2);
-  margin-top: 6px;
-  text-shadow:
-     0 0 5px #ffb92a,
-     0 0 10px #ffb92a,
-     0 0 20px #ffb92a,
-     0 0 30px #ffb92a;
-}
-
-/* Logged-in User Display in dropdown */
-.hamburger-dropdown .dropdown-user {
-  font-weight: 700;
+/* ICON STYLE */
+.hamburger-dropdown i {
+  font-size: 15px;
+  min-width: 18px;
   color: #5ed8ff;
   text-shadow:
-     0 0 5px #5ed8ff,
-     0 0 10px #5ed8ff,
-     0 0 20px #5ed8ff;
-  margin-bottom: 8px;
+    0 0 6px #00baff,
+    0 0 12px rgba(0, 200, 255, 0.8);
 }
 
-/* Optional: glow for user name on desktop top-right */
-.user-display {
-  font-weight: 600;
-  color: #ffcf57;
+/* Hover effect */
+.hamburger-dropdown .dropdown-item:hover {
+  background: rgba(255,255,255,0.1);
+  color: #00ffff;
+  transform: translateX(2px);
+}
+
+/* Hover icon glow */
+.hamburger-dropdown .dropdown-item:hover i {
+  color: #00ffff;
   text-shadow:
-     0 0 5px #ffcf57,
-     0 0 10px #ffcf57,
-     0 0 20px #ffcf57;
+    0 0 10px #00ffff,
+    0 0 20px #00ffff;
+}
+
+/* Logout special color */
+.hamburger-dropdown .dropdown-logout {
+  margin-top: 6px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255,255,255,0.2);
+  color: #ffb92a;
+}
+
+.hamburger-dropdown .dropdown-logout i {
+  color: #ffb92a;
+  text-shadow:
+    0 0 8px #ffb92a,
+    0 0 16px rgba(255,185,42,0.8);
 }
 
 /* Show dropdown */
@@ -1062,6 +1197,7 @@ body {
   display: flex;
   flex-direction: column;
 }
+
 
 /* Responsive Hamburger for Small Screens */
 @media screen and (max-width: 900px) {

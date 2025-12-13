@@ -7,6 +7,8 @@
   <link rel="stylesheet" href="assets/css/style.css">
   <link rel="stylesheet" href="assets/css/about.css">
 </head>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
 <body class="night-bg">
 
   <header class="site-header">
@@ -23,7 +25,6 @@
   </nav>
 
   <div class="right">
-    <p id="user-display" class="user-display"></p>
     <a href="login.html" id="login-link" class="btn small">Login</a>
 
     <!-- Hamburger Menu Icon -->
@@ -33,16 +34,24 @@
       <span></span>
     </div>
 
-     <!-- Hamburger Dropdown -->
-      <div class="hamburger-dropdown" id="hamburger-dropdown">
-        <a href="profile.html" class="dropdown-item">Profile</a>
-        <a href="index.html" class="dropdown-item">Home</a>
-        <a href="about.html" class="dropdown-item">About</a>
-        <a href="services.html" class="dropdown-item">Services</a>
-        <a href="contact.html" class="dropdown-item">Contact</a>
-        <a href="#" id="dropdown-logout" class="dropdown-logout">Logout</a>
-      </div>
+     <div class="hamburger-dropdown" id="hamburger-dropdown">
+      <a href="profile.html" class="dropdown-item">
+        <i class="fa-solid fa-user"></i> Profile
+      </a>
+      <a href="index.html" class="dropdown-item">
+        <i class="fa-solid fa-house"></i> Home
+      </a>
+      <a href="about.html" class="dropdown-item">
+        <i class="fa-solid fa-circle-info"></i> About
+      </a>
+      <a href="contact.html" class="dropdown-item">
+        <i class="fa-solid fa-envelope"></i> Contact
+      </a>
+      <a href="#" id="dropdown-logout" class="dropdown-logout">
+        <i class="fa-solid fa-right-from-bracket"></i> Logout
+      </a>
     </div>
+  </div>
 </header>
 
   <!-- ===== MAIN ===== -->
@@ -67,7 +76,27 @@
     </div>
   </main>
 
-  <footer class="site-footer">© Chuyzzz Midnight Snack</footer>
+  <footer class="site-footer">
+  <div class="footer-content">
+    
+    <div class="footer-row">
+      <p>© 2025 Chuyzzz Midnight Snack • All Rights Reserved</p>
+    </div>
+
+
+    <div class="footer-row footer-socials">
+      <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+      <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+      <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+      <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+    </div>
+
+    <!-- Row 3: Contact -->
+    <div class="footer-row footer-contact">
+      <p>📧 contact@chuyzzz.com | 📞 0912-345-6789</p>
+    </div>
+  </div>
+</footer>
 
   <!-- ===== SCRIPTS ===== -->
   <script src="assets/js/auth.js"></script>

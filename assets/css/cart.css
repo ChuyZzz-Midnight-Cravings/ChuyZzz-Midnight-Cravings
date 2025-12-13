@@ -318,11 +318,11 @@ header {
 .hamburger-dropdown {
   display: none;
   position: absolute;
-  top: 50px; /* Below hamburger icon */
+  top: 50px; 
   right: 0;
   background: rgba(0, 0, 0, 0.9);
   backdrop-filter: blur(10px);
-  border-radius: 12px;
+  border-radius: 12px;  
   flex-direction: column;
   gap: 12px;
   padding: 12px 18px;
@@ -332,62 +332,63 @@ header {
 }
 
 /* ===== Glow for Hamburger Dropdown Links ===== */
-.hamburger-dropdown .dropdown-item {
+/* Dropdown links */
+.hamburger-dropdown .dropdown-item,
+.hamburger-dropdown .dropdown-logout {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* space between icon & text */
   color: #b8e9ff;
   text-decoration: none;
   font-weight: 700;
   padding: 8px 12px;
-  border-radius: 6px;
-  transition: 0.2s;
+  border-radius: 8px;
+  transition: 0.25s ease;
 
-  /* Neon Glow Effect */
   text-shadow:
-     0 0 5px #00baff,
-     0 0 10px #00baff,
-     0 0 20px #00baff,
-     0 0 30px #00baff;
+    0 0 5px #00baff,
+    0 0 10px #00baff,
+    0 0 20px #00baff;
 }
 
-.hamburger-dropdown .dropdown-item:hover {
-  background: rgba(255,255,255,0.1);
-  text-shadow:
-     0 0 10px #00ffff,
-     0 0 20px #00ffff,
-     0 0 30px #00ffff,
-     0 0 40px #00ffff;
-}
-
-/* Logout link with stronger glow */
-.hamburger-dropdown .dropdown-logout {
-  color: #ffb92a;
-  border-top: 1px solid rgba(255,255,255,0.2);
-  margin-top: 6px;
-  text-shadow:
-     0 0 5px #ffb92a,
-     0 0 10px #ffb92a,
-     0 0 20px #ffb92a,
-     0 0 30px #ffb92a;
-}
-
-/* Logged-in User Display in dropdown */
-.hamburger-dropdown .dropdown-user {
-  font-weight: 700;
+/* ICON STYLE */
+.hamburger-dropdown i {
+  font-size: 15px;
+  min-width: 18px;
   color: #5ed8ff;
   text-shadow:
-     0 0 5px #5ed8ff,
-     0 0 10px #5ed8ff,
-     0 0 20px #5ed8ff;
-  margin-bottom: 8px;
+    0 0 6px #00baff,
+    0 0 12px rgba(0, 200, 255, 0.8);
 }
 
-/* Optional: glow for user name on desktop top-right */
-.user-display {
-  font-weight: 600;
-  color: #ffcf57;
+/* Hover effect */
+.hamburger-dropdown .dropdown-item:hover {
+  background: rgba(255,255,255,0.1);
+  color: #00ffff;
+  transform: translateX(2px);
+}
+
+/* Hover icon glow */
+.hamburger-dropdown .dropdown-item:hover i {
+  color: #00ffff;
   text-shadow:
-     0 0 5px #ffcf57,
-     0 0 10px #ffcf57,
-     0 0 20px #ffcf57;
+    0 0 10px #00ffff,
+    0 0 20px #00ffff;
+}
+
+/* Logout special color */
+.hamburger-dropdown .dropdown-logout {
+  margin-top: 6px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255,255,255,0.2);
+  color: #ffb92a;
+}
+
+.hamburger-dropdown .dropdown-logout i {
+  color: #ffb92a;
+  text-shadow:
+    0 0 8px #ffb92a,
+    0 0 16px rgba(255,185,42,0.8);
 }
 
 /* Show dropdown */
@@ -395,28 +396,6 @@ header {
   display: flex;
   flex-direction: column;
 }
-
-/* Responsive Hamburger for Small Screens */
-@media screen and (max-width: 900px) {
-  .nav {
-    display: none; /* Hide nav links */
-  }
-
-  .hamburger-menu {
-    display: flex; /* Show hamburger icon */
-  }
-
-  .hamburger-dropdown {
-    position: absolute;
-    right: 0;
-    top: 60px;
-    display: none;
-    flex-direction: column;
-  }
-
-  .hamburger-dropdown.show {
-    display: flex;
-  }
 
 /* ===============================
    CART STYLING
@@ -470,11 +449,18 @@ header {
 
 .remove-btn {
   margin-left: 12px;
-  background: transparent;
-  border: 1px solid #ff3333;
-  color: #ff3333;
-  padding: 4px 8px;
-  border-radius: 4px;
+  background: transparent;       
+  border: 2px solid #1e90ff;     
+  color: #1e90ff;               
+  padding: 4px 8px;           
+  border-radius: 4px;           
+  cursor: pointer;            
+  transition: all 0.3s ease;    
+}
+
+.remove-btn:hover {
+  background: #1e90ff;            
+  color: #fff;                  
 }
 
 /* ===============================
@@ -533,5 +519,4 @@ header {
     margin-left: 0;
     margin-top: 4px;
   }
-}
 }

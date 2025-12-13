@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Contact - Chuyzzz</title>
 
-  <!-- Main CSS -->
+  <!-- CSS -->
   <link rel="stylesheet" href="assets/css/style.css">
   <link rel="stylesheet" href="assets/css/contact.css">
 
@@ -17,37 +17,18 @@
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
   <style>
-    /* ===== Footer fixed ===== */
-    .site-footer {
-      background-color: rgba(0,0,0,0.8);
-      color: #fff;
-      text-align: center;
-      padding: 15px 0;
-      width: 100%;
-    }
-
-    /* ===== Main spacing for footer ===== */
-    .main-container {
-      min-height: calc(100vh - 80px); 
-      padding-bottom: 20px;
-    }
-
-    /* ===== Leaflet Map Container ===== */
-    .map-container {
-      width: 100%;
-      max-width: 750px;
+    /* Map container */
+    #map {
       height: 400px;
-      margin: 40px auto;
-      border-radius: 15px;
-      overflow: hidden;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+      width: 100%;
+      border-radius: 12px;
+      margin-top: 20px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.4);
     }
   </style>
 </head>
-
 <body class="night-bg">
 
-  <!-- ===== HEADER ===== -->
   <header class="site-header">
     <div class="left">
       <img src="assets/images/logo-chuyzzz.png" alt="Chuyzzz Logo" class="logo" />
@@ -62,43 +43,28 @@
     </nav>
 
     <div class="right">
-      <p id="user-display" class="user-display"></p>
-      <a href="login.html" id="login-link" class="btn small">Login</a>
-
-      <!-- Hamburger Menu Icon -->
       <div class="hamburger-menu" id="hamburger-menu">
-        <span></span>
-        <span></span>
-        <span></span>
+        <span></span><span></span><span></span>
       </div>
-
-      <!-- Hamburger Dropdown -->
       <div class="hamburger-dropdown" id="hamburger-dropdown">
-        <span id="dropdown-user" class="dropdown-user"></span>
-        <a href="profile.html" class="dropdown-item">Profile</a>
-        <a href="index.html" class="dropdown-item">Home</a>
-        <a href="about.html" class="dropdown-item">About</a>
-        <a href="shop.html" class="dropdown-item">Shop</a>
-        <a href="contact.html" class="dropdown-item">Contact</a>
-        <a href="#" id="dropdown-logout" class="dropdown-logout">Logout</a>
+        <a href="profile.html" class="dropdown-item"><i class="fa-solid fa-user"></i> Profile</a>
+        <a href="index.html" class="dropdown-item"><i class="fa-solid fa-house"></i> Home</a>
+        <a href="about.html" class="dropdown-item"><i class="fa-solid fa-circle-info"></i> About</a>
+        <a href="contact.html" class="dropdown-item"><i class="fa-solid fa-envelope"></i> Contact</a>
+        <a href="#" id="dropdown-logout" class="dropdown-logout"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
       </div>
     </div>
   </header>
 
-  <!-- ===== MAIN ===== -->
   <main class="main-container">
     <div class="contact-container">
-
       <!-- Contact Info Card -->
       <div class="contact-card">
         <h2>Contact Info</h2>
-        <div class="contact-info">
-          <p>📍 <strong>Location:</strong> Damilag, Manolo Fortich Bukidnon</p>
-          <p>📞 <strong>Phone:</strong> 0912-345-6789</p>
-          <p>📧 <strong>Email:</strong> ChuyZzz@gmail.com</p>
-          <p>🕐 <strong>Service Hours:</strong> 8:00 PM – 2:00 AM</p>
-        </div>
-        <p>We respond quickly—especially during peak craving hours!</p>
+        <p>📍 <strong>Location:</strong> Damilag, Manolo Fortich, Bukidnon</p>
+        <p>📞 <strong>Phone:</strong> 0912-345-6789</p>
+        <p>📧 <strong>Email:</strong> ChuyZzz@gmail.com</p>
+        <p>🕐 <strong>Service Hours:</strong> 8:00 PM – 2:00 AM</p>
       </div>
 
       <!-- Contact Form Card -->
@@ -111,70 +77,45 @@
           <button type="submit">Send Message</button>
         </form>
       </div>
-
     </div>
 
     <!-- Leaflet Map -->
-    <div id="map" class="map-container"></div>
+    <div id="map"></div>
   </main>
 
-  <footer class="site-footer">© Chuyzzz Midnight Snack</footer>
+  <footer class="site-footer">
+    <div class="footer-content">
+      <div class="footer-row">
+        <p>© 2025 Chuyzzz Midnight Snack • All Rights Reserved</p>
+      </div>
+      <div class="footer-row footer-socials">
+        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+      </div>
+      <div class="footer-row footer-contact">
+        <p>📧 contact@chuyzzz.com | 📞 0912-345-6789</p>
+      </div>
+    </div>
+  </footer>
 
-  <!-- ===== SCRIPTS ===== -->
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-      const userDisplay = document.getElementById("user-display");
-      const loginLink = document.getElementById("login-link");
-      const dropdownLogout = document.getElementById("dropdown-logout");
+      // Hamburger menu toggle
       const hamburger = document.getElementById("hamburger-menu");
       const dropdown = document.getElementById("hamburger-dropdown");
-      const cartCountEl = document.getElementById("cart-count");
-
-      // Update header & cart
-      function updateHeaderUI() {
-        const email = localStorage.getItem("loggedUser");
-        if (email) {
-          const users = JSON.parse(localStorage.getItem("users") || "[]");
-          const user = users.find(u => u.email === email);
-          if (user) {
-            userDisplay.textContent = "Hello, " + user.name + "!";
-            loginLink.style.display = "none";
-            dropdownLogout.style.display = "block";
-            document.getElementById("dropdown-user").textContent = user.name;
-          }
-        } else {
-          userDisplay.textContent = "";
-          loginLink.style.display = "inline-block";
-          dropdownLogout.style.display = "none";
-          document.getElementById("dropdown-user").textContent = "";
-        }
-
-        // Update cart count
-        const cart = JSON.parse(localStorage.getItem(`cart_${localStorage.getItem("loggedUser")}`) || "[]");
-        if (cartCountEl) cartCountEl.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
-      }
-
-      // Logout
-      dropdownLogout.addEventListener("click", () => {
-        localStorage.removeItem("loggedUser");
-        window.location.href = "login.html";
-      });
-
-      // Hamburger toggle
       hamburger.addEventListener("click", e => {
         e.stopPropagation();
         dropdown.classList.toggle("show");
       });
-
       document.addEventListener("click", e => {
         if (!dropdown.contains(e.target) && !hamburger.contains(e.target)) {
           dropdown.classList.remove("show");
         }
       });
 
-      updateHeaderUI();
-
-      // Contact form
+      // Contact form submit
       const form = document.getElementById("contact-form");
       form.addEventListener("submit", e => {
         e.preventDefault();
@@ -182,16 +123,24 @@
         form.reset();
       });
 
-      // ===== Initialize Leaflet Map =====
-      const map = L.map('map').setView([8.1234567, 124.9123456], 15);
+      // ===== Leaflet Map for Damilag, Manolo Fortich =====
+      const damilagCoords = [8.2211, 124.9234]; // approximate coordinates
+      const map = L.map('map').setView(damilagCoords, 16);
 
-      // Dark tiles for night theme
-      L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png', {
-        maxZoom: 20,
-        attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a> contributors'
+      // Satellite layer (Esri)
+      L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+        attribution: 'Tiles &copy; Esri',
+        maxZoom: 20
       }).addTo(map);
 
-      // Custom snack icon marker
+      // Optional: overlay labels
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 20,
+        attribution: '&copy; OpenStreetMap contributors',
+        opacity: 0.5
+      }).addTo(map);
+
+      // Custom marker
       const snackIcon = L.icon({
         iconUrl: 'assets/images/icon.png',
         iconSize: [40, 40],
@@ -199,9 +148,9 @@
         popupAnchor: [0, -35]
       });
 
-      L.marker([8.1234567, 124.9123456], { icon: snackIcon })
+      L.marker(damilagCoords, { icon: snackIcon })
         .addTo(map)
-        .bindPopup('<b>Chuyzzz Midnight Snack</b><br>Damilag, Manolo Fortich Bukidnon.')
+        .bindPopup('<b>Chuyzzz Midnight Snack</b><br>Damilag, Manolo Fortich, Bukidnon.')
         .openPopup();
     });
   </script>

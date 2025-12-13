@@ -33,7 +33,6 @@
     </nav>
 
     <div class="right">
-      <p id="user-display" class="user-display"></p>
       <a href="login.html" id="login-link" class="btn small">Login</a>
 
       <!-- Hamburger Menu Icon -->
@@ -43,14 +42,22 @@
         <span></span>
       </div>
 
-      <!-- Hamburger Dropdown -->
-      <div class="hamburger-dropdown" id="hamburger-dropdown">
-        <a href="profile.html" class="dropdown-item">Profile</a>
-        <a href="index.html" class="dropdown-item">Home</a>
-        <a href="about.html" class="dropdown-item">About</a>
-        <a href="shop.html" class="dropdown-item">Shop</a>
-        <a href="contact.html" class="dropdown-item">Contact</a>
-        <a href="#" id="dropdown-logout" class="dropdown-logout">Logout</a>
+       <div class="hamburger-dropdown" id="hamburger-dropdown">
+        <a href="profile.html" class="dropdown-item">
+          <i class="fa-solid fa-user"></i> Profile
+        </a>
+        <a href="index.html" class="dropdown-item">
+          <i class="fa-solid fa-house"></i> Home
+        </a>
+        <a href="about.html" class="dropdown-item">
+          <i class="fa-solid fa-circle-info"></i> About
+        </a>
+        <a href="contact.html" class="dropdown-item">
+          <i class="fa-solid fa-envelope"></i> Contact
+        </a>
+        <a href="#" id="dropdown-logout" class="dropdown-logout">
+          <i class="fa-solid fa-right-from-bracket"></i> Logout
+        </a>
       </div>
     </div>
   </header>
@@ -69,7 +76,27 @@
     <section id="foods-list" class="product-grid"></section>
   </main>
 
-  <footer class="site-footer">© Chuyzzz Midnight Snack</footer>
+  <footer class="site-footer">
+  <div class="footer-content">
+    
+    <div class="footer-row">
+      <p>© 2025 Chuyzzz Midnight Snack • All Rights Reserved</p>
+    </div>
+
+
+    <div class="footer-row footer-socials">
+      <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+      <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+      <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+      <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+    </div>
+
+    <!-- Row 3: Contact -->
+    <div class="footer-row footer-contact">
+      <p>📧 contact@chuyzzz.com | 📞 0912-345-6789</p>
+    </div>
+  </div>
+</footer>
 
   <script src="assets/js/auth.js"></script>
   <script src="assets/js/shop.js"></script>
